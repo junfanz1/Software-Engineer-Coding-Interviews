@@ -34,10 +34,10 @@ Educative.io online course.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
 
-## 4. Machine Learning with Graphs, Stanford CS 224W
+## 4. Coding Interview Patterns: Nail Your Next Coding Interview
 
-CS224W: Machine Learning with Graphs, by Prof. Jure Leskovec at Stanford
+Alex Xu, Shaun Gunawardane
 
-> http://web.stanford.edu/class/cs224w/
+> https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135
 
 Notes: To come.
