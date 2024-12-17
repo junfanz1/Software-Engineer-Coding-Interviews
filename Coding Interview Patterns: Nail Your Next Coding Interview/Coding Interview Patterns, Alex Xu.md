@@ -1,3 +1,10 @@
+[Coding Interview Patterns: Nail Your Next Coding Interview
+by Alex Xu, Shaun Gunawardane](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135)
+
+Notes
+---
+
+
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [Char 1 Two Pointers](#char-1-two-pointers)
