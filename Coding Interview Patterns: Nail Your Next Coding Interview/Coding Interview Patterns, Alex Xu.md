@@ -1,4 +1,4 @@
-# [Coding Interview Patterns: Nail Your Next Coding Interview](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135)
+# [Coding Interview Patterns: Nail Your Next Coding Interview (Book Link)](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135)
 
 Notes
 ---
