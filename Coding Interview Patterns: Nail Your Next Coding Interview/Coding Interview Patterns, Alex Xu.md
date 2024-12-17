@@ -860,7 +860,7 @@ class MedianOfAnIntegerStream:
         if len(self.left_half) == len(self.right_half):
             return (-self.left_half[0] + self.right_half[0]) / 2.0
         return -self.left_half[0]
-```python    
+```   
 
 <!-- TOC --><a name="char-9-interval"></a>
 # Char 9 Interval
