@@ -117,6 +117,8 @@
 
 <!-- TOC end -->
 
+```python
+
 <!-- TOC --><a name="coding-interview-patterns-alex-xu"></a>
 # Coding Interview Patterns, Alex Xu
 
@@ -2470,3 +2472,5 @@ def gcd(a, b):
     while b != 0:
         a, b = b, a % b
     return a 
+
+```
