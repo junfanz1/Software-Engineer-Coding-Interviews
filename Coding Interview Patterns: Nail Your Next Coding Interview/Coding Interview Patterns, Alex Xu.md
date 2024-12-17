@@ -117,7 +117,6 @@
 
 <!-- TOC end -->
 
-```python
 
 <!-- TOC --><a name="coding-interview-patterns-alex-xu"></a>
 # Coding Interview Patterns, Alex Xu
@@ -127,6 +126,8 @@
 
 <!-- TOC --><a name="pair-sum-sorted"></a>
 ## Pair Sum - Sorted
+
+```python
 def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
     left, right = 0, len(nums) - 1
     while left < right:
@@ -143,9 +144,10 @@ def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
         else:
             return [left, right]
     return []
-
+```
 <!-- TOC --><a name="triplet-sum"></a>
 ## Triplet Sum
+```python
 def triplet_sum(nums: List[int]) -> List[List[int]]:
     triplets = []
     nums.sort()
@@ -180,9 +182,10 @@ def pair_sum_sorted_all_pairs(nums: List[int],
         else:
             right -= 1
     return pairs
-
+```
 <!-- TOC --><a name="palindrome-valid"></a>
 ## palindrome valid
+```python
 def is_palindrome_valid(s: str) -> bool:
     left, right = 0, len(s) - 1
     while left < right:
@@ -197,9 +200,10 @@ def is_palindrome_valid(s: str) -> bool:
         left += 1
         right -= 1
     return True
-
+```
 <!-- TOC --><a name="largest-container"></a>
 ## largest container
+```python
 def largest_container(heights: List[int]) -> int:
     max_water = 0
     left, right = 0, len(heights) - 1
@@ -217,12 +221,13 @@ def largest_container(heights: List[int]) -> int:
             left += 1
             right -= 1
     return max_water 
-
+```
 <!-- TOC --><a name="char-2-hash-map"></a>
 # Char 2 Hash Map
 
 <!-- TOC --><a name="pair-sum-unsorted"></a>
 ## Pair Sum Unsorted
+```python
 def pair_sum_unsorted_two_pass(nums: List[int],
                                target: int) -> List[int]:
     num_map = {}
@@ -244,9 +249,11 @@ def pair_sum_unsorted(nums: List[int],
             return [hashmap[target - x], i]
         hashmap[x] = i
     return []
-
+```
 <!-- TOC --><a name="verify-sudoku-board"></a>
 ## Verify Sudoku Board
+
+```python
 def verify_sudoku_board(board: List[List[int]]) -> bool:
     # create hash sets for each row, column, subgrid to keep track of
     # numbers previously seen on any given row, column, subgrid 
@@ -269,9 +276,11 @@ def verify_sudoku_board(board: List[List[int]]) -> bool:
             column_sets[c].add(num)
             subgrid_sets[r // 3][c // 3].add(num)
     return True 
-
+```
 <!-- TOC --><a name="zero-stripping"></a>
 ## Zero stripping 
+
+```python
 def zero_stripping_hash_sets(matrix: List[List[int]]) -> None:
     if not matrix or not matrix[0]:
         return 
@@ -290,10 +299,10 @@ def zero_stripping_hash_sets(matrix: List[List[int]]) -> None:
         for c in range(n):
             if r in zero_rows or c in zero_cols:
                 matrix[r][c] = 0
-
+```
 <!-- TOC --><a name="char-3-linked-list"></a>
 # Char 3 Linked List
-
+```python
 class ListNode:
     def __init__(self, val: int, next: ListNode):
         self.val = val 
@@ -319,9 +328,10 @@ def linked_list_reversal_recursive(head: ListNode) -> ListNode:
     head.next.next = head 
     head.next = None 
     return new_head 
-
+```
 <!-- TOC --><a name="remove-k-th-last-node"></a>
 ## remove k-th last node
+```python
 def remove_kth_last_node(head: ListNode, k: int) -> ListNode:
     # dummy node to ensure a node before head in case we need to remove head 
     dummy = ListNode(-1)
@@ -340,10 +350,10 @@ def remove_kth_last_node(head: ListNode, k: int) -> ListNode:
     # remove kth node from the end 
     trailer.next = trailer.next.next 
     return dummy.next 
-
+```
 <!-- TOC --><a name="linked-list-intersection"></a>
 ## linked list intersection 
-
+```python
 def linked_list_intersection(head_A: ListNode,
                              head_B: ListNode) -> ListNode:
     ptr_A, ptr_B = head_A, head_B 
@@ -357,10 +367,10 @@ def linked_list_intersection(head_A: ListNode,
     # ptr_A and ptr_B either point to intersection node or both are null if lists don't intersect 
     # return either pointer 
     return ptr_A 
-
+```
 <!-- TOC --><a name="lru-cache"></a>
 ## LRU cache 
-
+```python
 class DoublyLinkedListNode:
     def __init__(self, key: int, val: int):
         self.key = key 
@@ -407,14 +417,14 @@ class LRUCache:
             del self.hashmap[self.head.next.key]
             self.remove_node(self.head.next)
         self.add_to_tail(node)
-
+```
 
 <!-- TOC --><a name="char-4-fast-slow-pointers"></a>
 # Char 4 Fast Slow Pointers 
 
 <!-- TOC --><a name="linked-list-loop"></a>
 ## Linked List Loop
-
+```python
 def linked_list_loop_naive(head: ListNode) -> bool:
     visited = set()
     curr = head 
@@ -436,10 +446,10 @@ def linked_list_loop(head: ListNode) -> bool:
         if fast == slow:
             return True 
     return False 
-
+```
 <!-- TOC --><a name="linked-list-midpoint"></a>
 ## Linked List Midpoint 
-
+```python
 def linked_list_midpoint(head: ListNode) -> ListNode:
     slow = fast = head 
     # when fast pointer reaches the end, slow reaches midpoint 
@@ -447,10 +457,10 @@ def linked_list_midpoint(head: ListNode) -> ListNode:
         slow = slow.next 
         fast = fast.next.next
     return slow 
-
+```
 <!-- TOC --><a name="happy-number"></a>
 ## Happy Number 
-
+```python
 def happy_number(n: int) -> bool: 
     slow = fast = n
     while True:
@@ -471,13 +481,13 @@ def get_next_num(x: int) -> int:
         x //= 10
         next_num += digit ** 2
     return next_num
-
+```
 <!-- TOC --><a name="char-5-sliding-windows"></a>
 # Char 5 Sliding Windows 
 
 <!-- TOC --><a name="substring-anagrams"></a>
 ## Substring Anagrams
-
+```python
 def substring_anagrams(s: str, t: str) -> int:
     len_s, len_t = len(s), len(t)
     if len_t > len_s:
@@ -501,10 +511,10 @@ def substring_anagrams(s: str, t: str) -> int:
             left += 1
         right += 1
     return count 
-
+```
 <!-- TOC --><a name="longest-substring-with-unique-characters"></a>
 ## Longest substring with unique characters
-
+```python
 def longest_substring_with_unique_chars(s: str) -> int:
     max_len = 0
     hash_set = set()
@@ -521,9 +531,10 @@ def longest_substring_with_unique_chars(s: str) -> int:
         hash_set.add(s[right])
         right += 1
     return max_len 
-
+```
 <!-- TOC --><a name="optimized"></a>
 ## optimized 
+```python
 def longest_substring_with_unique_chars(s: str) -> int:
     max_len = 0
     prev_indexes = {}
@@ -541,10 +552,10 @@ def longest_substring_with_unique_chars(s: str) -> int:
         # expand window 
         right += 1
     return max_len 
-
+```
 <!-- TOC --><a name="longest-uniform-substring-after-replacement"></a>
 ## Longest Uniform substring after replacement
-
+```python
 def longest_uniform_substring_after_replacement(s: str, k: int) -> int:
     freqs = {}
     highest_freq = max_len = 0
@@ -567,13 +578,13 @@ def longest_uniform_substring_after_replacement(s: str, k: int) -> int:
         # expand window 
         right += 1
     return max_len 
-
+```
 <!-- TOC --><a name="char-6-binary-search"></a>
 # Char 6 Binary Search
 
 <!-- TOC --><a name="find-insertion-index"></a>
 ## Find Insertion Index 
-
+```python
 def find_the_insertion_index(nums: List[int], target: int) -> int:
     left, right = 0, len(nums)
     while left < right:
@@ -585,10 +596,10 @@ def find_the_insertion_index(nums: List[int], target: int) -> int:
         else:
             left = mid + 1
     return left
-
+```
 <!-- TOC --><a name="first-and-last-occurrence-of-number"></a>
 ## First and Last Occurrence of Number 
-
+```python
 def first_and_last_occurrences_of_a_number(nums: List[int],
                                            target: int) -> List[int]:
     lower_bound = lower_bound_binary_search(nums, target)
@@ -619,10 +630,10 @@ def upper_bound_binary_search(nums: List[int], target: int) -> int:
         else:
             left = mid 
     return right if nums and nums[right] == target else -1
-
+```
 <!-- TOC --><a name="cutting-wood"></a>
 ## Cutting Wood 
-
+```python
 def cutting_wood(heights: List[int], k: int) -> int:
     left, right = 0, max(heights)
     while left < right:
@@ -633,19 +644,20 @@ def cutting_wood(heights: List[int], k: int) -> int:
         else:
             right = mid - 1 
     return right 
-
+```
 <!-- TOC --><a name="determine-if-current-value-of-h-cuts-at-least-k-meters-of-wood"></a>
 # Determine if current value of H cuts at least k meters of wood
+```python
 def cuts_enough_wood(H: int, k: int, heights: List[int]) -> bool:
     wood_collected = 0
     for height in heights:
         if height > H:
             wood_collected += (height - H)
     return wood_collected >= k
-
+```
 <!-- TOC --><a name="find-target-in-rotated-sorted-array"></a>
 ## Find target in rotated sorted array
-
+```python
 def find_the_largest_in_a_rotated_sorted_array(nums: List[int],
                                                target: int) -> int:
     left, right = 0, len(nums) - 1
@@ -669,14 +681,14 @@ def find_the_largest_in_a_rotated_sorted_array(nums: List[int],
                 right = mid - 1
     # if target found, return index. else, return -1
     return left if nums and nums[left] == target else -1 
-
+```
 
 <!-- TOC --><a name="char-7-stack"></a>
 # Char 7 Stack
 
 <!-- TOC --><a name="valid-parenthesis-expression"></a>
 ## Valid Parenthesis Expression
-
+```python
 def valid_parenthesis_expression(s: str) -> bool:
     parentheses_map = {'(':')', '{':'}', '[':']'}
     stack = []
@@ -692,10 +704,10 @@ def valid_parenthesis_expression(s: str) -> bool:
                 return False 
     # if stack empty, all opening parentheses were closed 
     return not stack 
-
+```
 <!-- TOC --><a name="next-largest-number-to-the-right"></a>
 ## Next Largest Number to the Right 
-
+```python
 def next_largest_number_to_the_right(nums: List[int]) -> List[int]:
     res = [0] * len(nums)
     stack = []
@@ -709,10 +721,10 @@ def next_largest_number_to_the_right(nums: List[int]) -> List[int]:
         res[i] = stack[-1] if stack else -1 
         stack.append(nums[i])
     return res 
-
+```
 <!-- TOC --><a name="evaluate-expression"></a>
 ## Evaluate Expression 
-
+```python
 def evaluate_expression(s: str) -> int:
     stack = []
     curr_num, sign, res = 0, 1, 0
@@ -741,7 +753,7 @@ def evaluate_expression(s: str) -> int:
             curr_num = 0
     # finalize result of overall expression
     return res + curr_num * sign 
-
+```
 <!-- TOC --><a name="char-8-heaps"></a>
 # Char 8 Heaps
 
@@ -750,7 +762,7 @@ def evaluate_expression(s: str) -> int:
 
 <!-- TOC --><a name="max-heap"></a>
 ## Max Heap
-
+```python
 class Pair:
     def __init__(self, str, freq):
         self.str = str
@@ -773,10 +785,10 @@ def k_most_frequent_strings_max_heap(strs: List[str],
     heapq.heapify(max_heap)
     # pop most frequent string off the heap k tiems and return k most frequent strings 
     return [heapq.heappop(max_heap).str for _ in range(k)]
-
+```
 <!-- TOC --><a name="min-heap"></a>
 ## Min Heap 
-
+```python
 class Pair:
     def __init__(self, str, freq):
         self.str = str 
@@ -802,10 +814,10 @@ def k_most_frequent_strings_min_heap(strs: List[str],
     res = [heapq.heappop(min_heap).str for _ in range(k)]
     res.reverse()
     return res 
-
+```
 <!-- TOC --><a name="combine-sorted-linked-lists"></a>
 ## Combine Sorted linked lists
-
+```python
 def combine_sorted_linked_lists(lists: List[ListNode]) -> ListNode:
     # define custom comparator for ListNode, enabling min-heap to prioritize nodes with smaller values 
     ListNode.__lt__ = lambda self, other: self.val < other.val 
@@ -827,10 +839,10 @@ def combine_sorted_linked_lists(lists: List[ListNode]) -> ListNode:
         if smallest_node.next:
             heapq.heappush(heap, smallest_node.next)
     return dummy.next 
-
+```
 <!-- TOC --><a name="median-of-integer-stream"></a>
 ## Median of Integer Stream
-
+```python
 class MedianOfAnIntegerStream:
     def __init__(self):
         self.left_half = []
@@ -855,14 +867,14 @@ class MedianOfAnIntegerStream:
         if len(self.left_half) == len(self.right_half):
             return (-self.left_half[0] + self.right_half[0]) / 2.0
         return -self.left_half[0]
-    
+```python    
 
 <!-- TOC --><a name="char-9-interval"></a>
 # Char 9 Interval
 
 <!-- TOC --><a name="merge-overlapping-intervals"></a>
 ## Merge Overlapping Intervals 
-
+```python
 def merge_overlappinng_intervals(
         intervals: List[Interval]
 ) -> List[Interval]:
@@ -878,10 +890,10 @@ def merge_overlappinng_intervals(
             merged[-1] = Interval(A.start, max(A.end, B.end))
     return merged
 
-
+```
 <!-- TOC --><a name="identify-all-interval-overlaps"></a>
 ## Identify All Interval Overlaps 
-
+```python
 def identify_all_interval_overlaps(
         intervals1: List[Interval], intervals2: List[Interval]
 ) -> List[Interval]:
@@ -902,10 +914,10 @@ def identify_all_interval_overlaps(
         else:
             j += 1
     return overlaps 
-
+```
 <!-- TOC --><a name="largest-overlaps-of-intervals"></a>
 ## Largest Overlaps of Intervals 
-
+```python
 def largest_overlap_of_intervals(intervals: List[Interval]) -> int:
     points = []
     for interval in intervals:
@@ -923,22 +935,22 @@ def largest_overlap_of_intervals(intervals: List[Interval]) -> int:
             active_intervals -= 1
         max_overlaps = max(max_overlaps, active_intervals)
     return max_overlaps
-
+```
 
 <!-- TOC --><a name="char-10-prefix-sums"></a>
 # Char 10 Prefix Sums 
-
+```python
 def prefix_sums(sums):
     # start by adding the first number to the prefix sum array
     prefix_sum = [nums[0]]
     # for all remaining indexes, add them in
     for i in range(1, len(nums)):
         prefix_sum.append(prefix_sum[-1] + nums[i])
-
+```
 
 <!-- TOC --><a name="sum-between-range"></a>
 ## Sum between range
-
+```python
 class SumBetweenRange:
     def __init__(self, nums: List[int]):
         self.prefix_sum = [nums[0]]
@@ -949,10 +961,10 @@ class SumBetweenRange:
         if i == 0:
             return self.prefix_sum[j]
         return self.prefix_sum[j] - self.prefix_sum[i - 1]
-    
+```    
 <!-- TOC --><a name="k-sum-subarrays"></a>
 ## K-sum Subarrays 
-
+```python
 def k_sum_subarrays(nums: List[int], k: int) -> int:
     n = len(nums)
     count = 0 
@@ -966,10 +978,10 @@ def k_sum_subarrays(nums: List[int], k: int) -> int:
             if prefix_sum[j] - prefix_sum[i - 1] == k:
                 count += 1
     return count 
-
+```
 <!-- TOC --><a name="optimization-hash-map-similar-to-pair-sum-unsorted-in-hash-maps-chapter"></a>
 ## Optimization: Hash Map (Similar to Pair Sum - Unsorted, in Hash Maps Chapter)
-
+```python
 def k_sum_subarrays_optimized(nums: List[int], k: int) -> int:
     count = 0
     # initialize map with 0 to handle subarrays that sum to k from start of array
@@ -985,10 +997,10 @@ def k_sum_subarrays_optimized(nums: List[int], k: int) -> int:
         freq = prefix_sum_map.get(curr_prefix_sum, 0)
         prefix_sum_map[curr_prefix_sum] = freq + 1 
     return count 
-
+```
 <!-- TOC --><a name="product-array-without-current-element"></a>
 ## Product Array without current element 
-
+```python
 def product_array_without_current_element(nums: List[int]) -> List[int]:
     n = len(nums)
     res = [1] * n
@@ -1000,30 +1012,30 @@ def product_array_without_current_element(nums: List[int]) -> List[int]:
         res[i] *= right_product
         right_product *= nums[i]
     return res 
-
+```
 
 <!-- TOC --><a name="char-11-trees"></a>
 # Char 11 Trees
-
+```python
 class TreeNode:
     def __init__(self, val):
         self.val = val
         self.left = None 
         self.right = None 
-
+```
 <!-- TOC --><a name="dfs"></a>
 ## DFS
-
+```python
 def dfs(node: TreeNode):
     if node is None:
         return 
     process(node)
     dfs(node.left)
     dfs(node.right)
-
+```
 <!-- TOC --><a name="bfs"></a>
 ## BFS 
-
+```python
 def bfs(root: TreeNode):
     if root is None:
         return 
@@ -1036,13 +1048,13 @@ def bfs(root: TreeNode):
             queue.append(node.left)
         if node.right:
             queue.append(node.right)
-
+```
 <!-- TOC --><a name="invert-binary-tree-mirror-of-itself"></a>
 ## Invert Binary Tree (Mirror of itself)
 
 <!-- TOC --><a name="recursive"></a>
 ### Recursive
-
+```python
 def invert_binary_tree_recursive(root: TreeNode) -> TreeNode:
     if not root:
         return None 
@@ -1050,10 +1062,10 @@ def invert_binary_tree_recursive(root: TreeNode) -> TreeNode:
     invert_binary_tree_recursive(root.left)
     invert_binary_tree_recursive(root.right)
     return root 
-
+```
 <!-- TOC --><a name="iteration"></a>
 ### Iteration
-
+```python
 def invert_binary_tree_iterative(root: TreeNode) -> TreeNode:
     if not root:
         return None 
@@ -1068,10 +1080,10 @@ def invert_binary_tree_iterative(root: TreeNode) -> TreeNode:
         if node.right:
             stack.append(node.right)
     return root 
-
+```
 <!-- TOC --><a name="balanced-binary-tree-validation"></a>
 ## Balanced Binary Tree Validation
-
+```python
 def balanced_binary_tree_validation(root: TreeNode) -> bool:
     return get_height_imbalance(root) != -1 
 def get_height_imbalance(node: TreeNode) -> int:
@@ -1089,11 +1101,11 @@ def get_height_imbalance(node: TreeNode) -> int:
         return -1
     # return height of current subtree
     return 1 + max(left_height, right_height)
-
+```
 
 <!-- TOC --><a name="rightmost-nodes-of-binary-tree"></a>
 ## Rightmost nodes of binary tree
-
+```python
 def rightmost_nodes_of_a_binary_tree(root: TreeNode) -> List[int]:
     if not root:
         return []
@@ -1112,10 +1124,10 @@ def rightmost_nodes_of_a_binary_tree(root: TreeNode) -> List[int]:
             if i == level_size - 1:
                 res.append(node.val)
     return res
-
+```
 <!-- TOC --><a name="widest-binary-tree-level"></a>
 ## Widest Binary Tree Level 
-
+```python
 def widest_binary_tree_level(root: TreeNode) -> int:
     if not root:
         return 0
@@ -1138,11 +1150,11 @@ def widest_binary_tree_level(root: TreeNode) -> int:
             rightmost_index = i
         max_width = max(max_width, rightmost_index - leftmost_index + 1)
     return max_width
-
+```
 
 <!-- TOC --><a name="binary-search-tree-validation"></a>
 ## Binary Search Tree Validation
-
+```python
 def binary_search_tree_validation(root: TreeNode) -> bool:
     # start validation at root node, can contain value, so set initial lower and upper bound to infinity
     return is_within_bounds(root, float('-inf'), float('inf'))
@@ -1160,10 +1172,10 @@ def is_within_bounds(node: TreeNode,
         return False 
     # otherwise, true 
     return is_within_bounds(node.right, node.val, upper_bound)
-
+```
 <!-- TOC --><a name="lowest-common-ancestor-lca"></a>
 ## Lowest Common Ancestor (LCA)
-
+```python
 def lowerst_common_ancestor(root: TreeNode,
                             p: TreeNode, q: TreeNode) -> TreeNode:
     dfs(root, p, q)
@@ -1183,10 +1195,10 @@ def dfs(node: TreeNode, p: TreeNode, q: TreeNode) -> bool:
         lca = node 
     # return true if current subtree contains p or q 
     return (node_is_p_or_q or left_contains_p_or_q or right_contains_p_or_q)
-
+```
 <!-- TOC --><a name="build-binary-tree-from-preorder-and-inorder-traversals"></a>
 ## Build Binary Tree from Preorder and Inorder Traversals 
-
+```python
 preorder_index = 0
 inorder_indexes_map = {}
 
@@ -1213,10 +1225,10 @@ def build_subtree(left: int, right: int, preorder: List[int], inorder: List[int]
     node.left = build_subtree(left, inorder_index - 1, preorder, inorder)
     node.right = build_binary_trees(inorder_index + 1, right, preorder, inorder)
     return node 
-
+```
 <!-- TOC --><a name="max-sum-of-continuous-path-in-binary-tree"></a>
 ## Max Sum of Continuous Path in Binary Tree 
-
+```python
 max_sum = float('-inf')
 
 def max_path_sum(root: TreeNode) -> int:
@@ -1236,10 +1248,10 @@ def max_path_sum_helper(node: TreeNode) -> int:
     max_sum = max(max_sum, node.val + left_sum + right_sum)
     # return max sum of a single, continuous path with current node as endpoint
     return node.val + max(left_sum, right_sum)
-
+```
 <!-- TOC --><a name="char-12-tries"></a>
 # Char 12 Tries 
-
+```python
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -1273,10 +1285,10 @@ class Trie:
                 return False 
             node = node.children[c]
         return True 
-    
+``` 
 <!-- TOC --><a name="insert-and-search-words-with-wildcards"></a>
 ## Insert and Search Words with Wildcards 
-
+```python
 class InsertAndSearchWordsWithWildcards:
     def __init__(self):
         self.root = TrieNode()
@@ -1307,10 +1319,10 @@ class InsertAndSearchWordsWithWildcards:
                 return False 
         # after processing the last character, return true if reaching end of the word 
         return node.is_word
-    
+```    
 <!-- TOC --><a name="find-all-words-on-a-board"></a>
 ## Find All Words on a Board 
-
+```python
 def dfs(r, c, board, node):
     temp = board[r][c]
     board[r][c] = '#' # mark as visited
@@ -1365,10 +1377,10 @@ class TrieNode:
 
     def is_within_bounds(r: int, c: int, board: List[str]) -> bool:
         return 0 <= r < len(board) and 0 <= c < len(board[0])
-    
+```    
 <!-- TOC --><a name="char-13-graphs"></a>
 # Char 13 Graphs
-
+```python
 class GraphNode:
     def __init__(self, val):
         self.val = val 
@@ -1391,10 +1403,10 @@ def bfs(node: GraphNode):
             process(node)
             for neighbor in node.neighbors:
                 queue.append(neighbor)
-
+```
 <!-- TOC --><a name="graph-deep-copy"></a>
 ## Graph Deep Copy
-
+```python
 def graph_deep_copy(node: GraphNode) -> GraphNode:
     if not node:
         return None 
@@ -1413,11 +1425,11 @@ def dfs(node: GraphNode, clone_map = {}) -> GraphNode:
         cloned_neighbor = dfs(neighbor, clone_map)
         cloned_node.neighbors.append(cloned_neighbor)
     return cloned_node 
-
+```
 
 <!-- TOC --><a name="count-islands"></a>
 ## Count Islands 
-
+```python
 def count_islands(matrix: List[List[int]]) -> int:
     if not matrix:
         return 0
@@ -1443,10 +1455,10 @@ def dfs(r: int, c: int, matrix: List[List[int]]) -> None:
 
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
-
+```
 <!-- TOC --><a name="matrix-infection"></a>
 ## Matrix Infection
-
+```python
 def matrix_infection(matrix: List[List[int]]) -> int:
     dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     queue = deque()
@@ -1477,10 +1489,10 @@ def matrix_infection(matrix: List[List[int]]) -> int:
 
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
-
+```
 <!-- TOC --><a name="bipartite-graph-validation"></a>
 ## Bipartite Graph Validation
-
+```python
 def bipartite_graph_validation(graph: List[List[int]]) -> bool:
     colors = [0] * len(graph)
     # determine if each graph component is bipartite 
@@ -1499,10 +1511,10 @@ def dfs(node: int, color: int, graph: List[List[int]], colors: List[int]) -> boo
         if (colors[neighbor] == 0 and not dfs(neighbor, -color, graph, colors)):
             return False 
     return True 
-
+```
 <!-- TOC --><a name="longest-increasing-path"></a>
 ## Longest Increasing Path 
-
+```python
 def longest_increasing_path(matrix: List[List[int]]) -> int:
     if not matrix:
         return 0
@@ -1532,10 +1544,10 @@ def dfs(r: int, c: int, matrix: List[List[int]], memo: List[List[int]]) -> int:
 
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
-
+```
 <!-- TOC --><a name="shortest-transformation-sequence"></a>
 ## Shortest Transformation Sequence 
-
+```python
 def shortest_transformation_sequence(start: str, end: str, dictionary: List[str]) -> int:
     dictionary_set = set(dictionary)
     if start not in dictionary_set or end not in dictionary_set:
@@ -1565,10 +1577,10 @@ def shortest_transformation_sequence(start: str, end: str, dictionary: List[str]
         dist += 1
     # if no way to reach the end node, then no path exists 
     return 0
-
+```
 <!-- TOC --><a name="optimization-bidirectional-traversal"></a>
 ## Optimization - Bidirectional Traversal 
-
+```python
 def shortest_transformation_sequence_optimized(start: str, end: str, dictionary: List[str]) -> int:
     dictionary_set = set(dictionary)
     if start not in dictionary_set or end not in dictionary_set:
@@ -1594,7 +1606,6 @@ def shortest_transformation_sequence_optimized(start: str, end: str, dictionary:
     # if traversals never met, no path exists
     return 0
 
-<!-- TOC --><a name="explore-next-level-in-the-level-order-traversal-and-check-if-2-searches-meet"></a>
 # explore next level in the level-order traversal and check if 2 searches meet 
 def explore_level(queue, visited, other_visited, dictionary_set) -> bool:
     lower_case_alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -1611,10 +1622,10 @@ def explore_level(queue, visited, other_visited, dictionary_set) -> bool:
                     queue.append(next_word)
     # if no word has been visited by the other traversal, searches have not met yet 
     return False 
-
+```
 <!-- TOC --><a name="merging-communities"></a>
 ## Merging Communities 
-
+```python
 def find(x: int) -> int:
     # if x == parent, found representative
     if x == parent[x]:
@@ -1670,10 +1681,10 @@ class MergingCommunities:
         self.uf.union(x, y)
     def get_community_size(self, x: int) -> int:
         return self.uf.get_size(x)
-    
+```    
 <!-- TOC --><a name="prerequisites"></a>
 ## Prerequisites 
-
+```python
 def prerequisites(n: int, prerequisites: List[List[int]]) -> bool:
     graph = defaultdict(list)
     in_degrees = [0] * n 
@@ -1698,10 +1709,10 @@ def prerequisites(n: int, prerequisites: List[List[int]]) -> bool:
                 queue.append(neighbor)
     # return true if we've enrolled in all courses 
     return enrolled_courses == n 
-
+```
 <!-- TOC --><a name="char-14-backtracking"></a>
 # Char 14 Backtracking 
-
+```python
 def dfs(state):
     # termination condition 
     if meets_termination_condition(state):
@@ -1712,10 +1723,10 @@ def dfs(state):
         make_decision(state, decision)
         dfs(state)
         undo_decision(state, decision) # backtrack
-
+```
 <!-- TOC --><a name="find-all-permutations"></a>
 ## Find All Permutations 
-
+```python
 def find_all_permutations(nums: List[int]) -> List[List[int]]:
     res = []
     backtrack(nums, [], set(), res)
@@ -1736,10 +1747,10 @@ def backtrack(nums: List[int], candidate: List[int], used: Set[int], res: List[L
             # backtrack by reversing changes made 
             candidate.pop()
             used.remove(num)
-
+```
 <!-- TOC --><a name="find-all-subsets"></a>
 ## Find All Subsets 
-
+```python
 def find_all_subsets(nums: List[int]) -> List[List[int]]:
     res = []
     backtrack(0, [], nums, res)
@@ -1756,10 +1767,10 @@ def backtrack(i: int, curr_subset: List[int], nums: List[int], res: List[List[in
     # exclude current element and recursively explore all paths that branch from this subset 
     curr_subset.pop()
     backtrack(i + 1, curr_subset, nums, res)
-
+```
 <!-- TOC --><a name="n-queens"></a>
 ## N Queens 
-
+```python
 res = 0
 
 def n_queens(n: int) -> int:
@@ -1788,7 +1799,7 @@ def dfs(r: int, diagonals_set: Set[int], anti_diagonals_set: Set[int], cols_set:
         cols_set.remove(c)
         diagonals_set.remove(curr_diagonal)
         anti_diagonals_set.remove(curr_anti_diagonal)
-
+```
 <!-- TOC --><a name="char-15-dynamic-programming"></a>
 # Char 15 Dynamic Programming 
 
@@ -1796,6 +1807,7 @@ def dfs(r: int, diagonals_set: Set[int], anti_diagonals_set: Set[int], cols_set:
 ## Climbing Stairs
 <!-- TOC --><a name="top-down"></a>
 ### Top-down
+```python
 memo = {}
 def climbing_stairs_top_down(n: int) -> int:
     # base case: with a 1-step staircase, there's only one way to climb it, 2-step staircase, 2 ways.
@@ -1806,9 +1818,10 @@ def climbing_stairs_top_down(n: int) -> int:
     # number of ways to climb to n-th step = sum of number of ways to climb to step n - 1 and to n - 2
     memo[n] = (climbing_stairs_top_down(n - 1) + climbing_stairs_top_down(n - 2))
     return memo[n]
-
+```
 <!-- TOC --><a name="botom-up"></a>
 ### Botom-up
+```python
 def climbing_stairs_bottom_up(n: int) -> int:
     if n <= 2: 
         return n 
@@ -1819,9 +1832,10 @@ def climbing_stairs_bottom_up(n: int) -> int:
     for i in range(3, n + 1):
         dp[i] = dp[i - 1] + dp[i - 2]
     return dp[n]
-
+```
 <!-- TOC --><a name="optimization-bottom-up"></a>
 ### Optimization - bottom up
+```python
 def climbing_stairs_bottom_up_optimized(n: int) -> int:
     if n <= 2:
         return n 
@@ -1834,13 +1848,13 @@ def climbing_stairs_bottom_up_optimized(n: int) -> int:
         two_steps_before = one_step_before
         one_step_before = current 
     return one_step_before
-
+```
 <!-- TOC --><a name="min-coin-combination"></a>
 ## Min Coin Combination 
 
 <!-- TOC --><a name="top-down-1"></a>
 ### Top Down
-
+```python
 def min_coin_combination_top_down(coins: List[int], target: int) -> int:
     res = top_down_dp(coins, target, {})
     return -1 if res == float('inf') else res 
@@ -1860,10 +1874,10 @@ def top_down_dp(coins: List[int], target: int, memo: Dict[int, int]) -> int:
             min_coins = min(min_coins, 1 + top_down_dp(coins, target - coin, memo))
     memo[target] = min_coins 
     return memo[target]
-
+```
 <!-- TOC --><a name="bottom-up"></a>
 ### Bottom up
-
+```python
 def min_coin_combination_bottom_up(coins: List[int], target: int) -> int:
     # DP array will store min number of coins needed for each amount 
     # set each element to a large number initially 
@@ -1876,10 +1890,10 @@ def min_coin_combination_bottom_up(coins: List[int], target: int) -> int:
             if coin <= t: 
                 dp[t] = min(dp[t], 1 + dp[t - coin])
     return dp[target] if dp[target] != float('inf') else -1 
-
+```
 <!-- TOC --><a name="matrix-pathways"></a>
 ## Matrix Pathways 
-
+```python
 def matrix_pathways(m: int, n: int) -> int:
     # base case: set all cells in row 0 and column 0 to 1, initialize all cells in dp table to 1
     dp = [[1] * n for _ in range(m)]
@@ -1889,10 +1903,10 @@ def matrix_pathways(m: int, n: int) -> int:
             # paths to current cell = paths from above + paths from left 
             dp[r][c] = dp[r -1][c] + dp[r][c - 1]
     return dp[m - 1][n - 1]
-
+```
 <!-- TOC --><a name="optimized-1"></a>
 ### Optimized 
-
+```python
 def matrix_pathways_optimized(m: int, n: int) -> int:
     # initialize prev_row as DP values of row 0, which are all 1s.
     prev_row = [1] * n 
@@ -1908,10 +1922,10 @@ def matrix_pathways_optimized(m: int, n: int) -> int:
         prev_row = curr_row
     # last element in prev_row stores the result for bottom_right cell 
     return prev_row[n - 1]
-
+```
 <!-- TOC --><a name="neighborhood-burglary"></a>
 ## Neighborhood Burglary
-
+```python
 def neighborhood_burglary(houses: List[int]) -> int:
     # handle cases when size of array < 2 to avoid out-of-bounds errors when assigning base case values 
     if not houses:
@@ -1928,10 +1942,10 @@ def neighborhood_burglary(houses: List[int]) -> int:
         # dp[i] = max(profit if we skip house i, profit if we rob house i)
         dp[i] = max(dp[i - 1], houses[i] + dp[i - 2])
     return dp[len(houses) - 1]
-
+```
 <!-- TOC --><a name="optimization"></a>
 ### Optimization 
-
+```python
 def neighborhood_burglary_optimized(houses: List[int]) -> int:
     if not houses:
         return 0 
@@ -1946,10 +1960,10 @@ def neighborhood_burglary_optimized(houses: List[int]) -> int:
         prev_prev_max_profit = prev_max_profit
         prev_max_profit = curr_max_profit
     return prev_max_profit
-
+```
 <!-- TOC --><a name="longest-common-subsequence-lcs"></a>
 ## Longest Common Subsequence (LCS)
-
+```python
 def longest_common_subsequence(s1: str, s2: str) -> int:
     # base case: set last row and last column to 0 by initializing entire DP table with 0s.
     dp = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
@@ -1965,10 +1979,10 @@ def longest_common_subsequence(s1: str, s2: str) -> int:
             else:
                 dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
     return dp[0][0]
-
+```
 <!-- TOC --><a name="optimization-1"></a>
 ### Optimization
-
+```python
 def longest_common_subsequence_optimized(s1: str, s2: str) -> int:
     # initialize prev_row as DP values of the last row 
     prev_row = [0] * (len(s2) + 1)
@@ -1988,10 +2002,10 @@ def longest_common_subsequence_optimized(s1: str, s2: str) -> int:
         # update prev_row with curr_row values for next iteration 
         prev_row = curr_row 
     return prev_row[0]
-
+```
 <!-- TOC --><a name="longest-palindrome-in-string"></a>
 ## Longest Palindrome in String 
-
+```python
 def longest_palindrome_in_a_string(s: str) -> str:
     n = len(s)
     if n == 0:
@@ -2020,18 +2034,16 @@ def longest_palindrome_in_a_string(s: str) -> str:
                 start_index = i 
     return s[start_index: start_index + max_len]
 
-<!-- TOC --><a name="expand-outward-from-the-center-of-a-base-case-to-identify-start-index-and-length-of-longest-palindrome-that-extends-from-base-case"></a>
 # expand outward from the center of a base case to identify start index and length of longest palindrome that extends from base case 
-
 def expand_palindrome(left: int, right: int, s: str) -> Tuple[int, int]:
     while (left > 0 and right < len(s) - 1 and s[left - 1] == s[right + 1]):
         left -= 1
         right += 1
     return left, right - left + 1
-
+```
 <!-- TOC --><a name="max-subarray-sum"></a>
 ## Max Subarray Sum 
-
+```python
 def max_subarray_sum(nums: List[int]) -> int:
     if not nums:
         return 0
@@ -2069,10 +2081,10 @@ def max_subarray_sum_dp_optimized(nums: List[int]) -> int:
         current_sum = max(nums[i], current_sum + nums[i])
         max_sum = max(max_sum, current_sum)
     return max_sum 
-
+```
 <!-- TOC --><a name="01-knapsack"></a>
 ## 0/1 Knapsack 
-
+```python
 def knapsack(cap: int, weights: List[int], values: List[int]) -> int:
     n = len(values)
     # base case: set first column and last row to 0 by initializing entire DP table to 0
@@ -2109,13 +2121,13 @@ def knapsack_optimized(cap: int, weights: List[int], values: List[int]) -> int:
         # set prev_row to curr_row values for next iteration 
         prev_row = curr_row 
     return prev_row[cap]
-
+```
 <!-- TOC --><a name="char-16-greedy"></a>
 # Char 16 Greedy 
 
 <!-- TOC --><a name="jump-to-end"></a>
 ## Jump to End 
-
+```python
 def jump_to_the_end(nums: List[int]) -> bool:
     # set initial destination to the last index in array 
     destination = len(nums) - 1 
@@ -2126,10 +2138,10 @@ def jump_to_the_end(nums: List[int]) -> bool:
             destination = i 
     # if destination is index 0, we can jump to end from index 0
     return destination == 0
-
+```
 <!-- TOC --><a name="gas-stations"></a>
 ## Gas Stations
-
+```python
 def gas_stations(gas: List[int], cost: List[int]) -> int:
     # if total gas < total cost, completing circuit is impossible 
     if sum(gas) < sum(cost):
@@ -2143,10 +2155,10 @@ def gas_stations(gas: List[int], cost: List[int]) -> int:
             # set next station as new start point and reset tank 
             start, tank = i + 1, 0 
     return start 
-
+```
 <!-- TOC --><a name="candies"></a>
 ## Candies 
-
+```python
 def candies(ratings: List[int]) -> int:
     n = len(ratings)
     # ensure each child starts with 1 candy 
@@ -2161,13 +2173,13 @@ def candies(ratings: List[int]) -> int:
             # if current child already has more candies than their right-side neighbor, keep higher amount 
             candies[i] = max(candies[i], candies[i + 1] + 1)
     return sum(candies)
-
+```
 <!-- TOC --><a name="char-17-sort-and-search"></a>
 # Char 17 Sort and Search 
 
 <!-- TOC --><a name="sort-linked-list"></a>
 ## Sort Linked List 
-
+```python
 def merge_sort(head):
     # split linked list into 2 halves 
     second_head = split_list(head)
@@ -2215,17 +2227,16 @@ def merge(l1: ListNode, l2: ListNode) -> ListNode:
     # one of 2 linked lists could still have nodes remaining, attach them to the end of merged linked list 
     tail.next = l1 or l2
     return dummy.next 
-
+```
 <!-- TOC --><a name="sort-array"></a>
 ## Sort Array 
-
+```python
 def quicksort(nums, left, right):
     # partition the array and obtain index of pivot 
     pivot_index = partition(nums, left, right)
     # sort left and right parts 
     quicksort(nums, left, pivot_index - 1)
     quicksort(nums, pivot_index + 1, right)
-
 
 def sort_array(nums: List[int]) -> List[int]:
     quicksort(nums, 0, len(nums) - 1)
@@ -2276,10 +2287,10 @@ def sort_array_counting_sort(nums: List[int]) -> List[int]:
     for i, count in enumerate(counts):
         res.extend([i] * count)
     return res 
-
+```
 <!-- TOC --><a name="k-th-largest-integer"></a>
 ## K-th Largest Integer
-
+```python
 def kth_largest_integer_min_heap(nums: List[int], k: int) -> int:
     min_heap = []
     heapq.heapify(min_heap)
@@ -2292,10 +2303,10 @@ def kth_largest_integer_min_heap(nums: List[int], k: int) -> int:
             heapq.heappop(min_heap)
             heapq.heappush(min_heap, num)
     return min_heap[0]
-
+```
 <!-- TOC --><a name="quickselect"></a>
 ### Quickselect 
-
+```python
 def kth_largest_integer_quickselect(nums: List[int], k: int) -> int:
     return quickselect(nums, 0, len(nums) - 1, k)
 
@@ -2327,13 +2338,13 @@ def partition(nums: List[int], left: int, right: int) -> int:
             lo += 1
     nums[lo], nums[right] = nums[right], nums[lo]
     return lo
-
+```
 <!-- TOC --><a name="char-18-bit-manipulation"></a>
 # Char 18 Bit Manipulation 
 
 <!-- TOC --><a name="hamming-weights-of-integers"></a>
 ## Hamming Weights of Integers 
-
+```python
 def hamming_weights_of_integers(n: int) -> List[int]:
     return [count_set_bits(x) for x in range(n + 1)]
 
@@ -2354,10 +2365,10 @@ def hamming_weights_of_integers_dp(n: int) -> List[int]:
         # dp[x] is obtained using result of dp[x >> 1], plus LSB of x 
         dp[x] = dp[x >> 1] + (x & 1)
     return dp 
-
+```
 <!-- TOC --><a name="lonely-integer"></a>
 ## Lonely Integer 
-
+```python
 def lonely_integer(nums: List[int]) -> int:
     res = 0 
     # XOR each element of array so that duplicate values will cancel each other out
@@ -2366,10 +2377,10 @@ def lonely_integer(nums: List[int]) -> int:
         res ^= num 
     # res stores the lonely integer because it won't have been canceled out by any duplicat 
     return res 
-
+```
 <!-- TOC --><a name="swap-odd-and-even-bits"></a>
 ## Swap Odd and Even Bits 
-
+```python
 def swap_odd_and_even_bits(n: int) -> int:
     even_mask = 0x5555555
     odd_mask = 0xAAAAAAA
@@ -2377,13 +2388,13 @@ def swap_odd_and_even_bits(n: int) -> int:
     odd_bits = n & odd_mask 
     # shift even bits to the left, odd bits to the right, and merge these shifted values together 
     return (even_bits << 1) | (odd_bits >> 1)
-
+```
 <!-- TOC --><a name="char-19-math-and-geometry"></a>
 # Char 19 Math and Geometry 
 
 <!-- TOC --><a name="spiral-traversal"></a>
 ## Spiral Traversal 
-
+```python
 def spiral_matrix(matrix: List[List[int]]) -> List[int]:
     if not matrix:
         return []
@@ -2412,10 +2423,10 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
                 result.append(matrix[i][left])
             left += 1
     return result 
-
+```
 <!-- TOC --><a name="reverse-32-bit-integer"></a>
 ## Reverse 32-bit Integer 
-
+```python
 def reverse_32_bit_integer(n: int) -> int:
     INT_MAX = 2 ** 31 - 1
     INT_MIN = -2 ** 31
@@ -2432,10 +2443,10 @@ def reverse_32_bit_integer(n: int) -> int:
         # add current digit to reversed_n 
         reversed_n = reversed_n * 10 + digit 
     return reversed_n
-
+```
 <!-- TOC --><a name="max-collinear-points"></a>
 ## Max Collinear Points 
-
+```python
 def max_collinear_points(points: List[List[int]]) -> int:
     res = 0
     # treat each point as focal point, and determine max number of points that are collinear with each focal point
@@ -2472,5 +2483,4 @@ def gcd(a, b):
     while b != 0:
         a, b = b, a % b
     return a 
-
 ```
