@@ -1,7 +1,129 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [Coding Interview Patterns, Alex Xu](#coding-interview-patterns-alex-xu)
+- [Char 1 Two Pointers](#char-1-two-pointers)
+   * [Pair Sum - Sorted](#pair-sum-sorted)
+   * [Triplet Sum](#triplet-sum)
+   * [palindrome valid](#palindrome-valid)
+   * [largest container](#largest-container)
+- [Char 2 Hash Map](#char-2-hash-map)
+   * [Pair Sum Unsorted](#pair-sum-unsorted)
+   * [Verify Sudoku Board](#verify-sudoku-board)
+   * [Zero stripping ](#zero-stripping)
+- [Char 3 Linked List](#char-3-linked-list)
+   * [remove k-th last node](#remove-k-th-last-node)
+   * [linked list intersection ](#linked-list-intersection)
+   * [LRU cache ](#lru-cache)
+- [Char 4 Fast Slow Pointers ](#char-4-fast-slow-pointers)
+   * [Linked List Loop](#linked-list-loop)
+   * [Linked List Midpoint ](#linked-list-midpoint)
+   * [Happy Number ](#happy-number)
+- [Char 5 Sliding Windows ](#char-5-sliding-windows)
+   * [Substring Anagrams](#substring-anagrams)
+   * [Longest substring with unique characters](#longest-substring-with-unique-characters)
+   * [optimized ](#optimized)
+   * [Longest Uniform substring after replacement](#longest-uniform-substring-after-replacement)
+- [Char 6 Binary Search](#char-6-binary-search)
+   * [Find Insertion Index ](#find-insertion-index)
+   * [First and Last Occurrence of Number ](#first-and-last-occurrence-of-number)
+   * [Cutting Wood ](#cutting-wood)
+- [Determine if current value of H cuts at least k meters of wood](#determine-if-current-value-of-h-cuts-at-least-k-meters-of-wood)
+   * [Find target in rotated sorted array](#find-target-in-rotated-sorted-array)
+- [Char 7 Stack](#char-7-stack)
+   * [Valid Parenthesis Expression](#valid-parenthesis-expression)
+   * [Next Largest Number to the Right ](#next-largest-number-to-the-right)
+   * [Evaluate Expression ](#evaluate-expression)
+- [Char 8 Heaps](#char-8-heaps)
+   * [K most frequent strings](#k-most-frequent-strings)
+   * [Max Heap](#max-heap)
+   * [Min Heap ](#min-heap)
+   * [Combine Sorted linked lists](#combine-sorted-linked-lists)
+   * [Median of Integer Stream](#median-of-integer-stream)
+- [Char 9 Interval](#char-9-interval)
+   * [Merge Overlapping Intervals ](#merge-overlapping-intervals)
+   * [Identify All Interval Overlaps ](#identify-all-interval-overlaps)
+   * [Largest Overlaps of Intervals ](#largest-overlaps-of-intervals)
+- [Char 10 Prefix Sums ](#char-10-prefix-sums)
+   * [Sum between range](#sum-between-range)
+   * [K-sum Subarrays ](#k-sum-subarrays)
+   * [Optimization: Hash Map (Similar to Pair Sum - Unsorted, in Hash Maps Chapter)](#optimization-hash-map-similar-to-pair-sum-unsorted-in-hash-maps-chapter)
+   * [Product Array without current element ](#product-array-without-current-element)
+- [Char 11 Trees](#char-11-trees)
+   * [DFS](#dfs)
+   * [BFS ](#bfs)
+   * [Invert Binary Tree (Mirror of itself)](#invert-binary-tree-mirror-of-itself)
+      + [Recursive](#recursive)
+      + [Iteration](#iteration)
+   * [Balanced Binary Tree Validation](#balanced-binary-tree-validation)
+   * [Rightmost nodes of binary tree](#rightmost-nodes-of-binary-tree)
+   * [Widest Binary Tree Level ](#widest-binary-tree-level)
+   * [Binary Search Tree Validation](#binary-search-tree-validation)
+   * [Lowest Common Ancestor (LCA)](#lowest-common-ancestor-lca)
+   * [Build Binary Tree from Preorder and Inorder Traversals ](#build-binary-tree-from-preorder-and-inorder-traversals)
+   * [Max Sum of Continuous Path in Binary Tree ](#max-sum-of-continuous-path-in-binary-tree)
+- [Char 12 Tries ](#char-12-tries)
+   * [Insert and Search Words with Wildcards ](#insert-and-search-words-with-wildcards)
+   * [Find All Words on a Board ](#find-all-words-on-a-board)
+- [Char 13 Graphs](#char-13-graphs)
+   * [Graph Deep Copy](#graph-deep-copy)
+   * [Count Islands ](#count-islands)
+   * [Matrix Infection](#matrix-infection)
+   * [Bipartite Graph Validation](#bipartite-graph-validation)
+   * [Longest Increasing Path ](#longest-increasing-path)
+   * [Shortest Transformation Sequence ](#shortest-transformation-sequence)
+   * [Optimization - Bidirectional Traversal ](#optimization-bidirectional-traversal)
+- [explore next level in the level-order traversal and check if 2 searches meet ](#explore-next-level-in-the-level-order-traversal-and-check-if-2-searches-meet)
+   * [Merging Communities ](#merging-communities)
+   * [Prerequisites ](#prerequisites)
+- [Char 14 Backtracking ](#char-14-backtracking)
+   * [Find All Permutations ](#find-all-permutations)
+   * [Find All Subsets ](#find-all-subsets)
+   * [N Queens ](#n-queens)
+- [Char 15 Dynamic Programming ](#char-15-dynamic-programming)
+   * [Climbing Stairs](#climbing-stairs)
+      + [Top-down](#top-down)
+      + [Botom-up](#botom-up)
+      + [Optimization - bottom up](#optimization-bottom-up)
+   * [Min Coin Combination ](#min-coin-combination)
+      + [Top Down](#top-down-1)
+      + [Bottom up](#bottom-up)
+   * [Matrix Pathways ](#matrix-pathways)
+      + [Optimized ](#optimized-1)
+   * [Neighborhood Burglary](#neighborhood-burglary)
+      + [Optimization ](#optimization)
+   * [Longest Common Subsequence (LCS)](#longest-common-subsequence-lcs)
+      + [Optimization](#optimization-1)
+   * [Longest Palindrome in String ](#longest-palindrome-in-string)
+- [expand outward from the center of a base case to identify start index and length of longest palindrome that extends from base case ](#expand-outward-from-the-center-of-a-base-case-to-identify-start-index-and-length-of-longest-palindrome-that-extends-from-base-case)
+   * [Max Subarray Sum ](#max-subarray-sum)
+   * [0/1 Knapsack ](#01-knapsack)
+- [Char 16 Greedy ](#char-16-greedy)
+   * [Jump to End ](#jump-to-end)
+   * [Gas Stations](#gas-stations)
+   * [Candies ](#candies)
+- [Char 17 Sort and Search ](#char-17-sort-and-search)
+   * [Sort Linked List ](#sort-linked-list)
+   * [Sort Array ](#sort-array)
+   * [K-th Largest Integer](#k-th-largest-integer)
+      + [Quickselect ](#quickselect)
+- [Char 18 Bit Manipulation ](#char-18-bit-manipulation)
+   * [Hamming Weights of Integers ](#hamming-weights-of-integers)
+   * [Lonely Integer ](#lonely-integer)
+   * [Swap Odd and Even Bits ](#swap-odd-and-even-bits)
+- [Char 19 Math and Geometry ](#char-19-math-and-geometry)
+   * [Spiral Traversal ](#spiral-traversal)
+   * [Reverse 32-bit Integer ](#reverse-32-bit-integer)
+   * [Max Collinear Points ](#max-collinear-points)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="coding-interview-patterns-alex-xu"></a>
 # Coding Interview Patterns, Alex Xu
 
+<!-- TOC --><a name="char-1-two-pointers"></a>
 # Char 1 Two Pointers
 
+<!-- TOC --><a name="pair-sum-sorted"></a>
 ## Pair Sum - Sorted
 def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
     left, right = 0, len(nums) - 1
@@ -20,6 +142,7 @@ def pair_sum_sorted(nums: List[int], target: int) -> List[int]:
             return [left, right]
     return []
 
+<!-- TOC --><a name="triplet-sum"></a>
 ## Triplet Sum
 def triplet_sum(nums: List[int]) -> List[List[int]]:
     triplets = []
@@ -56,6 +179,7 @@ def pair_sum_sorted_all_pairs(nums: List[int],
             right -= 1
     return pairs
 
+<!-- TOC --><a name="palindrome-valid"></a>
 ## palindrome valid
 def is_palindrome_valid(s: str) -> bool:
     left, right = 0, len(s) - 1
@@ -72,6 +196,7 @@ def is_palindrome_valid(s: str) -> bool:
         right -= 1
     return True
 
+<!-- TOC --><a name="largest-container"></a>
 ## largest container
 def largest_container(heights: List[int]) -> int:
     max_water = 0
@@ -91,8 +216,10 @@ def largest_container(heights: List[int]) -> int:
             right -= 1
     return max_water 
 
+<!-- TOC --><a name="char-2-hash-map"></a>
 # Char 2 Hash Map
 
+<!-- TOC --><a name="pair-sum-unsorted"></a>
 ## Pair Sum Unsorted
 def pair_sum_unsorted_two_pass(nums: List[int],
                                target: int) -> List[int]:
@@ -116,6 +243,7 @@ def pair_sum_unsorted(nums: List[int],
         hashmap[x] = i
     return []
 
+<!-- TOC --><a name="verify-sudoku-board"></a>
 ## Verify Sudoku Board
 def verify_sudoku_board(board: List[List[int]]) -> bool:
     # create hash sets for each row, column, subgrid to keep track of
@@ -140,6 +268,7 @@ def verify_sudoku_board(board: List[List[int]]) -> bool:
             subgrid_sets[r // 3][c // 3].add(num)
     return True 
 
+<!-- TOC --><a name="zero-stripping"></a>
 ## Zero stripping 
 def zero_stripping_hash_sets(matrix: List[List[int]]) -> None:
     if not matrix or not matrix[0]:
@@ -160,6 +289,7 @@ def zero_stripping_hash_sets(matrix: List[List[int]]) -> None:
             if r in zero_rows or c in zero_cols:
                 matrix[r][c] = 0
 
+<!-- TOC --><a name="char-3-linked-list"></a>
 # Char 3 Linked List
 
 class ListNode:
@@ -188,6 +318,7 @@ def linked_list_reversal_recursive(head: ListNode) -> ListNode:
     head.next = None 
     return new_head 
 
+<!-- TOC --><a name="remove-k-th-last-node"></a>
 ## remove k-th last node
 def remove_kth_last_node(head: ListNode, k: int) -> ListNode:
     # dummy node to ensure a node before head in case we need to remove head 
@@ -208,6 +339,7 @@ def remove_kth_last_node(head: ListNode, k: int) -> ListNode:
     trailer.next = trailer.next.next 
     return dummy.next 
 
+<!-- TOC --><a name="linked-list-intersection"></a>
 ## linked list intersection 
 
 def linked_list_intersection(head_A: ListNode,
@@ -224,6 +356,7 @@ def linked_list_intersection(head_A: ListNode,
     # return either pointer 
     return ptr_A 
 
+<!-- TOC --><a name="lru-cache"></a>
 ## LRU cache 
 
 class DoublyLinkedListNode:
@@ -274,8 +407,10 @@ class LRUCache:
         self.add_to_tail(node)
 
 
+<!-- TOC --><a name="char-4-fast-slow-pointers"></a>
 # Char 4 Fast Slow Pointers 
 
+<!-- TOC --><a name="linked-list-loop"></a>
 ## Linked List Loop
 
 def linked_list_loop_naive(head: ListNode) -> bool:
@@ -300,6 +435,7 @@ def linked_list_loop(head: ListNode) -> bool:
             return True 
     return False 
 
+<!-- TOC --><a name="linked-list-midpoint"></a>
 ## Linked List Midpoint 
 
 def linked_list_midpoint(head: ListNode) -> ListNode:
@@ -310,6 +446,7 @@ def linked_list_midpoint(head: ListNode) -> ListNode:
         fast = fast.next.next
     return slow 
 
+<!-- TOC --><a name="happy-number"></a>
 ## Happy Number 
 
 def happy_number(n: int) -> bool: 
@@ -333,8 +470,10 @@ def get_next_num(x: int) -> int:
         next_num += digit ** 2
     return next_num
 
+<!-- TOC --><a name="char-5-sliding-windows"></a>
 # Char 5 Sliding Windows 
 
+<!-- TOC --><a name="substring-anagrams"></a>
 ## Substring Anagrams
 
 def substring_anagrams(s: str, t: str) -> int:
@@ -361,6 +500,7 @@ def substring_anagrams(s: str, t: str) -> int:
         right += 1
     return count 
 
+<!-- TOC --><a name="longest-substring-with-unique-characters"></a>
 ## Longest substring with unique characters
 
 def longest_substring_with_unique_chars(s: str) -> int:
@@ -380,6 +520,7 @@ def longest_substring_with_unique_chars(s: str) -> int:
         right += 1
     return max_len 
 
+<!-- TOC --><a name="optimized"></a>
 ## optimized 
 def longest_substring_with_unique_chars(s: str) -> int:
     max_len = 0
@@ -399,6 +540,7 @@ def longest_substring_with_unique_chars(s: str) -> int:
         right += 1
     return max_len 
 
+<!-- TOC --><a name="longest-uniform-substring-after-replacement"></a>
 ## Longest Uniform substring after replacement
 
 def longest_uniform_substring_after_replacement(s: str, k: int) -> int:
@@ -424,8 +566,10 @@ def longest_uniform_substring_after_replacement(s: str, k: int) -> int:
         right += 1
     return max_len 
 
+<!-- TOC --><a name="char-6-binary-search"></a>
 # Char 6 Binary Search
 
+<!-- TOC --><a name="find-insertion-index"></a>
 ## Find Insertion Index 
 
 def find_the_insertion_index(nums: List[int], target: int) -> int:
@@ -440,6 +584,7 @@ def find_the_insertion_index(nums: List[int], target: int) -> int:
             left = mid + 1
     return left
 
+<!-- TOC --><a name="first-and-last-occurrence-of-number"></a>
 ## First and Last Occurrence of Number 
 
 def first_and_last_occurrences_of_a_number(nums: List[int],
@@ -473,6 +618,7 @@ def upper_bound_binary_search(nums: List[int], target: int) -> int:
             left = mid 
     return right if nums and nums[right] == target else -1
 
+<!-- TOC --><a name="cutting-wood"></a>
 ## Cutting Wood 
 
 def cutting_wood(heights: List[int], k: int) -> int:
@@ -486,6 +632,7 @@ def cutting_wood(heights: List[int], k: int) -> int:
             right = mid - 1 
     return right 
 
+<!-- TOC --><a name="determine-if-current-value-of-h-cuts-at-least-k-meters-of-wood"></a>
 # Determine if current value of H cuts at least k meters of wood
 def cuts_enough_wood(H: int, k: int, heights: List[int]) -> bool:
     wood_collected = 0
@@ -494,6 +641,7 @@ def cuts_enough_wood(H: int, k: int, heights: List[int]) -> bool:
             wood_collected += (height - H)
     return wood_collected >= k
 
+<!-- TOC --><a name="find-target-in-rotated-sorted-array"></a>
 ## Find target in rotated sorted array
 
 def find_the_largest_in_a_rotated_sorted_array(nums: List[int],
@@ -521,8 +669,10 @@ def find_the_largest_in_a_rotated_sorted_array(nums: List[int],
     return left if nums and nums[left] == target else -1 
 
 
+<!-- TOC --><a name="char-7-stack"></a>
 # Char 7 Stack
 
+<!-- TOC --><a name="valid-parenthesis-expression"></a>
 ## Valid Parenthesis Expression
 
 def valid_parenthesis_expression(s: str) -> bool:
@@ -541,6 +691,7 @@ def valid_parenthesis_expression(s: str) -> bool:
     # if stack empty, all opening parentheses were closed 
     return not stack 
 
+<!-- TOC --><a name="next-largest-number-to-the-right"></a>
 ## Next Largest Number to the Right 
 
 def next_largest_number_to_the_right(nums: List[int]) -> List[int]:
@@ -557,6 +708,7 @@ def next_largest_number_to_the_right(nums: List[int]) -> List[int]:
         stack.append(nums[i])
     return res 
 
+<!-- TOC --><a name="evaluate-expression"></a>
 ## Evaluate Expression 
 
 def evaluate_expression(s: str) -> int:
@@ -588,10 +740,13 @@ def evaluate_expression(s: str) -> int:
     # finalize result of overall expression
     return res + curr_num * sign 
 
+<!-- TOC --><a name="char-8-heaps"></a>
 # Char 8 Heaps
 
+<!-- TOC --><a name="k-most-frequent-strings"></a>
 ## K most frequent strings
 
+<!-- TOC --><a name="max-heap"></a>
 ## Max Heap
 
 class Pair:
@@ -617,6 +772,7 @@ def k_most_frequent_strings_max_heap(strs: List[str],
     # pop most frequent string off the heap k tiems and return k most frequent strings 
     return [heapq.heappop(max_heap).str for _ in range(k)]
 
+<!-- TOC --><a name="min-heap"></a>
 ## Min Heap 
 
 class Pair:
@@ -645,6 +801,7 @@ def k_most_frequent_strings_min_heap(strs: List[str],
     res.reverse()
     return res 
 
+<!-- TOC --><a name="combine-sorted-linked-lists"></a>
 ## Combine Sorted linked lists
 
 def combine_sorted_linked_lists(lists: List[ListNode]) -> ListNode:
@@ -669,6 +826,7 @@ def combine_sorted_linked_lists(lists: List[ListNode]) -> ListNode:
             heapq.heappush(heap, smallest_node.next)
     return dummy.next 
 
+<!-- TOC --><a name="median-of-integer-stream"></a>
 ## Median of Integer Stream
 
 class MedianOfAnIntegerStream:
@@ -697,8 +855,10 @@ class MedianOfAnIntegerStream:
         return -self.left_half[0]
     
 
+<!-- TOC --><a name="char-9-interval"></a>
 # Char 9 Interval
 
+<!-- TOC --><a name="merge-overlapping-intervals"></a>
 ## Merge Overlapping Intervals 
 
 def merge_overlappinng_intervals(
@@ -717,6 +877,7 @@ def merge_overlappinng_intervals(
     return merged
 
 
+<!-- TOC --><a name="identify-all-interval-overlaps"></a>
 ## Identify All Interval Overlaps 
 
 def identify_all_interval_overlaps(
@@ -740,6 +901,7 @@ def identify_all_interval_overlaps(
             j += 1
     return overlaps 
 
+<!-- TOC --><a name="largest-overlaps-of-intervals"></a>
 ## Largest Overlaps of Intervals 
 
 def largest_overlap_of_intervals(intervals: List[Interval]) -> int:
@@ -761,6 +923,7 @@ def largest_overlap_of_intervals(intervals: List[Interval]) -> int:
     return max_overlaps
 
 
+<!-- TOC --><a name="char-10-prefix-sums"></a>
 # Char 10 Prefix Sums 
 
 def prefix_sums(sums):
@@ -771,6 +934,7 @@ def prefix_sums(sums):
         prefix_sum.append(prefix_sum[-1] + nums[i])
 
 
+<!-- TOC --><a name="sum-between-range"></a>
 ## Sum between range
 
 class SumBetweenRange:
@@ -784,6 +948,7 @@ class SumBetweenRange:
             return self.prefix_sum[j]
         return self.prefix_sum[j] - self.prefix_sum[i - 1]
     
+<!-- TOC --><a name="k-sum-subarrays"></a>
 ## K-sum Subarrays 
 
 def k_sum_subarrays(nums: List[int], k: int) -> int:
@@ -800,6 +965,7 @@ def k_sum_subarrays(nums: List[int], k: int) -> int:
                 count += 1
     return count 
 
+<!-- TOC --><a name="optimization-hash-map-similar-to-pair-sum-unsorted-in-hash-maps-chapter"></a>
 ## Optimization: Hash Map (Similar to Pair Sum - Unsorted, in Hash Maps Chapter)
 
 def k_sum_subarrays_optimized(nums: List[int], k: int) -> int:
@@ -818,6 +984,7 @@ def k_sum_subarrays_optimized(nums: List[int], k: int) -> int:
         prefix_sum_map[curr_prefix_sum] = freq + 1 
     return count 
 
+<!-- TOC --><a name="product-array-without-current-element"></a>
 ## Product Array without current element 
 
 def product_array_without_current_element(nums: List[int]) -> List[int]:
@@ -833,6 +1000,7 @@ def product_array_without_current_element(nums: List[int]) -> List[int]:
     return res 
 
 
+<!-- TOC --><a name="char-11-trees"></a>
 # Char 11 Trees
 
 class TreeNode:
@@ -841,6 +1009,7 @@ class TreeNode:
         self.left = None 
         self.right = None 
 
+<!-- TOC --><a name="dfs"></a>
 ## DFS
 
 def dfs(node: TreeNode):
@@ -850,6 +1019,7 @@ def dfs(node: TreeNode):
     dfs(node.left)
     dfs(node.right)
 
+<!-- TOC --><a name="bfs"></a>
 ## BFS 
 
 def bfs(root: TreeNode):
@@ -865,8 +1035,10 @@ def bfs(root: TreeNode):
         if node.right:
             queue.append(node.right)
 
+<!-- TOC --><a name="invert-binary-tree-mirror-of-itself"></a>
 ## Invert Binary Tree (Mirror of itself)
 
+<!-- TOC --><a name="recursive"></a>
 ### Recursive
 
 def invert_binary_tree_recursive(root: TreeNode) -> TreeNode:
@@ -877,6 +1049,7 @@ def invert_binary_tree_recursive(root: TreeNode) -> TreeNode:
     invert_binary_tree_recursive(root.right)
     return root 
 
+<!-- TOC --><a name="iteration"></a>
 ### Iteration
 
 def invert_binary_tree_iterative(root: TreeNode) -> TreeNode:
@@ -894,6 +1067,7 @@ def invert_binary_tree_iterative(root: TreeNode) -> TreeNode:
             stack.append(node.right)
     return root 
 
+<!-- TOC --><a name="balanced-binary-tree-validation"></a>
 ## Balanced Binary Tree Validation
 
 def balanced_binary_tree_validation(root: TreeNode) -> bool:
@@ -915,6 +1089,7 @@ def get_height_imbalance(node: TreeNode) -> int:
     return 1 + max(left_height, right_height)
 
 
+<!-- TOC --><a name="rightmost-nodes-of-binary-tree"></a>
 ## Rightmost nodes of binary tree
 
 def rightmost_nodes_of_a_binary_tree(root: TreeNode) -> List[int]:
@@ -936,6 +1111,7 @@ def rightmost_nodes_of_a_binary_tree(root: TreeNode) -> List[int]:
                 res.append(node.val)
     return res
 
+<!-- TOC --><a name="widest-binary-tree-level"></a>
 ## Widest Binary Tree Level 
 
 def widest_binary_tree_level(root: TreeNode) -> int:
@@ -962,6 +1138,7 @@ def widest_binary_tree_level(root: TreeNode) -> int:
     return max_width
 
 
+<!-- TOC --><a name="binary-search-tree-validation"></a>
 ## Binary Search Tree Validation
 
 def binary_search_tree_validation(root: TreeNode) -> bool:
@@ -982,6 +1159,7 @@ def is_within_bounds(node: TreeNode,
     # otherwise, true 
     return is_within_bounds(node.right, node.val, upper_bound)
 
+<!-- TOC --><a name="lowest-common-ancestor-lca"></a>
 ## Lowest Common Ancestor (LCA)
 
 def lowerst_common_ancestor(root: TreeNode,
@@ -1004,6 +1182,7 @@ def dfs(node: TreeNode, p: TreeNode, q: TreeNode) -> bool:
     # return true if current subtree contains p or q 
     return (node_is_p_or_q or left_contains_p_or_q or right_contains_p_or_q)
 
+<!-- TOC --><a name="build-binary-tree-from-preorder-and-inorder-traversals"></a>
 ## Build Binary Tree from Preorder and Inorder Traversals 
 
 preorder_index = 0
@@ -1033,6 +1212,7 @@ def build_subtree(left: int, right: int, preorder: List[int], inorder: List[int]
     node.right = build_binary_trees(inorder_index + 1, right, preorder, inorder)
     return node 
 
+<!-- TOC --><a name="max-sum-of-continuous-path-in-binary-tree"></a>
 ## Max Sum of Continuous Path in Binary Tree 
 
 max_sum = float('-inf')
@@ -1055,6 +1235,7 @@ def max_path_sum_helper(node: TreeNode) -> int:
     # return max sum of a single, continuous path with current node as endpoint
     return node.val + max(left_sum, right_sum)
 
+<!-- TOC --><a name="char-12-tries"></a>
 # Char 12 Tries 
 
 class TrieNode:
@@ -1091,6 +1272,7 @@ class Trie:
             node = node.children[c]
         return True 
     
+<!-- TOC --><a name="insert-and-search-words-with-wildcards"></a>
 ## Insert and Search Words with Wildcards 
 
 class InsertAndSearchWordsWithWildcards:
@@ -1124,6 +1306,7 @@ class InsertAndSearchWordsWithWildcards:
         # after processing the last character, return true if reaching end of the word 
         return node.is_word
     
+<!-- TOC --><a name="find-all-words-on-a-board"></a>
 ## Find All Words on a Board 
 
 def dfs(r, c, board, node):
@@ -1181,6 +1364,7 @@ class TrieNode:
     def is_within_bounds(r: int, c: int, board: List[str]) -> bool:
         return 0 <= r < len(board) and 0 <= c < len(board[0])
     
+<!-- TOC --><a name="char-13-graphs"></a>
 # Char 13 Graphs
 
 class GraphNode:
@@ -1206,6 +1390,7 @@ def bfs(node: GraphNode):
             for neighbor in node.neighbors:
                 queue.append(neighbor)
 
+<!-- TOC --><a name="graph-deep-copy"></a>
 ## Graph Deep Copy
 
 def graph_deep_copy(node: GraphNode) -> GraphNode:
@@ -1228,6 +1413,7 @@ def dfs(node: GraphNode, clone_map = {}) -> GraphNode:
     return cloned_node 
 
 
+<!-- TOC --><a name="count-islands"></a>
 ## Count Islands 
 
 def count_islands(matrix: List[List[int]]) -> int:
@@ -1256,6 +1442,7 @@ def dfs(r: int, c: int, matrix: List[List[int]]) -> None:
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
 
+<!-- TOC --><a name="matrix-infection"></a>
 ## Matrix Infection
 
 def matrix_infection(matrix: List[List[int]]) -> int:
@@ -1289,6 +1476,7 @@ def matrix_infection(matrix: List[List[int]]) -> int:
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
 
+<!-- TOC --><a name="bipartite-graph-validation"></a>
 ## Bipartite Graph Validation
 
 def bipartite_graph_validation(graph: List[List[int]]) -> bool:
@@ -1310,6 +1498,7 @@ def dfs(node: int, color: int, graph: List[List[int]], colors: List[int]) -> boo
             return False 
     return True 
 
+<!-- TOC --><a name="longest-increasing-path"></a>
 ## Longest Increasing Path 
 
 def longest_increasing_path(matrix: List[List[int]]) -> int:
@@ -1342,6 +1531,7 @@ def dfs(r: int, c: int, matrix: List[List[int]], memo: List[List[int]]) -> int:
 def is_within_bounds(r: int, c: int, matrix: List[List[int]]) -> bool:
     return 0 <= r < len(matrix) and 0 <= c < len(matrix[0])
 
+<!-- TOC --><a name="shortest-transformation-sequence"></a>
 ## Shortest Transformation Sequence 
 
 def shortest_transformation_sequence(start: str, end: str, dictionary: List[str]) -> int:
@@ -1374,6 +1564,7 @@ def shortest_transformation_sequence(start: str, end: str, dictionary: List[str]
     # if no way to reach the end node, then no path exists 
     return 0
 
+<!-- TOC --><a name="optimization-bidirectional-traversal"></a>
 ## Optimization - Bidirectional Traversal 
 
 def shortest_transformation_sequence_optimized(start: str, end: str, dictionary: List[str]) -> int:
@@ -1401,6 +1592,7 @@ def shortest_transformation_sequence_optimized(start: str, end: str, dictionary:
     # if traversals never met, no path exists
     return 0
 
+<!-- TOC --><a name="explore-next-level-in-the-level-order-traversal-and-check-if-2-searches-meet"></a>
 # explore next level in the level-order traversal and check if 2 searches meet 
 def explore_level(queue, visited, other_visited, dictionary_set) -> bool:
     lower_case_alphabet = 'abcdefghijklmnopqrstuvwxyz'
@@ -1418,6 +1610,7 @@ def explore_level(queue, visited, other_visited, dictionary_set) -> bool:
     # if no word has been visited by the other traversal, searches have not met yet 
     return False 
 
+<!-- TOC --><a name="merging-communities"></a>
 ## Merging Communities 
 
 def find(x: int) -> int:
@@ -1476,6 +1669,7 @@ class MergingCommunities:
     def get_community_size(self, x: int) -> int:
         return self.uf.get_size(x)
     
+<!-- TOC --><a name="prerequisites"></a>
 ## Prerequisites 
 
 def prerequisites(n: int, prerequisites: List[List[int]]) -> bool:
@@ -1503,6 +1697,7 @@ def prerequisites(n: int, prerequisites: List[List[int]]) -> bool:
     # return true if we've enrolled in all courses 
     return enrolled_courses == n 
 
+<!-- TOC --><a name="char-14-backtracking"></a>
 # Char 14 Backtracking 
 
 def dfs(state):
@@ -1516,6 +1711,7 @@ def dfs(state):
         dfs(state)
         undo_decision(state, decision) # backtrack
 
+<!-- TOC --><a name="find-all-permutations"></a>
 ## Find All Permutations 
 
 def find_all_permutations(nums: List[int]) -> List[List[int]]:
@@ -1539,6 +1735,7 @@ def backtrack(nums: List[int], candidate: List[int], used: Set[int], res: List[L
             candidate.pop()
             used.remove(num)
 
+<!-- TOC --><a name="find-all-subsets"></a>
 ## Find All Subsets 
 
 def find_all_subsets(nums: List[int]) -> List[List[int]]:
@@ -1558,6 +1755,7 @@ def backtrack(i: int, curr_subset: List[int], nums: List[int], res: List[List[in
     curr_subset.pop()
     backtrack(i + 1, curr_subset, nums, res)
 
+<!-- TOC --><a name="n-queens"></a>
 ## N Queens 
 
 res = 0
@@ -1589,9 +1787,12 @@ def dfs(r: int, diagonals_set: Set[int], anti_diagonals_set: Set[int], cols_set:
         diagonals_set.remove(curr_diagonal)
         anti_diagonals_set.remove(curr_anti_diagonal)
 
+<!-- TOC --><a name="char-15-dynamic-programming"></a>
 # Char 15 Dynamic Programming 
 
+<!-- TOC --><a name="climbing-stairs"></a>
 ## Climbing Stairs
+<!-- TOC --><a name="top-down"></a>
 ### Top-down
 memo = {}
 def climbing_stairs_top_down(n: int) -> int:
@@ -1604,6 +1805,7 @@ def climbing_stairs_top_down(n: int) -> int:
     memo[n] = (climbing_stairs_top_down(n - 1) + climbing_stairs_top_down(n - 2))
     return memo[n]
 
+<!-- TOC --><a name="botom-up"></a>
 ### Botom-up
 def climbing_stairs_bottom_up(n: int) -> int:
     if n <= 2: 
@@ -1616,6 +1818,7 @@ def climbing_stairs_bottom_up(n: int) -> int:
         dp[i] = dp[i - 1] + dp[i - 2]
     return dp[n]
 
+<!-- TOC --><a name="optimization-bottom-up"></a>
 ### Optimization - bottom up
 def climbing_stairs_bottom_up_optimized(n: int) -> int:
     if n <= 2:
@@ -1630,8 +1833,10 @@ def climbing_stairs_bottom_up_optimized(n: int) -> int:
         one_step_before = current 
     return one_step_before
 
+<!-- TOC --><a name="min-coin-combination"></a>
 ## Min Coin Combination 
 
+<!-- TOC --><a name="top-down-1"></a>
 ### Top Down
 
 def min_coin_combination_top_down(coins: List[int], target: int) -> int:
@@ -1654,6 +1859,7 @@ def top_down_dp(coins: List[int], target: int, memo: Dict[int, int]) -> int:
     memo[target] = min_coins 
     return memo[target]
 
+<!-- TOC --><a name="bottom-up"></a>
 ### Bottom up
 
 def min_coin_combination_bottom_up(coins: List[int], target: int) -> int:
@@ -1669,6 +1875,7 @@ def min_coin_combination_bottom_up(coins: List[int], target: int) -> int:
                 dp[t] = min(dp[t], 1 + dp[t - coin])
     return dp[target] if dp[target] != float('inf') else -1 
 
+<!-- TOC --><a name="matrix-pathways"></a>
 ## Matrix Pathways 
 
 def matrix_pathways(m: int, n: int) -> int:
@@ -1681,6 +1888,7 @@ def matrix_pathways(m: int, n: int) -> int:
             dp[r][c] = dp[r -1][c] + dp[r][c - 1]
     return dp[m - 1][n - 1]
 
+<!-- TOC --><a name="optimized-1"></a>
 ### Optimized 
 
 def matrix_pathways_optimized(m: int, n: int) -> int:
@@ -1699,6 +1907,7 @@ def matrix_pathways_optimized(m: int, n: int) -> int:
     # last element in prev_row stores the result for bottom_right cell 
     return prev_row[n - 1]
 
+<!-- TOC --><a name="neighborhood-burglary"></a>
 ## Neighborhood Burglary
 
 def neighborhood_burglary(houses: List[int]) -> int:
@@ -1718,6 +1927,7 @@ def neighborhood_burglary(houses: List[int]) -> int:
         dp[i] = max(dp[i - 1], houses[i] + dp[i - 2])
     return dp[len(houses) - 1]
 
+<!-- TOC --><a name="optimization"></a>
 ### Optimization 
 
 def neighborhood_burglary_optimized(houses: List[int]) -> int:
@@ -1735,6 +1945,7 @@ def neighborhood_burglary_optimized(houses: List[int]) -> int:
         prev_max_profit = curr_max_profit
     return prev_max_profit
 
+<!-- TOC --><a name="longest-common-subsequence-lcs"></a>
 ## Longest Common Subsequence (LCS)
 
 def longest_common_subsequence(s1: str, s2: str) -> int:
@@ -1753,6 +1964,7 @@ def longest_common_subsequence(s1: str, s2: str) -> int:
                 dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
     return dp[0][0]
 
+<!-- TOC --><a name="optimization-1"></a>
 ### Optimization
 
 def longest_common_subsequence_optimized(s1: str, s2: str) -> int:
@@ -1775,6 +1987,7 @@ def longest_common_subsequence_optimized(s1: str, s2: str) -> int:
         prev_row = curr_row 
     return prev_row[0]
 
+<!-- TOC --><a name="longest-palindrome-in-string"></a>
 ## Longest Palindrome in String 
 
 def longest_palindrome_in_a_string(s: str) -> str:
@@ -1805,6 +2018,7 @@ def longest_palindrome_in_a_string(s: str) -> str:
                 start_index = i 
     return s[start_index: start_index + max_len]
 
+<!-- TOC --><a name="expand-outward-from-the-center-of-a-base-case-to-identify-start-index-and-length-of-longest-palindrome-that-extends-from-base-case"></a>
 # expand outward from the center of a base case to identify start index and length of longest palindrome that extends from base case 
 
 def expand_palindrome(left: int, right: int, s: str) -> Tuple[int, int]:
@@ -1813,6 +2027,7 @@ def expand_palindrome(left: int, right: int, s: str) -> Tuple[int, int]:
         right += 1
     return left, right - left + 1
 
+<!-- TOC --><a name="max-subarray-sum"></a>
 ## Max Subarray Sum 
 
 def max_subarray_sum(nums: List[int]) -> int:
@@ -1853,6 +2068,7 @@ def max_subarray_sum_dp_optimized(nums: List[int]) -> int:
         max_sum = max(max_sum, current_sum)
     return max_sum 
 
+<!-- TOC --><a name="01-knapsack"></a>
 ## 0/1 Knapsack 
 
 def knapsack(cap: int, weights: List[int], values: List[int]) -> int:
@@ -1892,8 +2108,10 @@ def knapsack_optimized(cap: int, weights: List[int], values: List[int]) -> int:
         prev_row = curr_row 
     return prev_row[cap]
 
+<!-- TOC --><a name="char-16-greedy"></a>
 # Char 16 Greedy 
 
+<!-- TOC --><a name="jump-to-end"></a>
 ## Jump to End 
 
 def jump_to_the_end(nums: List[int]) -> bool:
@@ -1907,6 +2125,7 @@ def jump_to_the_end(nums: List[int]) -> bool:
     # if destination is index 0, we can jump to end from index 0
     return destination == 0
 
+<!-- TOC --><a name="gas-stations"></a>
 ## Gas Stations
 
 def gas_stations(gas: List[int], cost: List[int]) -> int:
@@ -1923,6 +2142,7 @@ def gas_stations(gas: List[int], cost: List[int]) -> int:
             start, tank = i + 1, 0 
     return start 
 
+<!-- TOC --><a name="candies"></a>
 ## Candies 
 
 def candies(ratings: List[int]) -> int:
@@ -1940,8 +2160,10 @@ def candies(ratings: List[int]) -> int:
             candies[i] = max(candies[i], candies[i + 1] + 1)
     return sum(candies)
 
+<!-- TOC --><a name="char-17-sort-and-search"></a>
 # Char 17 Sort and Search 
 
+<!-- TOC --><a name="sort-linked-list"></a>
 ## Sort Linked List 
 
 def merge_sort(head):
@@ -1992,6 +2214,7 @@ def merge(l1: ListNode, l2: ListNode) -> ListNode:
     tail.next = l1 or l2
     return dummy.next 
 
+<!-- TOC --><a name="sort-array"></a>
 ## Sort Array 
 
 def quicksort(nums, left, right):
@@ -2052,6 +2275,7 @@ def sort_array_counting_sort(nums: List[int]) -> List[int]:
         res.extend([i] * count)
     return res 
 
+<!-- TOC --><a name="k-th-largest-integer"></a>
 ## K-th Largest Integer
 
 def kth_largest_integer_min_heap(nums: List[int], k: int) -> int:
@@ -2067,6 +2291,7 @@ def kth_largest_integer_min_heap(nums: List[int], k: int) -> int:
             heapq.heappush(min_heap, num)
     return min_heap[0]
 
+<!-- TOC --><a name="quickselect"></a>
 ### Quickselect 
 
 def kth_largest_integer_quickselect(nums: List[int], k: int) -> int:
@@ -2101,8 +2326,10 @@ def partition(nums: List[int], left: int, right: int) -> int:
     nums[lo], nums[right] = nums[right], nums[lo]
     return lo
 
+<!-- TOC --><a name="char-18-bit-manipulation"></a>
 # Char 18 Bit Manipulation 
 
+<!-- TOC --><a name="hamming-weights-of-integers"></a>
 ## Hamming Weights of Integers 
 
 def hamming_weights_of_integers(n: int) -> List[int]:
@@ -2126,6 +2353,7 @@ def hamming_weights_of_integers_dp(n: int) -> List[int]:
         dp[x] = dp[x >> 1] + (x & 1)
     return dp 
 
+<!-- TOC --><a name="lonely-integer"></a>
 ## Lonely Integer 
 
 def lonely_integer(nums: List[int]) -> int:
@@ -2137,6 +2365,7 @@ def lonely_integer(nums: List[int]) -> int:
     # res stores the lonely integer because it won't have been canceled out by any duplicat 
     return res 
 
+<!-- TOC --><a name="swap-odd-and-even-bits"></a>
 ## Swap Odd and Even Bits 
 
 def swap_odd_and_even_bits(n: int) -> int:
@@ -2147,8 +2376,10 @@ def swap_odd_and_even_bits(n: int) -> int:
     # shift even bits to the left, odd bits to the right, and merge these shifted values together 
     return (even_bits << 1) | (odd_bits >> 1)
 
+<!-- TOC --><a name="char-19-math-and-geometry"></a>
 # Char 19 Math and Geometry 
 
+<!-- TOC --><a name="spiral-traversal"></a>
 ## Spiral Traversal 
 
 def spiral_matrix(matrix: List[List[int]]) -> List[int]:
@@ -2180,6 +2411,7 @@ def spiral_matrix(matrix: List[List[int]]) -> List[int]:
             left += 1
     return result 
 
+<!-- TOC --><a name="reverse-32-bit-integer"></a>
 ## Reverse 32-bit Integer 
 
 def reverse_32_bit_integer(n: int) -> int:
@@ -2199,6 +2431,7 @@ def reverse_32_bit_integer(n: int) -> int:
         reversed_n = reversed_n * 10 + digit 
     return reversed_n
 
+<!-- TOC --><a name="max-collinear-points"></a>
 ## Max Collinear Points 
 
 def max_collinear_points(points: List[List[int]]) -> int:
@@ -2237,12 +2470,3 @@ def gcd(a, b):
     while b != 0:
         a, b = b, a % b
     return a 
-
-
-
-
-
-
-
-
-
