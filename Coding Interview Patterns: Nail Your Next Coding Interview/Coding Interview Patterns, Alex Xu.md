@@ -220,7 +220,7 @@ if tt > 0:
 ```
 
 Monotone Stack: Find the nearest left number < or > it 
-`tt = 0 for i in range(1, n)`
+`tt = 0 for i in range(1, n + 1)`
 
 ```python
 while tt and check(stk[tt], i):
@@ -264,10 +264,141 @@ q[hh]
 if hh != tt:
 ```
 
-11. 
+Monotone Queue: Find the max/min of sliding window
+`int hh = 0, tt = -1 for i in range(0, n)`
+```python
+while hh <= tt and check_out(q[hh]):
+    hh += 1 # check if head of queue is out of window 
+while hh <= tt and check(q[tt], i):
+    tt -= 1 
+tt += 1 
+q[tt] = i
+```
+11. KMP
+```python
+# s[]: long text, p[]: pattern string, n: len(s), m: len(p)
+```
 
+next array of pattern string
+```python
+j = 0
+for i in range(2, m + 1):
+    while j and p[i] != p[j + 1]:
+        j = ne[j]
+    if p[i] == p[j + 1]:
+        j += 1 
+    ne[i] = j 
+```
 
+match
+```python
+j = 0
+for i in range(1, n + 1):
+    while j and s[i] != p[j + 1]:
+        j = ne[j]
+    if s[i] == p[j + 1]:
+        j += 1 
+    if j == m:
+        j = ne[j]
+        # operations
+```
 
+12. Trie 
+```python
+# int son[N][26]: each node's child node, cnt[N]: each node's number of words, idx
+# 0 node is root node and empty node
+```
+insert string 
+```python
+def insert(s):
+    p = 0 
+    for i in range(len(s)):
+        u = ord(s[i]) - ord('a')
+        # node not stored 
+        if not son[p][u]:
+            idx += 1 
+            son[p][u] = idx 
+        p = son[p][u]
+    # number of strings += 1
+    cnt[p] += 1
+```
+count this string
+```python
+def query(s):
+    p = 0 
+    for i in range(len(s)):
+        u = ord(s[i]) - ord('a')
+        if not son[p][u]:
+            return 0
+        p = son[p][u]
+    return cnt[p]
+```
+
+13. Union Find
+```python
+p = [0] * n # each node's parent 
+# return x's parent 
+def find(x: int):
+    if p[x] != x:
+        # make parent's parent as root node 
+        p[x] = find(p[x])
+    return p[x]
+
+# initialize, node from 1 to n
+for i in range(1, n + 1):
+    p[i] = i 
+
+# union sets a and b
+p[find(a)] = find(b)
+```
+
+size of root node
+```python
+# p[]: each node's parent, size[]: number of nodes of root node 
+p, size = [0] * n, [0] * n 
+# return x's root 
+def find(x: int):
+    if p[x] != x:
+        p[x] = find(p[x])
+    return p[x]
+
+# initialize, nodes from 1 to n
+for i in range(1, n + 1):
+    p[i] = i
+    size[i] = 1 
+
+# union sets a and b 
+size[find(b)] += size[find(a)]
+p[find(a)] = find(b)
+```
+distance from root node 
+```python
+# p[]: each node's root, d[x]: distance(x, p[x])
+p, d = [0] * n, [0] * n 
+
+# x's root 
+def find(x: int):
+    if p[x] != x:
+        u = find(p[x])
+        d[x] += d[p[x]]
+        p[x] = u 
+    return p[x]
+
+# initialize, node from 1 to n 
+for i in range(1, n + 1):
+    p[i] = i
+    d[i] = 0 
+
+# union sets a and b 
+p[find(a)] = find(b)
+d[find(a)] = distance
+```
+14. Heap
+```python
+
+```
+
+15. 
 
 
 
