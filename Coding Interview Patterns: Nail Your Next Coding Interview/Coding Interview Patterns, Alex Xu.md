@@ -3,6 +3,274 @@
 ## [Book Link](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135)
 
 
+Templates
+---
+
+1. Quick Sort
+
+```python
+def quick_sort(q: [], l: int, r: int) -> None:
+    if l >= r:
+        return 
+    p, i, j = q[l + r >> 1], l - 1, r + 1
+    while i < j:
+        while 1:
+            i += 1
+            if q[i] >= p:
+                break 
+        while 1:
+            j -= 1
+            if q[j] <= p:
+                break 
+        if i < j:
+            q[i], q[j] = q[j], q[i]
+    quick_sort(q, l, j)
+    quick_sort(q, j + 1, r)
+```
+
+2. Merge Sort
+
+```python
+def merge_sort(q, l, r):
+    if l >= r:
+        return
+    mid = l + r >> 1
+    merge_sort(q, l, mid)
+    merge_sort(q, mid + 1, r)
+    i, j = 0, mid + 1 
+    tmp = list()
+    while i <= mid and j <= r:
+        if q[i] <= q[j]:
+            tmp.append(q[i])
+            i += 1 
+        else:
+            tmp.append(q[j])
+            j += 1 
+    while i <= mid:
+        tmp.append(q[i])
+        i += 1 
+    while j <= r:
+        tmp.append(q[j])
+        j += 1 
+    k = 0 
+    for i in range(l, r + 1):
+        q[i] = tmp[k]
+        k += 1 
+```
+
+3. Binary Search
+
+Integer Binary Search
+
+```python
+def check(x: int) -> bool:
+    return False 
+
+# If [l, r] = [l, mid] + [mid + 1, r]
+def bsearch_1(l: int, r: int) -> int:
+    while l < r:
+        mid = l + r >> 1 
+        if check(mid):  
+            r = mid 
+        else:
+            l = mid + 1 
+    return l 
+
+# If [l, r] = [l, mid - 1] + [mid, r]
+def bsearch_2(l: int, r: int) -> int:
+    while l < r:
+        mid = l + r + 1 >> 1 
+        if check(mid):
+            l = mid 
+        else:
+            r = mid - 1 
+    return l
+```
+
+Float Binary Search
+
+```python
+def check(x: float) -> bool:
+    return False 
+
+def bsearch_3(l: float, r: float) -> float:
+    eps = 1e-6
+    while r - l > eps:
+        mid = (l + r) / 2 
+        if check(mid):
+            r = mid 
+        else:
+            l = mid 
+    return l
+```
+
+4. Prefix Sum
+Sum of (x1, y1), (x2, y2)
+```python
+s[x2, y2] - s[x1 - 1, y2] - s[x2, y1 - 1] + s[x1 - 1, y1 - 1]
+```
+
+5. Bit Operation
+k-th digit of n
+```python
+n >> k & 1
+```
+
+last 1 of n
+```python
+lowbit(n) = n & -n
+```
+
+6. Two Pointers
+
+```python
+j = 0
+for i in range(n):
+    while (j < i and check(i, j)):
+        j += 1 
+        # operations
+```
+
+7. Merge Intervals
+```python
+def merge(a: [(int, int)]):
+    res = list()
+    a.sort(key=lambda x:x[0])
+    cur_st, cur_ed = -10 ** 9, -10 ** 9
+    for st, ed in a:
+        if cur_ed < st:
+            if cur_st != -10 ** 9:
+                res.append((cur_st, cur_ed))
+            cur_st, cur_ed = st, ed 
+        else:
+            cur_ed = max(cur_ed, ed)
+    if cur_st != -10 ** 9:
+        res.append((cur_st, cur_ed))
+    segs = res 
+```
+8. Linked List
+
+```python
+# e[]: values, ne[]: next pointer, idx: current node
+head, e, ne, idx = -1, [0] * n, [0] * n, 0
+
+def init():
+    head = -1
+    idx = 0 
+
+# insert a at head 
+def insert(a):
+    global idx, head 
+    e[idx] = a 
+    ne[idx] = head 
+    head = idx 
+    idx += 1 
+
+# delete head, but make sure head exists
+def remove():
+    global head 
+    head = ne[head]
+```
+
+Double Linked List 
+
+```python
+# e[]: value, l[]: left pointer, r[]: right pointer, idx: current node
+e, l, r, idx = [0] * n, [0] * n, [0] * n, 0
+
+def init():
+    # 0: left, 1: right 
+    global idx 
+    r[0] = 1 
+    l[1] = 0
+    idx = 2 
+
+# add x right to a
+def insert(a: int, x: int):
+    global idx 
+    e[idx] = x 
+    l[idx] = a, r[idx] = r[a]
+    l[r[a]] = idx 
+    r[a] = idx
+    idx += 1 
+
+# delete a
+def remove(a: int):
+    l[r[a]] = l[a]
+    r[l[a]] = r[a]
+```
+
+9. Stack
+```python
+# tt: top of stack
+stk, tt = [0] * n, 0
+
+# add x to top of stack
+tt += 1 
+stk[tt] = x 
+
+# pop from top
+tt -= 1 
+
+# top value 
+stk[tt]
+
+# check if empty 
+if tt > 0:
+```
+
+Monotone Stack: Find the nearest left number < or > it 
+`tt = 0 for i in range(1, n)`
+
+```python
+while tt and check(stk[tt], i):
+    tt -= 1 
+tt += 1 
+stk[tt] = i
+```
+10. Queue
+```python
+# hh: queue head, tt: queue end 
+q = [0] * n 
+hh, tt = 0, -1
+# add number at queue end 
+tt += 1 
+q[tt] = x 
+# pop a number from head 
+hh += 1 
+# queue head value 
+q[hh]
+# check if queue empty
+if hh <= tt:
+```
+
+Recursive Queue
+```python
+# hh: queue head, tt: queue end 
+q = [0] * n 
+hh, tt = 0, 0
+# add number at queue end 
+q[tt] = x 
+tt += 1 
+if tt == n:
+    tt = 0
+# pop a number from head 
+hh += 1 
+if hh == n:
+    hh = 0
+# queue head value 
+q[hh]
+# check if queue empty
+if hh != tt:
+```
+
+11. 
+
+
+
+
+
+
 Notes
 ---
 
