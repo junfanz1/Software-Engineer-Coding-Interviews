@@ -150,7 +150,7 @@ Notes
   - [Max Collinear Points](#max-collinear-points)
   - [Josephus Problem](#josephus-problem)
   - [Triangle Numbers](#triangle-numbers)
-
+- [Templates](#Templates)
 
 <!-- TOC --><a name="coding-interview-patterns-alex-xu"></a>
 # Coding Interview Patterns, Alex Xu
@@ -3215,7 +3215,12 @@ def triangle_numbers(n: int) -> int:
     return 4
 ```
 
-Templates
+---
+
+---
+
+
+# Templates
 ---
 
 ### 1. Quick Sort
