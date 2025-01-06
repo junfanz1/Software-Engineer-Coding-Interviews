@@ -42,5 +42,7 @@ Alex Xu, Shaun Gunawardane
 
 - [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
 
+- [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
+
 ![image](https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0)
 
