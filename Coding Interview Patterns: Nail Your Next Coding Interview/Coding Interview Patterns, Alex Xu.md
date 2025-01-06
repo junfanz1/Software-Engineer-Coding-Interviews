@@ -3217,11 +3217,9 @@ def triangle_numbers(n: int) -> int:
 
 ---
 
----
 
 
 # Templates
----
 
 ### 1. Quick Sort
 
