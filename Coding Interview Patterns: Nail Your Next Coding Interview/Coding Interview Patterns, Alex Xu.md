@@ -6,7 +6,7 @@
 Templates
 ---
 
-1. Quick Sort
+### 1. Quick Sort
 
 ```python
 def quick_sort(q: [], l: int, r: int) -> None:
@@ -28,7 +28,7 @@ def quick_sort(q: [], l: int, r: int) -> None:
     quick_sort(q, j + 1, r)
 ```
 
-2. Merge Sort
+### 2. Merge Sort
 
 ```python
 def merge_sort(q, l, r):
@@ -58,7 +58,7 @@ def merge_sort(q, l, r):
         k += 1 
 ```
 
-3. Binary Search
+### 3. Binary Search
 
 Integer Binary Search
 
@@ -104,13 +104,13 @@ def bsearch_3(l: float, r: float) -> float:
     return l
 ```
 
-4. Prefix Sum
+### 4. Prefix Sum
 Sum of (x1, y1), (x2, y2)
 ```python
 s[x2, y2] - s[x1 - 1, y2] - s[x2, y1 - 1] + s[x1 - 1, y1 - 1]
 ```
 
-5. Bit Operation
+### 5. Bit Operation
 k-th digit of n
 ```python
 n >> k & 1
@@ -121,7 +121,7 @@ last 1 of n
 lowbit(n) = n & -n
 ```
 
-6. Two Pointers
+### 6. Two Pointers
 
 ```python
 j = 0
@@ -131,7 +131,7 @@ for i in range(n):
         # operations
 ```
 
-7. Merge Intervals
+### 7. Merge Intervals
 ```python
 def merge(a: [(int, int)]):
     res = list()
@@ -148,7 +148,7 @@ def merge(a: [(int, int)]):
         res.append((cur_st, cur_ed))
     segs = res 
 ```
-8. Linked List
+### 8. Linked List
 
 ```python
 # e[]: values, ne[]: next pointer, idx: current node
@@ -200,7 +200,7 @@ def remove(a: int):
     r[l[a]] = r[a]
 ```
 
-9. Stack
+### 9. Stack
 ```python
 # tt: top of stack
 stk, tt = [0] * n, 0
@@ -228,7 +228,7 @@ while tt and check(stk[tt], i):
 tt += 1 
 stk[tt] = i
 ```
-10. Queue
+### 10. Queue
 ```python
 # hh: queue head, tt: queue end 
 q = [0] * n 
@@ -274,7 +274,7 @@ while hh <= tt and check(q[tt], i):
 tt += 1 
 q[tt] = i
 ```
-11. KMP
+### 11. KMP
 ```python
 # s[]: long text, p[]: pattern string, n: len(s), m: len(p)
 ```
@@ -303,7 +303,7 @@ for i in range(1, n + 1):
         # operations
 ```
 
-12. Trie 
+### 12. Trie 
 ```python
 # int son[N][26]: each node's child node, cnt[N]: each node's number of words, idx
 # 0 node is root node and empty node
@@ -334,7 +334,7 @@ def query(s):
     return cnt[p]
 ```
 
-13. Union Find
+### 13. Union Find
 ```python
 p = [0] * n # each node's parent 
 # return x's parent 
@@ -393,14 +393,92 @@ for i in range(1, n + 1):
 p[find(a)] = find(b)
 d[find(a)] = distance
 ```
-14. Heap
+### 14. Heap
 ```python
-
+# h[N]: values of heap, h[1]: top of heap, x left child = 2x, right child = 2x + 1
+# ph[k]: k-th node inserted in heap, hp[k]: order of insertion of node k
+h, ph, hp, size = [0] * n, [0] * n, [0] * n, 0 
 ```
 
-15. 
+swap 2 nodes and mappings 
+```python
+def heap_swap(a: int, b: int):
+    ph[hp[a]], ph[hp[b]] = ph[hp[b]], ph[hp[a]]
+    hp[a], hp[b] = hp[b], hp[a]
+    h[a], h[b] = h[b], h[a]
 
+def down(u: int):
+    t = u 
+    if u * 2 <= size and h[u * 2] < h[t]:
+        t = u * 2 
+    if u * 2 + 1 <= size and h[u * 2 + 1] < h[t]:
+        t = u * 2 + 1
+    if u != t:
+        heap_swap(u, t)
+        down(t)
 
+def up(u: int):
+    while u / 2 and h[u] < h[u // 2]:
+        heap_swap(u, u // 2)
+        u >>= 1 
+
+# O(n) build heap
+for i in range(n // 2, -1, -1):
+    down(i)
+```
+
+### 15. Hash
+
+```python
+h, e, ne, idx = [0] * n, [0] * n, [0] * n, 0 
+
+def insert(x: int):
+    k = (x % n + n) % n 
+    e[idx] = x 
+    ne[idx] = h[k]
+    h[k] = idx 
+    idx += 1 
+
+def find(x: int):
+    k = (x % n + n) % n 
+    i = h[k]
+    while i != -1:
+        if e[i] == x:
+            return True 
+        i = ne[i]
+    return False 
+```
+
+Open address finding
+
+```python
+h = [0] * n 
+null = -10 ** 9 
+
+def find(x: int):
+    t = (x % n + n) % n 
+    while h[t] != null and h[t] != x:
+        t += 1 
+        if t == n:
+            t = 0 
+    return t 
+```
+
+String Hash
+
+See string as a p^k number, p = 131
+```python
+# h[k]: hash value of first k digits of string, p[k] = p^k mod 2^64
+h, p, ma = [0] * n, [0] * n, 2 ** 64
+p[0] = 1 # initialize
+for i in range(1, n + 1):
+    h[i] = (h[i - 1] * P + str[i]) % ma 
+    p[i] = (p[i - 1] * P) % ma 
+
+# substr[l ~ r] hash value
+def get(l, r):
+    return h[r] - h[l - 1] * p[r - l + 1]
+```
 
 Notes
 ---
