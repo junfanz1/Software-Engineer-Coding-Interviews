@@ -42,9 +42,10 @@ Alex Xu, Shaun Gunawardane
 
 > https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135
 
+<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="50%" height="50%">
+
 - [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
 
 - [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
-![image](https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0)
 
