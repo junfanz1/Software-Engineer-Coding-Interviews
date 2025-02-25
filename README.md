@@ -1,6 +1,8 @@
 # CS-Online-Course-Notes
 
-Take notes when studying the courses.
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
 
 ## 1. Algorithms, Princeton, Coursera
 
