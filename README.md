@@ -67,4 +67,16 @@ Alex Xu, Shaun Gunawardane
 
 - [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
+---
 
+Connect me: 
+[LinkedIn](https://www.linkedin.com/in/junfan-zhu/)
+
+Leave a message to me:
+[junfanzhu98@gmail.com](mailto:junfanzhu98@gmail.com)
+
+---
+
+Future Readings:
+
+TBD
