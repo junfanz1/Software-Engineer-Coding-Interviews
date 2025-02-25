@@ -17,6 +17,8 @@
 
 <!-- TOC end -->
 
+---
+
 <!-- TOC --><a name="1-algorithms-princeton-coursera"></a>
 ## 1. Algorithms, Princeton, Coursera
 
