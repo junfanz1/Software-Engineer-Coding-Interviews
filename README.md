@@ -1,9 +1,22 @@
+
+<!-- TOC --><a name="cs-online-course-notes"></a>
 # CS-Online-Course-Notes
 
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
 
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [CS-Online-Course-Notes](#cs-online-course-notes)
+   * [1. Algorithms, Princeton, Coursera](#1-algorithms-princeton-coursera)
+   * [2. Kaggle Course Notes](#2-kaggle-course-notes)
+   * [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
+   * [4. Coding Interview Patterns: Nail Your Next Coding Interview](#4-coding-interview-patterns-nail-your-next-coding-interview)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="1-algorithms-princeton-coursera"></a>
 ## 1. Algorithms, Princeton, Coursera
 
 Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne at Princeton.
@@ -16,6 +29,7 @@ Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne at Princeton.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes.md)
 
+<!-- TOC --><a name="2-kaggle-course-notes"></a>
 ## 2. Kaggle Course Notes
 
 Kaggle Mini-courses.
@@ -26,6 +40,7 @@ Kaggle Mini-courses.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.md)
 
+<!-- TOC --><a name="3-grokking-the-system-design-interview"></a>
 ## 3. Grokking the System Design Interview
 
 Educative.io online course.
@@ -36,6 +51,7 @@ Educative.io online course.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
 
+<!-- TOC --><a name="4-coding-interview-patterns-nail-your-next-coding-interview"></a>
 ## 4. Coding Interview Patterns: Nail Your Next Coding Interview
 
 Alex Xu, Shaun Gunawardane
