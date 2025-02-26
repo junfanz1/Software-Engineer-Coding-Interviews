@@ -12,7 +12,7 @@
 - [2. Kaggle Course Notes](#2-kaggle-course-notes)
 - [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
 - [4. Coding Interview Patterns: Nail Your Next Coding Interview](#4-coding-interview-patterns-nail-your-next-coding-interview)
-- [5. Linux CheatSheet](#5-linux-cheatsheet)
+- [5. Linux/Git CheatSheet](#5-linux-git-cheatsheet)
 
 <!-- TOC end -->
 
@@ -66,8 +66,8 @@ Alex Xu, Shaun Gunawardane
 
 - [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
-<!-- TOC --><a name="5-linux-cheatsheet"></a>
-## 5. Linux CheatSheet
+<!-- TOC --><a name="5-linux-git-cheatsheet"></a>
+## 5. Linux/Git CheatSheet
 
 - [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Linux/Essential%20Linux.pdf)
 
