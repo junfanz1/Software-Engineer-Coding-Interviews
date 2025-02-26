@@ -8,12 +8,11 @@
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
-## Contents
-
-   * [1. Algorithms, Princeton, Coursera](#1-algorithms-princeton-coursera)
-   * [2. Kaggle Course Notes](#2-kaggle-course-notes)
-   * [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
-   * [4. Coding Interview Patterns: Nail Your Next Coding Interview](#4-coding-interview-patterns-nail-your-next-coding-interview)
+- [1. Algorithms, Princeton, Coursera](#1-algorithms-princeton-coursera)
+- [2. Kaggle Course Notes](#2-kaggle-course-notes)
+- [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
+- [4. Coding Interview Patterns: Nail Your Next Coding Interview](#4-coding-interview-patterns-nail-your-next-coding-interview)
+- [5. Linux CheatSheet](#5-linux-cheatsheet)
 
 <!-- TOC end -->
 
@@ -66,6 +65,11 @@ Alex Xu, Shaun Gunawardane
 - [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
 
 - [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
+
+<!-- TOC --><a name="5-linux-cheatsheet"></a>
+## 5. Linux CheatSheet
+
+- [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Linux/Essential%20Linux.pdf)
 
 ---
 
