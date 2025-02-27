@@ -8,6 +8,8 @@
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
+## Contents
+
 - [1. Algorithms, Princeton, Coursera](#1-algorithms-princeton-coursera)
 - [2. Kaggle Course Notes](#2-kaggle-course-notes)
 - [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
