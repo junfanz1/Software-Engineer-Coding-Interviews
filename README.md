@@ -63,7 +63,7 @@ Kaggle Mini-courses.
 
 > https://www.kaggle.com/learn
 
-- [__PDF Notes:__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.pdf)
+- [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.pdf)
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.md)
 
