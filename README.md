@@ -1,6 +1,5 @@
 
-<!-- TOC --><a name="cs-online-course-notes"></a>
-# CS-Online-Course-Notes
+# Software-Engineer-Coding-Interviews
 
 ## Star History
 
@@ -10,18 +9,42 @@
 
 ## Contents
 
-- [1. Algorithms, Princeton, Coursera](#1-algorithms-princeton-coursera)
-- [2. Kaggle Course Notes](#2-kaggle-course-notes)
-- [3. Grokking the System Design Interview](#3-grokking-the-system-design-interview)
-- [4. Coding Interview Patterns: Nail Your Next Coding Interview](#4-coding-interview-patterns-nail-your-next-coding-interview)
+- [1. Grokking the System Design Interview](#1-grokking-the-system-design-interview)
+- [2. Coding Interview Patterns: Nail Your Next Coding Interview](#2-coding-interview-patterns-nail-your-next-coding-interview)
+- [3. Algorithms, Princeton, Coursera](#3-algorithms-princeton-coursera)
+- [4. Kaggle Notes](#4-kaggle-notes)
 - [5. Linux/Git CheatSheet](#5-linux-git-cheatsheet)
 
 <!-- TOC end -->
 
 ---
 
-<!-- TOC --><a name="1-algorithms-princeton-coursera"></a>
-## 1. Algorithms, Princeton, Coursera
+<!-- TOC --><a name="1-grokking-the-system-design-interview"></a>
+## 1. Grokking the System Design Interview
+
+Educative.io online course.
+
+> https://www.educative.io/courses/grokking-the-system-design-interview/
+
+- [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf)
+
+- [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
+
+<!-- TOC --><a name="2-coding-interview-patterns-nail-your-next-coding-interview"></a>
+## 2. Coding Interview Patterns: Nail Your Next Coding Interview
+
+Alex Xu, Shaun Gunawardane
+
+> https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135
+
+<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="50%" height="50%">
+
+- [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
+
+- [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
+
+<!-- TOC --><a name="3-algorithms-princeton-coursera"></a>
+## 3. Algorithms, Princeton, Coursera
 
 Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne at Princeton.
 
@@ -33,8 +56,8 @@ Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne at Princeton.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes.md)
 
-<!-- TOC --><a name="2-kaggle-course-notes"></a>
-## 2. Kaggle Course Notes
+<!-- TOC --><a name="4-kaggle-notes"></a>
+## 4. Kaggle Notes
 
 Kaggle Mini-courses.
 
@@ -44,29 +67,6 @@ Kaggle Mini-courses.
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.md)
 
-<!-- TOC --><a name="3-grokking-the-system-design-interview"></a>
-## 3. Grokking the System Design Interview
-
-Educative.io online course.
-
-> https://www.educative.io/courses/grokking-the-system-design-interview/
-
-- [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf)
-
-- [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
-
-<!-- TOC --><a name="4-coding-interview-patterns-nail-your-next-coding-interview"></a>
-## 4. Coding Interview Patterns: Nail Your Next Coding Interview
-
-Alex Xu, Shaun Gunawardane
-
-> https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135
-
-<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="50%" height="50%">
-
-- [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
-
-- [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
 <!-- TOC --><a name="5-linux-git-cheatsheet"></a>
 ## 5. Linux/Git CheatSheet
