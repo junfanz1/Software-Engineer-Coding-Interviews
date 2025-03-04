@@ -26,7 +26,7 @@
 
 <img src="https://github.com/user-attachments/assets/d1c8b656-bf2d-46f1-ae90-39bb2791fbf3" width="50%" height="50%">
 
-[Certificate](https://www.educative.io/verify-certificate/B86jYxWPP3JhA8lAZw0B2Mhr92YjJNmG5Ty)
+- [Certificate](https://www.educative.io/verify-certificate/B86jYxWPP3JhA8lAZw0B2Mhr92YjJNmG5Ty)
 
 - [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf)
 
