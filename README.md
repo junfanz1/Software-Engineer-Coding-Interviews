@@ -22,9 +22,10 @@
 <!-- TOC --><a name="1-grokking-the-system-design-interview"></a>
 ## 1. Grokking the System Design Interview
 
-Educative.io online course.
-
 > https://www.educative.io/courses/grokking-the-system-design-interview/
+
+<img src="https://github.com/user-attachments/assets/d1c8b656-bf2d-46f1-ae90-39bb2791fbf3" width="50%" height="50%">
+
 
 - [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf)
 
