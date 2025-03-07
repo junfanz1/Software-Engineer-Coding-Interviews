@@ -34,7 +34,7 @@
 
 System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020
 
-<img src="https://github.com/user-attachments/assets/83e76c6c-53d4-497e-8303-70942b78541d" width="50%" height="50%">
+<img src="https://github.com/user-attachments/assets/83e76c6c-53d4-497e-8303-70942b78541d" width="35%" height="35%">
 
 - [__PDF Notes__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
@@ -45,7 +45,7 @@ Alex Xu, Shaun Gunawardane
 
 > https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135
 
-<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="50%" height="50%">
+<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="35%" height="35%">
 
 - [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
 
