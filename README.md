@@ -32,9 +32,9 @@
 
 - [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
 
-System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, Chinese translation 2023
+System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020
 
-> [Book Link](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF)
+<img src="https://github.com/user-attachments/assets/83e76c6c-53d4-497e-8303-70942b78541d" width="50%" height="50%">
 
 - [__PDF Notes__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
