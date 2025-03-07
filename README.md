@@ -34,7 +34,9 @@
 
 System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020
 
-<img src="https://github.com/user-attachments/assets/83e76c6c-53d4-497e-8303-70942b78541d" width="35%" height="35%">
+> https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF
+
+<img src="https://github.com/user-attachments/assets/6335141b-f801-44e4-921b-ccb3e7480b75" width="35%" height="35%">
 
 - [__PDF Notes__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
