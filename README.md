@@ -36,8 +36,6 @@ System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, C
 
 > [Book Link](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF)
 
-<img src="https://github.com/user-attachments/assets/8cfad2aa-2ad3-4c97-af88-79c98f369e33" width="50%" height="50%">
-
 - [__PDF Notes__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
 <!-- TOC --><a name="2-coding-interview-patterns-nail-your-next-coding-interview"></a>
