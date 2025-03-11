@@ -7,9 +7,9 @@
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
-- [1. System Design Interview](#1-system-design-interview)
-   * [Book](#book)
-   * [Educative](#educative)
+- [1. System Design](#1-system-design)
+   * [System Design Interview](#system-design-interview)
+   * [Educative Grokking System Design](#educative-grokking-system-design)
    * [GenAI System Design](#genai-system-design)
 - [2. Coding Interview Patterns: Nail Your Next Coding Interview](#2-coding-interview-patterns-nail-your-next-coding-interview)
 - [3. Algorithms, Princeton, Coursera](#3-algorithms-princeton-coursera)
@@ -20,11 +20,11 @@
 
 ---
 
-<!-- TOC --><a name="1-system-design-interview"></a>
-# 1. System Design Interview
+<!-- TOC --><a name="1-system-design"></a>
+# 1. System Design
 
-<!-- TOC --><a name="book"></a>
-## Book
+<!-- TOC --><a name="system-design-interview"></a>
+## System Design Interview
 
 System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, Chinese translation 2023
 
@@ -35,8 +35,8 @@ System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, C
 
 - [__PDF Notes__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
-<!-- TOC --><a name="educative"></a>
-## Educative
+<!-- TOC --><a name="educative-grokking-system-design"></a>
+## Educative Grokking System Design
 
 - [Educative - System Design Interview](https://www.educative.io/verify-certificate/B86jYxWPP3JhA8lAZw0B2Mhr92YjJNmG5Ty) | [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf) | [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
 
