@@ -1,10 +1,6 @@
 
 # Software-Engineer-Coding-Interviews
 
-# Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
-
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [1. System Design](#1-system-design)
@@ -17,6 +13,11 @@
 - [5. Linux/Git CheatSheet](#5-linuxgit-cheatsheet)
 
 <!-- TOC end -->
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
+
 
 ---
 
