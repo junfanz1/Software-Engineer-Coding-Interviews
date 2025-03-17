@@ -46,7 +46,7 @@ System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, C
 <!-- TOC --><a name="educative-grokking-modern-system-design"></a>
 ## Educative Grokking Modern System Design
 
-> [Educative - Grokking the Modern System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Overview/blob/main/System%20Design/Modern%20System%20Design.md)
+- [Educative - Grokking the Modern System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Overview/blob/main/System%20Design/Modern%20System%20Design.md)
 
 
 <!-- TOC --><a name="genai-system-design"></a>
