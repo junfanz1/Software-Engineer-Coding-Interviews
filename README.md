@@ -6,6 +6,7 @@
 - [1. System Design](#1-system-design)
    * [System Design Interview](#system-design-interview)
    * [Educative Grokking System Design](#educative-grokking-system-design)
+   * [Educative Grokking Modern System Design](#educative-grokking-modern-system-design)
    * [GenAI System Design](#genai-system-design)
 - [2. Coding Interview Patterns: Nail Your Next Coding Interview](#2-coding-interview-patterns-nail-your-next-coding-interview)
 - [3. Algorithms, Princeton, Coursera](#3-algorithms-princeton-coursera)
@@ -14,6 +15,7 @@
 
 <!-- TOC end -->
 
+<!-- TOC --><a name="star-history"></a>
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
@@ -40,6 +42,12 @@ System Design Interview, An Insider's Guide, Second Edition - by Alex Xu 2020, C
 ## Educative Grokking System Design
 
 - [Educative - System Design Interview](https://www.educative.io/verify-certificate/B86jYxWPP3JhA8lAZw0B2Mhr92YjJNmG5Ty) | [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.pdf) | [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Grokking%20the%20System%20Design%20Interview/Grokking%20the%20System%20Design%20Interview.md)
+
+<!-- TOC --><a name="educative-grokking-modern-system-design"></a>
+## Educative Grokking Modern System Design
+
+> [Educative - Grokking the Modern System Design Interview](https://www.educative.io/courses/grokking-the-system-design-interview) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Overview/blob/main/System%20Design/Modern%20System%20Design.md)
+
 
 <!-- TOC --><a name="genai-system-design"></a>
 ## GenAI System Design
