@@ -8,7 +8,7 @@
    * [Educative - GenAI/Modern System Design Interview](#educative-genaimodern-system-design-interview)
 - [2. Coding Interview](#2-coding-interview)
 - [3. Linux, Git](#3-linux-git)
-- [4. Coursera, Kaggle](#4-coursera-kaggle)
+- [4. Algorithms, Data Science](#4-algorithms-data-science)
    * [Star History](#star-history)
 
 <!-- TOC end -->
@@ -71,7 +71,7 @@ Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka,
 
 Linux, Git CheatSheet | [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Linux/Essential%20Linux.pdf)
 
-<!-- TOC --><a name="4-coursera-kaggle"></a>
+<!-- TOC --><a name="4-algorithms-data-science"></a>
 # 4. Algorithms, Data Science
 
 Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne, Princeton Coursera.
