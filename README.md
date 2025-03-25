@@ -9,8 +9,6 @@
 - [2. Coding Interview](#2-coding-interview)
 - [3. Linux, Git](#3-linux-git)
 - [4. Coursera, Kaggle](#4-coursera-kaggle)
-   * [Algorithms, Princeton, Coursera](#algorithms-princeton-coursera)
-   * [Kaggle Notes](#kaggle-notes)
    * [Star History](#star-history)
 
 <!-- TOC end -->
@@ -71,36 +69,18 @@ Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka,
 <!-- TOC --><a name="3-linux-git"></a>
 # 3. Linux, Git
 
-Linux/Git CheatSheet
-
-- [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Linux/Essential%20Linux.pdf)
+Linux, Git CheatSheet | [__PDF Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Linux/Essential%20Linux.pdf)
 
 <!-- TOC --><a name="4-coursera-kaggle"></a>
-# 4. Coursera, Kaggle
+# 4. Algorithms, Data Science
 
-<!-- TOC --><a name="algorithms-princeton-coursera"></a>
-## Algorithms, Princeton, Coursera
+Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne, Princeton Coursera.
 
-Algorithm Part I and Part II, by Robert Sedgewick and Kevin Wayne at Princeton.
+> [Char 1-6](https://www.coursera.org/learn/algorithms-part1) | [Char 7-12](https://www.coursera.org/learn/algorithms-part2) | [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes%20Junfan%20Zhu.pdf) | [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes.md)
 
-> Char 1-6: https://www.coursera.org/learn/algorithms-part1/
+Kaggle Notes
 
-> Char 7-12: https://www.coursera.org/learn/algorithms-part2/
-
-- [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes%20Junfan%20Zhu.pdf)
-
-- [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Princeton%20Algorithm/Princeton%20Algorithm%20Coursera%20Notes.md)
-
-<!-- TOC --><a name="kaggle-notes"></a>
-## Kaggle Notes
-
-Kaggle Mini-courses.
-
-> https://www.kaggle.com/learn
-
-- [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.pdf)
-
-- [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.md)
+> [Kaggle Mini-courses](https://www.kaggle.com/learn) | [__PDF Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.pdf) | [__Markdown Notes__](https://github.com/junfanz1/CS-Online-Course-Notes/blob/main/Kaggle%20Course%20Notes/Kaggle%20Course%20Notes.md)
 
 
 ---
