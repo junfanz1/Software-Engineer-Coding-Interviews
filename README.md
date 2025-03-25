@@ -101,7 +101,6 @@ Kaggle Notes
   </marquee>
 </div>
 
----
 
 <!-- TOC --><a name="star-history"></a>
 ## Star History
