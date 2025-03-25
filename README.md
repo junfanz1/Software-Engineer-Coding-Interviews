@@ -7,8 +7,6 @@
    * [ByteByteGo - GenAI/ML/Modern System Design Interview](#bytebytego-genaimlmodern-system-design-interview)
    * [Educative - GenAI/Modern System Design Interview](#educative-genaimodern-system-design-interview)
 - [2. Coding Interview](#2-coding-interview)
-   * [Coding Interview Patterns: Nail Your Next Coding Interview](#coding-interview-patterns-nail-your-next-coding-interview)
-   * [Beyond Cracking the Coding Interview](#beyond-cracking-the-coding-interview)
 - [3. Linux, Git](#3-linux-git)
 - [4. Coursera, Kaggle](#4-coursera-kaggle)
    * [Algorithms, Princeton, Coursera](#algorithms-princeton-coursera)
@@ -57,27 +55,18 @@ Machine Learning System Design Interview - by Ali Aminian, Alex Xu, 2023
 <!-- TOC --><a name="2-coding-interview"></a>
 # 2. Coding Interview
 
-<!-- TOC --><a name="coding-interview-patterns-nail-your-next-coding-interview"></a>
-## Coding Interview Patterns: Nail Your Next Coding Interview
+Coding Interview Patterns: Nail Your Next Coding Interview - by Alex Xu, Shaun Gunawardane, 2024
 
-Alex Xu, Shaun Gunawardane, 2024
+> [Book Link](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135) | [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md) | [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
-> [Book Link](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135)
-
-<img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="25%" height="25%">
-
-- [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md)
-
-- [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
-
-<!-- TOC --><a name="beyond-cracking-the-coding-interview"></a>
-## Beyond Cracking the Coding Interview
-
-Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano, 2025
+Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano, 2025
 
 > [Book Link](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__]
 
-<img src="https://github.com/user-attachments/assets/62a0e128-7ca0-49b4-a53f-fed51456f06b" width="25%" height="25%">
+<div style="display: flex; justify-content: space-around;">
+  <img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="35%" height="35%">
+  <img src="https://github.com/user-attachments/assets/62a0e128-7ca0-49b4-a53f-fed51456f06b" width="35%" height="35%">
+</div>
 
 <!-- TOC --><a name="3-linux-git"></a>
 # 3. Linux, Git
