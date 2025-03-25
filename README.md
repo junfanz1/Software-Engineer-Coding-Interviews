@@ -101,11 +101,10 @@ Kaggle Notes
   </marquee>
 </div>
 
+---
+
 <!-- TOC --><a name="star-history"></a>
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=junfanz1/Coding-Interview-Practices&type=Date)](https://star-history.com/#junfanz1/Coding-Interview-Practices&Date)
-
-
----
 
