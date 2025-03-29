@@ -27,7 +27,6 @@ class DynamicArray:
         self.capacity = 10 
         self._size = 0
         self.fixed_array = [None] * self.capacity
-
     def get(self, i):
         if i < 0 or i >= self._size:
             raise IndexError('index out of bounds')
@@ -55,9 +54,57 @@ class DynamicArray:
         self._size -= 1 
         if self._size / self.capacity < 0.25 and self.capacity > 10:
             self.resize(self.capacity // 2)
+    def pop(self, i):
+        if i < 0 or i >= self._size:
+            raise IndexError('Index out of bounds')
+        saved_element = self.fixed_array[i]
+        for index in range(i, self._size - 1):
+            self.fixed_array[index] = self.fixed_array[index + 1]
+        self.pop_back()
+        return saved_element
+```
+# 26. String Manipulation
+
+```py
+def is_uppercase(c):
+    return ord(c) >= ord('A') and ord(c) <= ord('Z')
+def is_digit(c):
+    return ord(c) >= ord('0') and ord(c) <= ord('9')
+def is_alphanumeric(c):
+    return is_lowercase(c) or is_uppercase(c) or is_digit(c)
+def to_uppercase(c):
+    if not is_lowercase(c):
+        return c 
+    return chr(ord(c) - ord('a') + ord('A'))
+
+def split(s, c):
+    if not s:
+        return []
+    res = []
+    current = []
+    for char in s:
+        if char == c:
+            res.append(''.join(current))
+            current = []
+        else:
+            current.append(char)
+    res.append(''.join(current))
+    return res 
+
+def join(arr, s):
+    res = []
+    for i in range(len(arr)):
+        if i != 0:
+            for c in s:
+                res.append(c)
+        for c in arr[i]:
+            res.append(c)
+    return array_to_string(res)
 ```
 
+## 27. Two Pointers
 
 ```py
 
 ```
+
