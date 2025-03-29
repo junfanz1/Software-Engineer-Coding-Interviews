@@ -59,7 +59,7 @@ Coding Interview Patterns: Nail Your Next Coding Interview - by Alex Xu, Shaun G
 
 Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano, 2025
 
-> [Book Link](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__]
+> [Book Link](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Beyond%20Cracking%20the%20Coding%20Interview/Beyond%20Cracking%20the%20Coding%20Interview.md)
 
 <div style="display: flex; justify-content: space-around;">
   <img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="35%" height="35%">
