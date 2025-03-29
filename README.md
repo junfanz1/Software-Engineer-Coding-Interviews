@@ -22,17 +22,12 @@
 <!-- TOC --><a name="bytebytego-genaimlmodern-system-design-interview"></a>
 ## ByteByteGo - GenAI/ML/Modern System Design Interview
 
-System Design Interview, An Insider's Guide, Second Edition - by Alex Xu, 2020
 
-> [Book Link](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF) | [__PDF Notes-Chinese__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
+> [System Design Interview, An Insider's Guide, Second Edition - by Alex Xu, 2020](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF) | [__PDF Notes-Chinese__](https://github.com/junfanz1/Quant-Books-Notes/blob/main/System%20Design/Notes%20on%20System%20Design.pdf)
 
-Generative AI System Design Interview - by Ali Aminian, Hao Sheng, 2024
+> [Generative AI System Design Interview - by Ali Aminian, Hao Sheng, 2024](https://www.amazon.com/Machine-Learning-System-Design-Interview/dp/1736049127) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Review/blob/main/System%20Design/GenAI%20System%20Design%20Interview.md)
 
-> [Book Link](https://www.amazon.com/Machine-Learning-System-Design-Interview/dp/1736049127) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Review/blob/main/System%20Design/GenAI%20System%20Design%20Interview.md)
-
-Machine Learning System Design Interview - by Ali Aminian, Alex Xu, 2023
-
-> [Book Link](https://www.amazon.com/Machine-Learning-System-Design-Interview/dp/1736049127) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Review/blob/main/System%20Design/ML%20System%20Design%20Interview.md)
+> [Machine Learning System Design Interview - by Ali Aminian, Alex Xu, 2023](https://www.amazon.com/Machine-Learning-System-Design-Interview/dp/1736049127) | [__Markdown Notes__](https://github.com/junfanz1/AI-LLM-ML-CS-Quant-Review/blob/main/System%20Design/ML%20System%20Design%20Interview.md)
 
 <div style="display: flex; justify-content: space-around;">
   <img src="https://github.com/user-attachments/assets/2bc97b4d-565b-4c8e-9915-23d1693635aa" width="28.6%">
