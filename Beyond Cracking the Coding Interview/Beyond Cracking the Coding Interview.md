@@ -27,33 +27,40 @@ class DynamicArray:
         self.capacity = 10 
         self._size = 0
         self.fixed_array = [None] * self.capacity
+
     def get(self, i):
         if i < 0 or i >= self._size:
             raise IndexError('index out of bounds')
         return self.fixed_array[i]
+
     def set(self, i, x):
         if i < 0 or i >= self._size:
             raise IndexError('index out of bounds')
-        self.fixed_array[i] = x 
+        self.fixed_array[i] = x
+
     def size(self):
-        return self._size 
+        return self._size
+
     def append(self, x):
         if self._size == self.capacity:
             self.resize(self.capacity * 2)
         self.fixed_array[self._size] = x 
-        self._size += 1 
+        self._size += 1
+
     def resize(self, new_capacity):
         new_fixed_size_arr = [None] * new_capacity
         for i in range(self._size):
             new_fixed_size_arr[i] = self.fixed_array[i]
         self.fixed_array = new_fixed_size_arr
         self.capacity = new_capacity
+
     def pop_back(self):
         if self._size == 0:
             raise IndexError('pop from empty array')
         self._size -= 1 
         if self._size / self.capacity < 0.25 and self.capacity > 10:
             self.resize(self.capacity // 2)
+
     def pop(self, i):
         if i < 0 or i >= self._size:
             raise IndexError('Index out of bounds')
@@ -68,10 +75,13 @@ class DynamicArray:
 ```py
 def is_uppercase(c):
     return ord(c) >= ord('A') and ord(c) <= ord('Z')
+
 def is_digit(c):
     return ord(c) >= ord('0') and ord(c) <= ord('9')
+
 def is_alphanumeric(c):
     return is_lowercase(c) or is_uppercase(c) or is_digit(c)
+
 def to_uppercase(c):
     if not is_lowercase(c):
         return c 
