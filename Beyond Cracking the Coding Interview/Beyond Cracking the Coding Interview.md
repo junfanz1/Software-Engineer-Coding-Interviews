@@ -756,7 +756,164 @@ def set_intersection(sets):
 ## 31. Sorting
 
 ```py
+def mergesort(arr):
+    n = len(arr)
+    if n <= 1:
+        return arr 
+    left = mergesort(arr[:n // 2])
+    right = mergesort(arr[n // 2:])
+    return merge(left, right)
 
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr 
+    pivot = random.choice(arr)
+    smaller, equal, larger = [], [], []
+    for x in arr:
+        if x < pivot: smaller.append(x)
+        if x == pivot: equal.append(x)
+        if x > pivot: larger.append(x)
+    return quicksort(smaller) + equal + quicksort(larger)
+
+def counting_sort(arr):
+    if not arr: return []
+    R = max(arr)
+    counts = [0] * (R + 1)
+    for x in arr:
+        counts[x] += 1 
+    res = []
+    for x in range(R + 1):
+        while counts[x] > 0:
+            res.append(x)
+            counts[x] -= 1 
+    return res 
+
+def descending_sort(strings):
+    return sorted(strings, key=lambda s: s.lower(), reverse=True)
+
+def sort_by_interval_end(intervals):
+    return sorted(intervals, key=lambda interval: interval[1])
+
+def sort_value_then_suit(deck):
+    suit_map = {'clubs': 0, 'hearts': 1, 'spades': 2, 'diamonds': 3}
+    return sorted(deck, key=lambda card: (card.value, suit_map[card.suit]))
+
+def new_deck_order(deck):
+    suit_map = {'hearts': 0, 'clubs': 1, 'diamonds': 2, 'spades': 3}
+    return sorted(deck, key=lambda card: (suit_map[card.suit], card.value))
+
+def stable_sort_by_value(deck):
+    return sorted(deck, key=lambda card: card.value)
+
+def letter_occurrences(word):
+    letter_to_count = dict()
+    for c in word:
+        if c not in letter_to_count:
+            letter_to_count[c] = 0
+        letter_to_count[c] += 1 
+    tuples = []
+    for letter, count in letter_to_count.items():
+        tuples.append((letter, count))
+    tuples.sort(key=lambda x: (-x[1], x[0]))
+    res = []
+    for letter, _ in tuples:
+        res.append(letter)
+    return res 
+
+def are_circles_nested(circles):
+    circles.sort(key = lambda c: c[1], reverse=True)
+    for i in range(len(circles) - 1):
+        if not contains(circles[i], circles[i + 1]):
+            return False 
+    return True 
+def contains(c1, c2):
+    (x1, y1), r1 = c1 
+    (x2, y2), r2 = c2 
+    center_distance = sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+    return center_distance + r2 < r1 
+
+def process_operations(nums, operations):
+    n = len(nums)
+    deleted = set()
+    sorted_indices = []
+    for i in range(n):
+        sorted_indices.append(i)
+    sorted_indices.sort(key=lambda i: nums[i])
+    smallest_idx = 0
+    for op in operations:
+        if 0 <= op < n:
+            deleted.add(op)
+        else:
+            # skip until the next non-deleted smallest index 
+            while smallest_idx < n and sorted_indices[smallest_idx] in deleted:
+                smallest_idx += 1 
+            if smallest_idx < n:
+                deleted.add(sorted_indices[smallest_idx])
+                smallest_idx += 1 
+    res = []
+    for i in range(n):
+        if not i in deleted:
+            res.append(nums[i])
+    return res 
+
+class Spreadsheet:
+    def __init__(self, rows, cols):
+        self.rows = rows 
+        self.cols = cols 
+        self.sheet = []
+        for _ in range(rows):
+            self.sheet.append([0] * cols)
+    def set(self, row, col, value):
+        self.sheet[row][col] = value 
+    def get(self, row, col):
+        return self.sheet[row][col]
+    def sort_rows_by_column(self, col):
+        self.sheet.sort(key=lambda row: row[col])
+    def sort_columns_by_row(self, row):
+        columns_with_values = []
+        for col in range(self.cols):
+            columns_with_values.append((col, self.sheet[row][col]))
+        sorted_columns = sorted(columns_with_values, key=lambda x: x[1])
+        sorted_sheet = []
+        for r in range(self.rows):
+            new_row = []
+            for col, _ in sorted_columns:
+                new_row.append(self.sheet[r][col])
+            sorted_sheet.append(new_row)
+        self.sheet = sorted_sheet 
+
+def bucket_sort(books):
+    if not books: return []
+    min_year = min(book.year_published for book in books)
+    max_year = max(book.year_published for book in books)
+    buckets = [[] for _ in range(max_year - min_year + 1)]
+    for book in books:
+        buckets[book.year_published - min_year].append(book)
+    res = []
+    for bucket in buckets:
+        for book in bucket:
+            res.append(book)
+    return res 
+
+def quickselect(arr, k):
+    if len(arr) == 1:
+        return arr[0]
+    pivot_index = random.randint(0, len(arr) - 1)
+    pivot = arr[pivot_index]
+    smaller, larger = [], []
+    for x in arr:
+        if x < pivot: smaller.append(x)
+        elif x > pivot: larger.append(x)
+    if k <= len(smaller):
+        return quickselect(smaller, k)
+    elif k == len(smaller) + 1:
+        return pivot 
+    else:
+        return quickselect(larger, k - len(smaller) - 1)
+def first_k(arr, k):
+    if len(arr) == 0: return []
+    kth_val = quickselect(arr, k)
+    return [x for x in arr if x <= kth_val]
 ```
 
 <!-- TOC --><a name="32-stacks-queues"></a>
