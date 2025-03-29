@@ -1344,7 +1344,327 @@ def remove_duplicates(head):
 ## 35. Trees 
 
 ```py
+# DFS
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val 
+        self.left = left 
+        self.right = right 
+    def is_leaf(node):
+        if not node:
+            return False 
+        return not node.left and not node.right 
+    def children_values(node):
+        if not node:
+            return []
+        values = []
+        if node.left:
+            values.append(node.left.val)
+        if node.right:
+            values.append(node.right.val)
+        return values 
+    def grandchildren_values(node):
+        if not node:
+            return []
+        values = []
+        for child in [node.left, node.right]:
+            if child and child.left:
+                values.append(child.left.val)
+            if child and child.right:
+                values.append(child.right.val)
+        return values 
+    def subtree_size(node):
+        if not node:
+            return 0 
+        left_size = subtree_size(node.left)
+        right_size = subtree_size(node.right)
+        return left_size + right_size + 1 # 1 for node 
+    def subtree_height(node):
+        if not node:
+            return 0 
+        left_height = subtree_height(node.left)
+        right_height = subtree_height(node.right)
+        return max(left_height, right_height) + 1
+    
+class Node:
+    def __init__(self, id, parent, left, right):
+        self.id = id 
+        self.parent = parent 
+        self.left = left 
+        self.right = right 
+    def is_root(node):
+        return not node.parent 
+    def ancestor_ids(node):
+        ids = []
+        while node.parent:
+            node = node.parent 
+            ids.append(node.id)
+        return ids 
+    def depth(node):
+        res = 0 
+        while node.parent:
+            node = node.parent 
+            res += 1 
+        return res 
+    def LCA(node1, node2):
+        depth1 = depth(node1)
+        depth2 = depth(node2)
+        while depth1 > depth2:
+            node1 = node1.parent 
+            depth1 -= 1
+        while depth2 > depth1:
+            node2 = node2.parent 
+            depth2 -= 1 
+        while node1.id != node2.id:
+            node1 = node1.parent 
+            node2 = node2.parent 
+        return node1.id 
+    def distance(node1, node2):
+        lca_id = LCA(node1, node2)
+        dist = 0 
+        while node1.id != lca_id:
+            dist += 1 
+            node1 = node1.parent 
+        while node2.id != lca_id:
+            dist += 1 
+            node2 = node2.parent 
+        return dist 
+    def size(node):
+        if not node:
+            return 0 
+        return size(node.left) + size(node.right) + 1 
+    def preorder(root):
+        if not root:
+            return 
+        print(root.val)
+        preorder(root.left)
+        preorder(root.right)
+    def inorder(root):
+        if not root:
+            return 
+        inorder(root.left)
+        print(root.val)
+        inorder(root.right)
+    def postorder(root):
+        if not root:
+            return 
+        postorder(root.left)
+        postorder(root.right)
+        print(root.val)
+    def visit(node, info_passed_down):
+        if base_case:
+            return info_to_pass_up
+        a = vist(node.left, info_to_pass_down)
+        b = visit(node.right, info_to_pass_down)
+        global_state = info_stored_globally
+        return info_to_pass_up
+    
+def longest_aligned_chain(root):
+    res = 0 
+    def visit(node, depth): # inner recursive function
+        nonlocal res # to make res visible inside visit()
+        if not node:
+            return 0 
+        left_chain = visit(node.left, depth + 1)
+        right_chain = visit(node.right, depth + 1)
+        current_chain = 0 
+        if node.val == depth:
+            current_chain = 1 + max(left_chain, right_chain)
+            res = max(res, current_chain)
+        return current_chain 
+    visit(root, 0) # trigger DFS, which updates global res
+    return res 
 
+def hidden_message(root):
+    message = []
+    def visit(node):
+        if not node:
+            return 
+        if node.text[0] == 'b':
+            message.append(node.text[1])
+            visit(node.left)
+            visit(node.right)
+        elif node.text[0] == 'i':
+            visit(node.left)
+            message.append(node.text[1])
+            visit(node.right)
+        else:
+            visit(node.left)
+            visit(node.right)
+            message.append(node.text[1])
+    visit(root)
+    return ''.join(message)
+
+def most_stacked(root):
+    pos_to_count = dict()
+    def visit(node, r, c):
+        if not node:
+            return 
+        if (r, c) not in pos_to_count:
+            pos_to_count[(r, c)] = 0 
+        pos_to_count[(r, c)] += 1 
+        visit(node.left, r + 1, c)
+        visit(node.right, r, c + 1)
+    visit(root, 0, 0)
+    return max(pos_to_count.values())
+
+def invert(root):
+    if not root:
+        return None 
+    root.left, root.right = invert(root.right), invert(root.left)
+    return root 
+
+def evaluate(root):
+    if root.kind == "num":
+        return root.num 
+    children_evals = []
+    for child in root.children:
+        children_evals.append(evaluate(child))
+    if root.kind == "sum":
+        return sum(children_evals)
+    if root.kind == "product":
+        return product(children_evals)
+    if root.kind == "max":
+        return max(children_evals)
+    if root.kind == "min":
+        return min(children_evals)
+    raise ValueError('invalid node kind')
+
+# BFS
+def level_order(root):
+    Q = Queue()
+    Q.add(root)
+    while not Q.empty():
+        node = Q.pop()
+        if not node:
+            continue 
+        print(node.eval)
+        Q.add(node.left)
+        Q.add(node.right)
+
+def node_depth_queue_recipe(root):
+    Q = Queue()
+    Q.add((root, 0))
+    while not Q.empty():
+        node, depth = Q.pop()
+        if not node:
+            continue 
+        # do something with node and depth
+        Q.add((node.left, depth+1))
+        Q.add((node.right, depth+1))
+
+def left_view(root):
+    if not root:
+        return []
+    Q = Queue()
+    Q.add((root, 0))
+    res = [root.val]
+    current_depth = 0 
+    while not Q.empty():
+        node, depth = Q.pop()
+        if not node:
+            continue 
+        if depth == current_depth + 1:
+            res.append(node.val)
+            current_depth += 1 
+        Q.add((node.left, depth+1))
+        Q.add((node.right, depth+1))
+    return res 
+
+def level_counts(root):
+    Q = Queue()
+    Q.add((root, 0))
+    level_count = defaultdict(int)
+    while not Q.empty():
+        node, depth = Q.pop()
+        if not node:
+            continue 
+        level_count[depth] += 1 
+        Q.add((node.left, depth + 1))
+        Q.add((node.right, depth + 1))
+    return level_count
+def most_prolific_level(root):
+    level_count = level_counts(root)
+    res = -1 
+    max_prolificness = -1 # less than any valid prolificness
+    for level in level_count:
+        if level + 1 not in level_count:
+            continue 
+        prolificness = level_count[level + 1] / level_count[level]
+        if prolificness > max_prolificness:
+            max_prolificness = prolificness
+            res = level 
+    return res 
+
+def zig_zag_order(root):
+    res = []
+    Q = Queue()
+    Q.add((root, 0))
+    cur_level = []
+    cur_depth = 0 
+    while not Q.empty():
+        node, depth = Q.pop()
+        if not node:
+            continue 
+        if depth > cur_depth:
+            if cur_depth % 2 == 0:
+                res += cur_level 
+            else:
+                res += cur_level[::-1] # reverse order
+            cur_level = []
+            cur_depth = depth 
+        cur_level.append(node)
+        Q.add((node.left, depth + 1))
+        Q.add((node.right, depth + 1))
+    if cur_depth % 2 == 0: # add last level 
+        res += cur_level
+    else:
+        res += cur_level[::-1]
+    return res 
+
+# Binary Search Tree
+def find(root, target):
+    cur_node = root
+    while cur_node:
+        if cur_node.val == target:
+            return True 
+        elif cur_node.val > target:
+            cur_node = cur_node.left 
+        else:
+            cur_node = cur_node.right 
+    return False 
+
+def find_closest(root, target):
+    cur_node = root 
+    next_above, next_below = math.inf, -math.inf
+    while cur_node:
+        if cur_node.val == target:
+            return cur_node.val 
+        elif cur_node.val > target:
+            next_above = cur_node.val 
+            cur_node = cur_node.left 
+        else:
+            next_below = cur_node.val 
+            cur_node = cur_node.right 
+    if next_above - target < target - next_below:
+        return next_above 
+    return next_below 
+
+def is_bst(root):
+    prev_value = -math.inf 
+    res = True 
+    def visit(node):
+        nonlocal prev_value, res 
+        if not node or not res:
+            return 
+        visit(node.left)
+        if node.val < prev_value:
+            res = False 
+        else:
+            prev_value = node.val 
+        visit(node.right)
+    visit(root)
+    return res 
 ```
 
 <!-- TOC --><a name="36-graphs"></a>
