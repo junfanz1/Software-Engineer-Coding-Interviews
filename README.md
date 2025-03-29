@@ -61,12 +61,13 @@ Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka,
 
 > [Book Link](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Beyond%20Cracking%20the%20Coding%20Interview/Beyond%20Cracking%20the%20Coding%20Interview.md)
 
+> [Educative - Grokking the Coding Interview Patterns in Python](https://www.educative.io/courses/grokking-coding-interview-in-python) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python.md)
+
+
 <div style="display: flex; justify-content: space-around;">
   <img src="https://github.com/user-attachments/assets/ec6ea72a-3d99-4c13-9086-3c1f3e9256b0" width="35%" height="35%">
   <img src="https://github.com/user-attachments/assets/62a0e128-7ca0-49b4-a53f-fed51456f06b" width="35%" height="35%">
 </div>
-
-> [Educative - Grokking the Coding Interview Patterns in Python](https://www.educative.io/courses/grokking-coding-interview-in-python) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python.md)
 
 <!-- TOC --><a name="3-linux-git"></a>
 # 3. Linux, Git
