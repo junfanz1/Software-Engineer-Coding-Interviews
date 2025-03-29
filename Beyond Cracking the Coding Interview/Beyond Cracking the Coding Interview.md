@@ -1048,7 +1048,82 @@ def balanced_brackets(s, brackets):
 ## 33. Recursion
 
 ```py
+def moves(seq):
+    res = []
+    def moves_rec(pos):
+        if pos == len(seq):
+            return 
+        if seq[pos] == '2':
+            moves_rec(pos+1)
+            moves_rec(pos+2)
+        else:
+            res.append(seq[pos])
+            moves_rec(pos+1)
+    moves_rec(0)
+    return ''.join(res)
 
+def nested_array_sum(arr):
+    res = 0
+    for elem in arr:
+        if isinstance(elem, int):
+            res += elem 
+        else:
+            res += nested_array_sum(elem)
+    return res 
+
+def reverse_in_place(arr):
+    reverse_rec(arr, 0, len(arr) - 1)
+    def reverse_rec(arr, i, j):
+        if i >= j:
+            return 
+        arr[i], arr[j] = arr[j], arr[i]
+        reverse_rec(arr, i + 1, j - 1)
+
+def power(a, p, m):
+    if p == 0:
+        return 1 
+    if p % 2 == 0:
+        half = power(a, p // 2, m)
+        return (half * half) % m 
+    return (a * power(a, p - 1, m)) % m 
+
+def fib(n):
+    memo = {}
+    def fib_rec(i):
+        if i <= 1:
+            return 1 
+        if i in memo:
+            return memo[i]
+        memo[i] = fib_rec(i - 1) + fib_rec(i - 2)
+        return memo[i]
+    return fib_rec(n)
+
+def blocks(n):
+    memo = dict()
+    def roof(n):
+        if n == 1:
+            return 1 
+        if n in memo:
+            return memo[n]
+        memo[n] = roof(n - 1) * 2 + 1 
+        return memo[n]
+    def blocks_rec(n):
+        if n == 1:
+            return 1 
+        return blocks_rec(n - 1) * 2 + roof(n)
+    return blocks_rec(n)
+
+def max_laminal_sum(arr):
+    # return max sum for subliminal array in arr[l:r]
+    def max_laminal_sum_rec(l, r):
+        if r - l == 1:
+            return arr[l]
+        mid = (l + r) // 2 
+        option1 = max_laminal_sum_rec(l, mid)
+        option2 = max_laminal_sum_rec(mid, r)
+        option3 = sum(arr)
+        return max(option1, option2, option3)
+    return max_laminal_sum_rec(0, len(arr))
 ```
 
 <!-- TOC --><a name="34-linked-lists"></a>
