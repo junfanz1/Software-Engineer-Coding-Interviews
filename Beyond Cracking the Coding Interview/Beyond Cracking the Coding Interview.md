@@ -920,7 +920,128 @@ def first_k(arr, k):
 ## 32. Stacks & Queues
 
 ```py
+class Stack:
+    def __init__(self):
+        self.array = []
+    def push(self, value):
+        self.array.append(value)
+    def pop(self):
+        if self.is_empty():
+            raise IndexError('stack is empty')
+        val = self.array[-1]
+        self.array.pop()
+        return val 
+    def peek(self):
+        if self.is_empty():
+            raise IndexError('stack is empty')
+        return self.array[-1]
+    def size(self):
+        return len(self.array)
 
+def compress_array(arr):
+    stack = []
+    for num in arr:
+        while stack and stack[-1] == num:
+            num += stack.pop()
+        stack.append(num)
+    return stack 
+
+def compress_array_by_k(arr, k):
+    stack = []
+    def merge(num):
+        if not stack or stack[-1][0] != num:
+            stack.append([num, 1])
+        elif stack[-1][1] < k - 1:
+            stack[-1][1] += 1 
+        else:
+            stack.pop()
+            merge(num * k)
+    for num in arr:
+        merge(num)
+    res = []
+    for num, count in stack:
+        for _ in range(count):
+            res.append(num)
+    return res 
+
+class ViewerCounter:
+    def __init__(self, window):
+        self.queues = {"guest": Queue(), "follower": Queue(), "subscriber": Queue()}
+        self.window = window 
+    def join(self, t, v):
+        self.queues[v].put(t)
+    def get_viewers(self, t, v):
+        queue = self.queues[v]
+        while not queue.empty() and queue.peek() < t - self.window:
+            queue.pop()
+        return queue.size()
+
+def current_url(actions):
+    stack = []
+    for action, value in actions:
+        if action == "go":
+            stack.append(value)
+        else:
+            while len(stack) > 1 and value > 0:
+                stack.pop()
+                value -= 1 
+    return stack[-1]
+
+def current_url_followup(actions):
+    stack = []
+    forward_stack = []
+    for action, value in actions:
+        if action == "go":
+            stack.append(value)
+            forward_stack = []
+        elif action == "back":
+            while len(stack) > 1 and value > 0:
+                forward_stack.append(stack.pop())
+                value -= 1 
+        else:
+            while forward_stack and value > 0:
+                stack.append(forward_stack.pop())
+                value -= 1 
+    return stack[-1]
+
+def balanced(s):
+    height = 0
+    for c in s:
+        if c == '(':
+            height += 1 
+        else:
+            height -= 1 
+            if height < 0:
+                return False 
+    return height == 0
+
+def max_balanced_partition(s):
+    height = 0 
+    res = 0 
+    for c in s:
+        if c == '(':
+            height += 1 
+        else:
+            height -= 1 
+            if height == 0:
+                res += 1 
+    return res 
+
+def balanced_brackets(s, brackets):
+    open_to_close = dict()
+    close_set = set()
+    for pair in brackets:
+        open_to_close[pair[0]] = pair[1]
+        close_set.add(pair[1])
+    stack = []
+    for c in s:
+        if c in open_to_close:
+            stack.append(open_to_close[c])
+        elif c in close_set:
+            if not stack or stack[-1] != c:
+                return False 
+            stack.pop()
+    return len(stack) == 0
 ```
 
 <!-- TOC --><a name="33-recursion"></a>
