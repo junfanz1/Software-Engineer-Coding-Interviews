@@ -621,7 +621,135 @@ def is_before(picture):
 ## 30. Set & Maps
 
 ```py
+def account_sharing(connections):
+    seen = set()
+    for ip, username in connections:
+        if username in seen:
+            return ip 
+        seen.add(username)
+    return ""
 
+def most_shared_account(connections):
+    user_to_count = dict()
+    for _, user in connections:
+        if not user in user_to_count:
+            user_to_count[user] = 0
+        user_to_count[user] += 1 
+    most_shared_user = None 
+    for user, count in user_to_count.items():
+        if not most_shared_account or count > user_to_count[most_shared_user]:
+            most_shared_user = user 
+    return most_shared_user
+
+def multi_account_cheating(users):
+    unique_lists = set()
+    for _, ips in users:
+        immutable_list = tuple(sorted(ips))
+        if immutable_list in unique_lists:
+            return True 
+        unique_lists.add(immutable_list)
+    return False 
+
+class DomainResolver:
+    def __init__(self):
+        self.ip_to_domains = dict()
+        self.domain_to_subdomains = dict()
+    def register_domain(self, ip, domain):
+        if ip not in self.ip_to_domains:
+            self.ip_to_domains[ip] = set()
+        self.ip_to_domains[ip].add(domain)
+    def register_subdomain(self, domain, subdomain):
+        if domain not in self.domain_to_subdomains:
+            self.domain_to_subdomains[domain] = set()
+        self.domain_to_subdomains[domain].add(subdomain)
+    def has_subdomain(self, ip, domain, subdomain):
+        if ip not in self.ip_to_domains:
+            return False 
+        if domain not in self.domain_to_subdomains:
+            return False 
+        return subdomain in self.domain_to_subdomains[domain]
+    
+def find_squared(arr):
+    # create map from number to index (allow multiple indices per number)
+    num_to_indices = {}
+    for i, num in enumerate(arr):
+        if num not in num_to_indices:
+            num_to_indices[num] = []
+        num_to_indices[num].append(i)
+    res = []
+    # iterate through each number and check if its square exists in map 
+    for i, num in enumerate(arr):
+        square = num ** 2 
+        if square in num_to_indices:
+            for j in num_to_indices[square]:
+                res.append([i, j])
+    return res 
+
+def suspect_students(answers, m, students):
+    def same_row(desk1, desk2):
+        return (desk1 - 1) // m == (desk2 - 1) // m 
+    desk_to_index = {}
+    for i, [student_id, desk, student_answers] in enumerate(students):
+        if student_answers != answers:
+            desk_to_index[desk] = i 
+    sus_pairs = []
+    for student_id, desk, answers in students:
+        other_desk = desk + 1 
+        if same_row(desk, other_desk) and other_desk in desk_to_index:
+            other_student = students[desk_to_index[other_desk]]
+            if answers == other_student[2]:
+                sus_pairs.append([student_id, other_student[0]])
+    return sus_pairs
+
+def alphabetic_sum_product(words, target):
+    sums = set()
+    for word in words:
+        sums.add(alphabetical_sum(word))
+    for i in sums:
+        if target % i != 0:
+            continue 
+        for j in sums:
+            k = target / (i * j)
+            if k in sums:
+                return True 
+    return False 
+
+def find_anomalies(log):
+    opened = {} # ticket -> agent who opened it 
+    working_on = {} # agent -> ticket they're working on 
+    seen = set() # tickets that were opened or closed 
+    anomalies = set()
+    for agent, action, ticket in log:
+        if ticket in anomalies:
+            continue 
+        if action == "open":
+            if ticket in seen:
+                anomalies.add(ticket)
+                continue 
+            if agent in working_on:
+                # if agent is working on another ticket, that ticket is anomalous 
+                anomalies.add(working_on[agent])
+            opened[ticket] = agent 
+            working_on[agent] = ticket 
+            seen.add(ticket)
+        else:
+            if ticket not in opened or opened[ticket] != agent:
+                anomalies.add(ticket)
+                continue 
+            if agent not in working_on or working_on[agent] != ticket:
+                anomalies.add(ticket)
+                continue 
+            del working_on[agent]
+            del opened[ticket]
+    # any tickets still open are anomalous 
+    anomalies.update(opened.keys())
+    return list(anomalies)
+
+def set_intersection(sets):
+    res = sets[0]
+    for i in range(1, len(sets)):
+        res = {elem for elem in sets[i] if elem in res}
+    return res 
 ```
 
 <!-- TOC --><a name="31-sorting"></a>
