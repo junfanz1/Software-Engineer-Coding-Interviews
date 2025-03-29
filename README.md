@@ -66,6 +66,8 @@ Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka,
   <img src="https://github.com/user-attachments/assets/62a0e128-7ca0-49b4-a53f-fed51456f06b" width="35%" height="35%">
 </div>
 
+> [Educative - Grokking the Coding Interview Patterns in Python](https://www.educative.io/courses/grokking-coding-interview-in-python) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python.md)
+
 <!-- TOC --><a name="3-linux-git"></a>
 # 3. Linux, Git
 
