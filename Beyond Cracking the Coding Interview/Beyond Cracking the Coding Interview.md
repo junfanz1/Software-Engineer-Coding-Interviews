@@ -1130,7 +1130,214 @@ def max_laminal_sum(arr):
 ## 34. Linked Lists
 
 ```py
+class Node:
+    def __init__(self, val):
+        self.val = val 
+        self.prev = None
+        self.next = None 
 
+def add_to_end(head, val):
+    cur = head 
+    while cur.next:
+        cur = cur.next 
+    cur.next = Node(val)
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None 
+        self._size = 0 
+    def size(self):
+        return self._size 
+    def push_front(self, val):
+        new = Node(val)
+        new.next = self.head 
+        self.head = new 
+        self._size += 1 
+    def pop_front(self):
+        if not self.head:
+            return None 
+        val = self.head.val 
+        self.head = self.head.next 
+        self._size -= 1 
+        return val 
+    def push_back(self, val):
+        new = Node(val)
+        self._size += 1 
+        if not self.head:
+            self.head = new 
+            return 
+        cur = self.head 
+        while cur.next:
+            cur = cur.next 
+        cur.next = new 
+    def pop_back(self):
+        if not self.head:
+            return None 
+        self._size -= 1
+        if not self.head.next:
+            val = self.head.val 
+            self.head = None 
+            return val 
+        cur = self.head 
+        while cur.next and cur.next.next:
+            cur = cur.next 
+        val = cur.next.val 
+        cur.next = None 
+        return val 
+    def contains(self, val):
+        cur = self.head 
+        while cur:
+            if cur.val == val:
+                return cur 
+            cur = cur.next 
+        return None 
+    
+class Node:
+    def __init__(self, val):
+        self.val = val 
+        self.next = None 
+class Queue:
+    def __init__(self):
+        self.head = None 
+        self.tail = None 
+        self._size = 0 
+    def empty(self):
+        return not self.head 
+    def size(self):
+        return self._size 
+    def push(self, val):
+        new = Node(val)
+        if self.tail:
+            self.tail.next = new 
+        self.tail = new 
+        if not self.head:
+            self.head = new 
+        self._size += 1 
+    def pop(self):
+        if self.empty():
+            raise IndexError('empty queue')
+        val = self.head.val 
+        self.head = self.head.next 
+        if not self.head:
+            self.tail = None 
+        self._size -= 1
+        return val 
+    
+def copy_list(head):
+    if not head:
+        return None 
+    new_head = Node(head.val)
+    cur_new = new_head 
+    cur_old = head.next 
+    while cur_old:
+        cur_new.next = Node(cur_old.val)
+        cur_new = cur_new.next 
+        cur_old = cur_old.next 
+    return new_head 
+
+def reverse_list(head):
+    prev = None 
+    cur = head 
+    while cur:
+        nxt = cur.next 
+        cur.next = prev 
+        prev = cur 
+        cur = nxt 
+    return prev 
+
+def reverse_section(head, left, right):
+    dummy = Node(0)
+    dummy.next = head 
+    # find nodes before and after section
+    if left == 0:
+        prev = dummy 
+    else:
+        prev = node_at_index(head, left - 1)
+    if not prev or not prev.next:
+        # nothing to reverse 
+        return head 
+    nxt = node_at_index(head, right + 1) # may be none 
+    # break out section
+    section_head = prev.next 
+    prev.next = None 
+    section_tail = section_head 
+    while section_tail.next != nxt:
+        section_tail = section_tail.next 
+    section_tail.next = None 
+    # reverse section, same as reverse linked list solution
+    old_section_head = section_head 
+    new_section_head = reverse_list(section_head)
+    # reattach section
+    prev.next = new_section_head
+    old_section_head.next = nxt 
+    return dummy.next 
+
+def has_cycle(head):
+    slow, fast = head, head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+        if slow == fast:
+            return True 
+    return False 
+
+def convert_to_array(self, node):
+    cur = node 
+    while cur.prev:
+        cur = cur.prev 
+    res = []
+    while cur:
+        res.append(cur.val)
+        cur = cur.next 
+    return res 
+
+def get_middle(head):
+    slow, fast = head, head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next
+    return slow 
+
+def remove_kth_node(head, k):
+    if not head:
+        return None 
+    dummy = Node(0)
+    dummy.next = head 
+    fast = dummy
+    slow = dummy 
+    for _ in range(k):
+        fast = fast.next 
+    while fast and fast.next:
+        fast = fast.next 
+        slow = slow.next 
+    slow.next = slow.next.next 
+    return dummy.next 
+
+def merge(head1, head2):
+    dummy = Node(0)
+    cur = dummy 
+    p1, p2 = head1, head2 
+    while p1 and p2:
+        cur.next = p1 
+        cur = cur.next 
+        p1 = p1.next 
+        cur.next = p2 
+        p2 = p2.next 
+        cur = cur.next 
+    if p1:
+        cur.next = p1 
+    else:
+        cur.next = p2 
+    return dummy.next 
+
+def remove_duplicates(head):
+    cur = head 
+    while cur and cur.next:
+        if cur.val == cur.next.val:
+            cur.next = cur.next.next 
+        else:
+            cur = cur.next 
+    return head 
 ```
 
 <!-- TOC --><a name="35-trees"></a>
