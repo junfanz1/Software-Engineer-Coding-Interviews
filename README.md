@@ -48,13 +48,9 @@
 <!-- TOC --><a name="2-coding-interview"></a>
 # 2. Coding Interview
 
-Coding Interview Patterns: Nail Your Next Coding Interview - by Alex Xu, Shaun Gunawardane, 2024
+> [Coding Interview Patterns: Nail Your Next Coding Interview - by Alex Xu, Shaun Gunawardane, 2024](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135) | [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md) | [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
 
-> [Book Link](https://www.amazon.com/Coding-Interview-Patterns-Nail-Your/dp/1736049135) | [__Markdown Notes__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns:%20Nail%20Your%20Next%20Coding%20Interview/Coding%20Interview%20Patterns,%20Alex%20Xu.md) | [__Bonus PDF of the Book__](https://github.com/junfanz1/Coding-Interview-Practices/blob/main/Coding%20Interview%20Patterns%3A%20Nail%20Your%20Next%20Coding%20Interview/Bonus_Pdf.pdf)
-
-Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano, 2025
-
-> [Book Link](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Beyond%20Cracking%20the%20Coding%20Interview/Beyond%20Cracking%20the%20Coding%20Interview.md)
+> [Beyond Cracking the Coding Interview - by Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano, 2025](https://www.amazon.com/Beyond-Cracking-Coding-Interview-Successfully/dp/195570600X) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Beyond%20Cracking%20the%20Coding%20Interview/Beyond%20Cracking%20the%20Coding%20Interview.md)
 
 > [Educative - Grokking the Coding Interview Patterns in Python](https://www.educative.io/courses/grokking-coding-interview-in-python) | [__Markdown Notes__](https://github.com/junfanz1/Software-Engineer-Coding-Interviews/blob/main/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python/Grokking%20the%20Coding%20Interview%20Patterns%20in%20Python.md)
 
