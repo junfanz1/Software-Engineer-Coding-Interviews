@@ -63,7 +63,7 @@ class DynamicArray:
         self.pop_back()
         return saved_element
 ```
-# 26. String Manipulation
+## 26. String Manipulation
 
 ```py
 def is_uppercase(c):
