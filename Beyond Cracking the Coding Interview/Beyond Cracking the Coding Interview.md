@@ -115,6 +115,185 @@ def join(arr, s):
 ## 27. Two Pointers
 
 ```py
+def palindrome(s):
+    l, r = 0, len(s) - 1 
+    while l < r:
+        if s[l] != s[r]:
+            return False 
+        l += 1 
+        r -= 1
+    return True 
 
+def smaller_prefixes(arr):
+    sp, fp = 0, 0
+    slow_sum, fast_sum = 0, 0 
+    while fp < len(arr):
+        slow_sum += arr[sp]
+        fast_sum += arr[fp] + arr[fp+1]
+        if slow_sum >= fast_sum:
+            return False 
+        sp += 1 
+        fp += 2 
+    return True 
+
+def common_elements(arr1, arr2):
+    p1, p2 = 0, 0 
+    res = []
+    while p1 < len(arr1) and p2 < len(arr2):
+        if arr1[p1] == arr2[p2]:
+            res.append(arr1[p1])
+            p1 += 1 
+            p2 += 1 
+        elif arr1[p1] < arr2[p2]:
+            p1 += 1 
+        else:
+            p2 += 1 
+    return res 
+
+def palindrome_sentence(s):
+    l, r = 0, len(s) - 1 
+    while l < r: 
+        if not s[l].isalpha():
+            l += 1 
+        elif not s[r].isalpha():
+            r -= 1 
+        else:
+            if s[l].lower() != s[r].lower():
+                return False 
+            l += 1 
+            r -= 1 
+    return True 
+
+def reverse_case_match(s):
+    l, r = 0, len(s) - 1 
+    while l < len(s) and r >= 0:
+        if not s[l].islower():
+            l += 1 
+        elif not s[r].isupper():
+            r -= 1 
+        else:
+            if s[l] != s[r].lower():
+                return False 
+            l += 1 
+            r -= 1 
+    return True
+
+def merge(arr1, arr2):
+    p1, p2 = 0, 0
+    res = []
+    while p1 < len(arr1) and p2 < len(arr2):
+        if arr1[p1] < arr2[p2]:
+            res.append(arr1[p1])
+            p1 += 1 
+        else:
+            res.append(arr2[p2])
+            p2 += 1 
+    while p1 < len(arr1):
+        res.append(arr1[p1])
+        p1 += 1 
+    while p2 < len(arr2):
+        res.append(arr2[p2])
+        p2 += 1 
+    return res 
+
+def two_sum(arr):
+    l, r = 0, len(arr) - 1 
+    while l < r:
+        if arr[l] + arr[r] > 0:
+            r -= 1 
+        elif arr[l] + arr[r] < 0:
+            l += 1 
+        else:
+            return True 
+    return False 
+
+def sort_valley_array(arr):
+    if len(arr) == 0:
+        return []
+    l, r = 0, len(arr) - 1 
+    res = [0] * len(arr)
+    i = len(arr) - 1 
+    while l < r:
+        if arr[l] >= arr[r]:
+            res[i] = arr[l]
+            l += 1 
+            i -= 1 
+        else:
+            res[i] = arr[r]
+            r -= 1 
+            i -= 1 
+    res[0] = arr[l]
+    return res 
+
+def intersection(int1, int2):
+    overlap_start = max(int1[0], int2[0])
+    overlap_end = min(int1[1], int2[1])
+    return [overlap_start, overlap_end]
+def interval_intersection(arr1, arr2):
+    p1, p2 = 0, 0
+    n1, n2 = len(arr1), len(arr2)
+    res = []
+    while p1 < n1 and p2 < n2:
+        int1, int2 = arr1[p1], arr2[p2]
+        if int1[1] < int2[0]:
+            p1 += 1 
+        elif int2[1] < int1[0]:
+            p2 += 1 
+        else:
+            res.append(intersection(int1, int2))
+            if int1[1] < int2[1]:
+                p1 += 1 
+            else:
+                p2 += 1 
+    return res 
+
+def reverse(arr):
+    l, r = 0, len(arr) - 1 
+    while l < r:
+        arr[l], arr[r] = arr[r], arr[l]
+        l += 1
+        r -= 1 
+
+def sort_even(arr):
+    l, r = 0, len(arr) - 1 
+    while l < r:
+        if arr[l] % 2 == 0:
+            l += 1 
+        elif arr[r] % 2 == 1:
+            r -= 1 
+        else:
+            arr[l], arr[r] = arr[r], arr[l]
+            l += 1 
+            r -= 1
+
+def remove_duplicates(arr):
+    s, w = 0, 0
+    while s < len(arr):
+        must_keep = s == 0 or arr[s] != arr[s-1]
+        if must_keep:
+            arr[w] = arr[s]
+            w += 1 
+        s += 1 
+    return w 
+
+def move_word(arr, word):
+    seeker, writer = 0, 0
+    i = 0
+    while seeker < len(arr):
+        if i < len(word) and arr[seeker] == word[i]:
+            seeker += 1 
+            i += 1 
+        else:
+            arr[writer] = arr[seeker]
+            seeker += 1 
+            writer += 1 
+    for c in word:
+        arr[writer] = c 
+        writer += 1 
 ```
 
+# 28. Grids & Matrices
+
+```py
+
+```
