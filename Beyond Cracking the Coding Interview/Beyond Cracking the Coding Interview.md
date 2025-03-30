@@ -2776,7 +2776,94 @@ def delay_optimized(times):
 ## 41. Greedy Algorithms
 
 ```py
+def most_non_overlapping_intervals(intervals):
+    intervals.sort(key=lambda x: x[1])
+    count = 0 
+    prev_end = -math.inf
+    for l, r in intervals:
+        if l > prev_end:
+            count += 1 
+            prev_end = r 
+    return count 
 
+def can_reach_goal(jumping_points, k, max_aging):
+    n = len(jumping_points)
+    gaps = []
+    for i in range(1, n):
+        gaps.append(jumping_points[i] - jumping_points[i - 1])
+    gaps.sort()
+    total_aging = sum(gaps[:n - 1 - k])
+    return total_aging <= max_aging
+
+def minimize_distance(points, center1, center2):
+    n = len(points)
+    assignment = [0] * n 
+    baseline = 0 
+    c1_count = 0
+    for i, p in enumerate(points):
+        if dist(p, center1) <= dist(p, center2):
+            assignment[i] = 1 
+            baseline += dist(p, center1)
+            c1_count += 1 
+        else:
+            assignment[i] = 2 
+            baseline += dist(p, center2)
+    if c1_count == n // 2:
+        return baseline
+    switch_costs = []
+    for i, p in enumerate(points):
+        if assignment[i] == 1 and c1_count > n // 2:
+            switch_costs.append(dist(p, center2) - dist(p, center1))
+        if assignment[i] == 2 and c1_count < n // 2:
+            switch_costs.append(dist(p, center1) - dist(p, center2))
+    res = baseline 
+    switch_costs.sort()
+    for cost in switch_costs[:abs(c1_count - n // 2)]:
+        res += cost 
+    return res 
+
+def min_middle_sum(arr):
+    arr.sort()
+    middle_sum = 0 
+    for i in range(len(arr) // 3):
+        middle_sum += arr[i * 2 + 1]
+    return middle_sum
+
+def min_script_runs(meetings):
+    meetings.sort(key=lambda x: x[1])
+    count = 0 
+    prev_end = -math.inf
+    for l, r in meetings:
+        if l > prev_end:
+            count += 1 
+            prev_end = r 
+    return count 
+
+def latest_reachable_year(jumping_points, k, max_aging):
+    gaps = []
+    for i in range(1, len(jumping_points)):
+        gaps.append(jumping_points[i] - jumping_points[i - 1])
+    min_heap = Heap()
+    total_gap_sum = 0 
+    sum_heap = 0 
+    for i, gap in enumerate(gaps):
+        aged = total_gap_sum - sum_heap 
+        min_heap.push(gap)
+        sum_heap += gap 
+        total_gap_sum += gap 
+        if min_heap.size() > k:
+            smallest_jump = min_heap.pop()
+            sum_heap -= smallest_jump 
+        new_aged = total_gap_sum - sum_heap
+        if new_aged > max_aging:
+            # we can't reach the end of gap i
+            # we get to jumping_points[i] and age naturally from there 
+            remaining_aging = max_aging - aged 
+            return jumping_points[i] + remaining_aging
+    # reached last jumping point 
+    aged = total_gap_sum - sum_heap 
+    remaining_aging = max_aging - aged 
+    return jumping_points[len(jumping_points) - 1] + remaining_aging
 ```
 
 <!-- TOC --><a name="42-topological-sort"></a>
