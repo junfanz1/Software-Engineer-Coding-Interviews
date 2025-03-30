@@ -2959,5 +2959,134 @@ def compile_time(seconds, imports):
 ## 43. Prefix Sums 
 
 ```py
+def channel_views(views, periods):
+    prefix_sum = [0] * len(views)
+    prefix_sum[0] = views[0]
+    for i in range(1, len(views)):
+        prefix_sum[i] = prefix_sum[i - 1] + views[i]
+    res = []
+    for l, r in periods:
+        if l == 0:
+            res.append(prefix_sum[r])
+        else:
+            res.append(prefix_sum[r] - prefix_sum[l - 1])
+    return res 
 
+# # initialization
+# # initialize prefix_sum with the same length as input array 
+# prefix_sum[0] = arr[0] # at least one element 
+# for i from 1 to len(arr) - 1:
+#     prefix_sum[i] = prefix_sum[i - 1] + arr[i]
+# # query: sum of subarray [l, r]
+# if l == 0:
+#     return prefix_sum[r]
+# return prefix_sum[r] - prefix_sum[l - 1]
+
+def good_reception_scores(likes, dislikes, periods):
+    positive_days = [0] * len(likes)
+    for i in range(likes):
+        if likes[i] > dislikes[i]:
+            positive_days[i] = 1 
+    # build prefix sum for positive_days array and query it with each period 
+
+def exclusive_product_array(arr):
+    m = 10 ** 9 + 7 
+    n = len(arr)
+    prefix_product = [1] * n 
+    prefix_product[0] = arr[0]
+    for i in range(1, n):
+        prefix_product[i] = (prefix_product[i - 1] * arr[i]) % m 
+    postfix_product = [1] * n 
+    postfix_product[n - 1] = arr[n - 1]
+    for i in range(n - 2, -1, -1):
+        postfix_product[i] = (postfix_product[i + 1] * arr[i]) % m 
+    res = [1] * n 
+    res[0] = postfix_product[1]
+    res[n - 1] = prefix_product[n - 2]
+    for i in range(1, n - 1):
+        res[i] = (prefix_product[i - 1] * postfix_product[i + 1]) % m 
+    return res 
+
+def balanced_index(arr):
+    prefix_sum = 0 
+    postfix_sum = sum(arr) - arr[0]
+    for i in range(len(arr)):
+        if prefix_sum == postfix_sum:
+            return i 
+        prefix_sum += arr[i]
+        if i + 1 < len(arr):
+            postfix_sum -= arr[i + 1]
+    return -1 
+
+def max_total_deviation(likes, dislikes):
+    scores = [likes[i] - dislikes[i] for i in range(len(likes))]
+    scores.sort()
+    n = len(scores)
+    prefix_sum = [0] * n 
+    prefix_sum[0] = scores[0]
+    for i in range(1, n):
+        prefix_sum[i] = prefix_sum[i - 1] + scores[i]
+    max_deviation = 0
+    for i in range(n):
+        left, right = 0, 0 
+        if i > 0:
+            left = i * scores[i] - prefix_sum[i - 1]
+        if i < n - 1:
+            right = prefix_sum[n - 1] - prefix_sum[i] - (n - i - 1) * scores[i]
+        max_deviation = max(max_deviation, left + right)
+    return max_deviation
+
+def count_subarrays(arr, k):
+    prefix_sum = # ...
+    prefix_sum_to_count = {0: 1} # for empty prefix 
+    count = 0 
+    for val in prefix_sum:
+        if val - k in prefix_sum_to_count:
+            count += prefix_sum_to_count[val - k]
+        if val not in prefix_sum_to_count:
+            prefix_sum_to_count[val] = 0 
+        prefix_sum_to_count[val] += 1 
+    return count 
+
+def longest_subarray_with_sum_k(arr, k):
+    prefix_sum = # ...
+    prefix_sum_to_index = {0: -1} # for empty prefix 
+    res = -1 
+    for r, val in enumerate(prefix_sum):
+        if val - k in prefix_sum_to_index:
+            l = prefix_sum_to_index[val - k]
+            res = max(res, r - l)
+        if val not in prefix_sum_to_index:
+            prefix_sum_to_index[val] = r 
+    return res 
+
+def range_updates(n, votes):
+    diff = [0] * n 
+    for l, r, v in votes:
+        diff[l] += v 
+        if r + 1 < n:
+            diff[r + 1] -= v 
+    prefix_sum = [0] * n 
+    prefix_sum[0] = diff[0]
+    for i in range(1, n):
+        prefix_sum[i] = prefix_sum[i - 1] + diff[i]
+    return prefix_sum
+
+def most_booked_slot(slots, bookings):
+    n = len(slots)
+    diff = [0] * n 
+    for l, r, c in bookings:
+        diff[l] += c 
+        if r + 1 < n:
+            diff[r + 1] -= c 
+    prefix_sum = [0] * n 
+    prefix_sum[0] = diff[0]
+    for i in range(1, n):
+        prefix_sum[i] = prefix_sum[i - 1] + diff[i]
+    max_bookings, max_index = 0, -1 
+    for i in range(n):
+        total_bookings = prefix_sum[i] + slots[i]
+        if total_bookings > max_bookings:
+            max_bookings, max_index = total_bookings, i 
+    return max_index
 ```
