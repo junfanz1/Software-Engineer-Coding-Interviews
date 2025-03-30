@@ -1671,7 +1671,346 @@ def is_bst(root):
 ## 36. Graphs
 
 ```py
+def num_nodes(graph):
+    return len(graph)
+def num_edges(graph):
+    count = 0 
+    for node in range(len(graph)):
+        count += len(graph[node])
+    return count // 2 # halved because we counted each edge from both endpoints 
+def degree(graph, node):
+    return len(graph[node])
+def print_neighbors(graph, node):
+    for nbr in graph[node]:
+        print(nbr)
+def build_adjency_list(V, edge_list):
+    graph = [[] for _ in range(V)]
+    for node1, node2 in edge_list:
+        graph[node1].append(node2)
+        graph[node2].append(node1)
+    return graph
+def adjacent(graph, node1, node2):
+    for nbr in graph[node1]:
+        if nbr == node2: return True 
+    return False 
 
+def validate(graph):
+    V = len(graph)
+    for node in range(V):
+        seen = get()
+        for nbr in graph[node]:
+            if nbr < 0 or nbr >= V: return False # invalid node index 
+            if nbr == node: return False # self-loop
+            if nbr in seen: return False # parallel edge
+            seen.add(nbr)
+    edges = set()
+    for node1 in range(V):
+        for node2 in graph[node1]:
+            edge = (min(node1, node2), max(node1, node2))
+            if edge in edges:
+                edges.remove(edge)
+            else:
+                edges.add(edge)
+    return len(edges) == 0
+
+def graph_dfs(graph, start)：
+    visited = {start}
+    def visit(node):
+        # do something
+        for nbr in graph[node]:
+            if not nbr in visited:
+                visited.add(nbr)
+                visit(nbr)
+    visit(start)
+
+def tree_dfs(root):
+    def visit(node):
+        # do something
+        if root.left:
+            visit(root.left)
+        if root.right:
+            visit(root.right)
+    if root:
+        visit(root)
+
+def count_connected_components(graph):
+    count = 0 
+    visited = set()
+    for node in range(len(graph)):
+        if node not in visited:
+            visited.add(node)
+            visit(node)
+            count += 1 
+    return count 
+
+def path(graph, node1, node2):
+    predecessors = {node2: None} # starting node doesn't have predecessor
+    def visit(node):
+        for nbr in graph[node]:
+            if nbr not in predecessors:
+                predecessors[nbr] = node 
+                visit(nbr)
+    visit(node2)
+    if node1 not in predecessors:
+        return [] # node1 node2 disconnected
+    path = [node1]
+    while path[len(path) - 1] != node2:
+        path.append(predecessors[path[len(path) - 1]])
+    return path 
+
+def is_tree(graph):
+    predecessors = {0: None} # start from node 0 (doesn't matter)
+    found_cycle = False 
+    def visit(node):
+        nonlocal found_cycle 
+        if found_cycle:
+            return 
+        for nbr in graph[node]:
+            if nbr not in predecessors:
+                predecessors[nbr] = node 
+                visit(nbr)
+            elif nbr != predecessors[node]:
+                found_cycle = True 
+    visit(0)
+    connected = len(predecessors) == len(graph)
+    return not found_cycle and connected 
+
+def connected_component_queries(graph, queries):
+    node_to_cc = {}
+    def visit(node, cc_id):
+        if node in node_to_cc:
+            return 
+        node_to_cc[node] = cc_id
+        for nbr in graph[node]:
+            visit(nbr, cc_id)
+    cc_id = 0 
+    for node in range(len(graph)):
+        if node not in node_to_cc:
+            visit(node, cc_id)
+            cc_id += 1 
+    res = []
+    for node1, node2 in queries:
+        res.append(node_to_cc[node1] == node_to_cc[node2])
+    return res 
+
+def strongly_connected(graph):
+    V = len(graph)
+    visited = set()
+    visit(graph, visited, 0)
+    if len(visited) < V:
+        return False 
+    reverse_graph = [[] for _ in range(V)]
+    for node in range(V):
+        for nbr in graph[node]:
+            reverse_graph[nbr].append(node)
+    reverse_visited = set()
+    visit(reverse_graph, reverse_visited, 0)
+    return len(reverse_visited) == V 
+
+def max_hilliness(graph, heights):
+    node_to_cc = label_nodes_with_cc_ids(graph)
+    V = len(graph)
+    cc_to_elevation_gain_sum = {}
+    cc_to_num_edges = {}
+    for node in range(V):
+        cc = node_to_cc[node]
+        if cc not in cc_to_num_edges:
+            cc_to_elevation_gain_sum[cc] = 0 
+            cc_to_num_edges[cc] = 0 
+        for nbr in graph[node]:
+            if nbr > node:
+                cc_to_num_edges[cc] += 1 
+                cc_to_elevation_gain_sum[cc] += abs(heights[node] - heights[nbr])
+    res = 0 
+    for cc in cc_to_num_edges:
+        res = max(res, cc_to_elevation_gain_sum[cc] / cc_to_num_edges[cc])
+
+def first_time_all_connected(V, cables):
+    def visit(graph, visited, node):
+        for nbr in graph[node]:
+            if nbr not in visited:
+                visited.add(nbr)
+                visit(graph, visited, nbr)
+
+    def is_before(cable_index):
+        graph = [[] for _ in range(V)]
+        for i in range(cable_index + 1):
+            node1, node2 = cables[i]
+            graph[node1].append(node2)
+            graph[node2].append(node1)
+        visited = {0}
+        visit(graph, visited, 0)
+        return len(visited) < V 
+    l, r = 0, len(cables) - 1 
+    if is_before(r):
+        return -1 
+    while r - l > 1:
+        mid = l + (r - l) // 2 
+        if is_before(mid):
+            l = mid 
+        else:
+            r = mid 
+    return r 
+
+# BFS
+def graph_bfs(graph, start):
+    Q = Queue()
+    Q.push(start)
+    distances = {start: 0}
+    while not Q.empty():
+        node = Q.pop()
+        for nbr in graph[node]:
+            if nbr not in distances:
+                distances[nbr] = distances[node] + 1
+                Q.push(nbr)
+    # do something 
+
+def tree_bfs(root):
+    Q = Queue()
+    Q.push(root)
+    while not Q.empty():
+        node = Q.pop()
+        if not node:
+            continue 
+        # do something 
+        Q.push(node.left)
+        Q.push(node.right)
+
+def shortest_path_queries(graph, start, queries):
+    Q = Queue()
+    Q.push(start)
+    predecessors = {start: None}
+    while not Q.empty():
+        node = Q.pop()
+        for nbr in graph[node]:
+            if nbr not in predecessors:
+                predecessors[nbr] = node 
+                Q.push(nbr)
+    res = []
+    for node in queries:
+        if node not in predecessors:
+            res.append([])
+        else:
+            path = [node]
+            while path[len(path) - 1] != start:
+                path.append(predecessors[path[len(path) - 1]])
+            path.reverse()
+            res.append(path)
+    return res 
+
+def walking_distance_to_coffee(graph, node1, node2, node3):
+    distances1 = bfs(graph, node1) # BFS
+    distances2 = bfs(graph, node2)
+    distances3 = bfs(graph, node3)
+    res = math.inf 
+    for i in range(len(graph)):
+        res = min(res, distances1[i] + distances2[i] + distances3[i])
+    return res 
+
+def multisource_bfs(graph, sources):
+    Q = Queue()
+    distances = {}
+    for start in sources:
+        Q.push(start)
+        distances[start] = 0
+    while not Q.empty(): # BFS
+        node = Q.pop()
+        for nbr in graph[node]:
+            if nbr not in distances:
+                distances[nbr] = distances[node] + 1 
+                Q.push(nbr)
+    # do something 
+
+def grid_dfs(grid, start_r, start_c):
+    # returns if (r, c) is in bounds, not visited, and walkable
+    def is_valid(r, c):
+        # do something 
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+    visited = {(start_r, start_c)}
+    def visit(r, c):
+        # do something with (r, c)
+        for dir_r, dir_c in directions:
+            nbr_r, nbr_c = r + dir_r, c + dir_c 
+            if is_valid(nbr_r, nbr_c):
+                visited.add((nbr_r, nbr_c))
+                visit(nbr_r, nbr_c)
+    visit(start_r, start_c)
+
+def grid_bfs(grid, start_r, start_c):
+    # returns if (r, c) is in bounds, not visited, and walkable
+    def is_valid(r, c):
+        # do something 
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+    Q = Queue()
+    Q.push((start_r, start_c))
+    distances = {(start_r, start_c): 0}
+    while not Q.empty():
+        r, c = Q.pop()
+        for dir_r, dir_c in directions:
+            nbr_r, nbr_c = r + dir_r, c + dir_c 
+            if is_valid(nbr_r, nbr_c):
+                distances[(nbr_r, nbr_c)] = distances[(r, c)] + 1 
+                Q.push((nbr_r, nbr_c))
+    # do something with distances 
+
+def count_islands(grid):
+    R, C = len(grid), len(grid[0])
+    count = 0 
+    visited = set()
+    for r in range(R):
+        for c in range(C):
+            if grid[r][c] == 1 and (r, c) not in visited:
+                visited.add((r, c))
+                dfs(grid, visited, r, c) # normal grid DFS
+                count += 1 
+    return count 
+
+def exit_distances(maze):
+    R, C = len(maze), len(maze[0])
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+    distances = [[-1] * C for _ in range(R)]
+    Q = Queue()
+    for r in range(R):
+        for c in range(C):
+            if maze[r][c] == 'o':
+                distances[r][c] = 0
+                Q.push((r, c))
+    while not Q.empty():
+        r, c = Q.pop()
+        for dir_r, dir_c in directions:
+            nbr_r, nbr_c = r + dir_r, c + dir_c
+            if (0 <= nbr_r < R and 0 <= nbr_c < C and 
+                maze[nbr_r][nbr_c] != 'x' and distances[nbr_r][nbr_c] == -1):
+                distances[nbr_r][nbr_c] = distances[r][c] + 1 
+                Q.push((nbr_r, nbr_c))
+    return distances 
+
+def segment_distance(min1, max1, min2, max2):
+    return max(0, max(min1, min2) - min(max1, max2))
+def distance(furniture1, furniture2):
+    x_min1, y_min1, x_max1, y_max1 = furniture1 
+    x_min2, y_min2, x_max2, y_max2 = furniture2 
+    x_gap = segment_distance(x_min1, x_max1, x_min2, x_max2)
+    y_gap = segment_distance(y_min1, y_max1, y_min2, y_max2)
+    if x_gap == 0:
+        return y_gap 
+    elif y_gap == 0:
+        return x_gap 
+    else:
+        return math.sqrt(x_gap ** 2 + y_gap ** 2)
+def can_reach(furniture, d):
+    V = len(furniture)
+    graph = [[] for _ in range(V)]
+    for i in range(V):
+        for j in range(i + 1, V):
+            if distance(furniture[i], furniture[j]) <= d:
+                graph[i].append(j)
+                graph[j].append(i)
+    visited = {0}
+    def visit(node): # DFS
+        # ... 
+    visit(0)
+    return V-1 in visited 
 ```
 
 <!-- TOC --><a name="37-heaps"></a>
