@@ -2870,7 +2870,89 @@ def latest_reachable_year(jumping_points, k, max_aging):
 ## 42. Topological Sort 
 
 ```py
+def topological_sort(graph):
+    # initialization
+    V = len(graph)
+    in_degrees = [0 for _ in range(V)]
+    for node in range(V):
+        for nbr in graph[node]: # for weighted graphs, unpack edges: nbr, _ 
+            in_degrees[nbr] += 1 
+    degree_zero = []
+    for node in range(V):
+        if in_degrees[node] == 0:
+            degree_zero.append(node)
+    # main peel-off loop 
+    topo_order = []
+    while degree_zero:
+        node = degree_zero.pop()
+        topo_order.append(node)
+        for nbr in graph[node]: # for weighted graphs, unpack edges: nbr, _ 
+            in_degrees[nbr] -= 1 
+            if in_degrees[nbr] == 0:
+                degree_zero.append(nbr)
+    if len(topo_order) < V:
+        return [] # there'a a cycle, some nodes couldn't be peeled off 
+    return topo_order 
 
+def distance(graph, start):
+    topo_order = topological_sort(graph) 
+    distances = {start: 0}
+    for node in topo_order:
+        if node not in distance: continue 
+        for nbr, weight in graph[node]:
+            if nbr not in distances or distances[node] + weight < distances[nbr]:
+                distances[nbr] = distances[node] + weight 
+    res = []
+    for i in range(len(graph)):
+        if i in distances:
+            res.append(distances[i])
+        else:
+            res.append(math.inf)
+    return res 
+
+def shortest_path(graph, start, goal):
+    topo_order = topological_sort(graph)
+    distances = {start: 0}
+    predecessors = {}
+    for node in topo_order:
+        if node not in distances: continue 
+        for nbr, weight in graph[node]:
+            if nbr not in distances or distances[node] + weight < distance[nbr]:
+                distances[nbr] = distances[node] + weight 
+                predecessors[nbr] = node 
+    if goal not in distances:
+        return []
+    path = [goal]
+    while path[-1] != start:
+        path.append(predecessors[path[-1]])
+    path.reverse()
+    return path 
+
+def path_count(graph, start):
+    topo_order = topological_sort(graph)
+    counts = [0] * len(graph)
+    counts[start] = 1 
+    for node in topo_order:
+        for nbr in graph[node]:
+            counts[nbr] += counts[node]
+    return counts 
+
+def compile_time(seconds, imports):
+    V = len(seconds)
+    graph = [[] for _ in range(V)]
+    for package in range(V):
+        for imported_package in imports[package]:
+            graph[imported_package].append(package)
+    topo_order = topological_sort(graph)
+    durations = {}
+    for node in topo_order:
+        if node not in durations:
+            durations[node] = seconds[node]
+        for nbr in graph[node]:
+            if nbr not in durations:
+                durations[nbr] = 0 
+            durations[nbr] = max(durations[nbr], seconds[nbr] + durations[node])
+    return max(durations.values())
 ```
 
 <!-- TOC --><a name="43-prefix-sums"></a>
