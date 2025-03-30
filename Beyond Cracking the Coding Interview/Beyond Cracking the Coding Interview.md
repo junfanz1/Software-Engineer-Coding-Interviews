@@ -2506,7 +2506,118 @@ def count_at_most_2_groups(arr):
 ## 39. Backtracking
 
 ```py
+def max_sum_path(grid):
+    # inefficient backtracking solution, DP is better
+    max_sum = -math.inf 
+    R, C = len(grid), len(grid[0])
+    def visit(r, c, cur_sum):
+        nonlocal max_sum
+        if r == R - 1 and c == C - 1:
+            max_sum = max(max_sum, cur_sum)
+            return 
+        if r + 1 < R:
+            visit(r + 1, c, cur_sum + grid[r + 1][c]) # go down 
+        if c + 1 < C:
+            visit(r, c + 1, cur_sum + grid[r][c + 1]) # go right 
+    visit(0, 0, grid[0][0])
+    return max_sum 
 
+# backtracking
+def visit(partial_solution):
+    if full_solution(partial_solution):
+        # process leaf/full solution 
+    else:
+        for choice in choices(partial_solution):
+            # prune children where possible 
+            child = apply_choice(partial_solution)
+            visit(child)
+visit(empty_solution)
+
+def all_subsets(S):
+    res = [] # gloabl list of subsets 
+    subset = [] # state of current partial solution 
+    def visit(i):
+        if i == len(S):
+            res.append(subset.copy())
+            return 
+        # choice 1: pick S[i]
+        subset.append(S[i])
+        visit(i + 1)
+        subset.pop() # cleanup work, undo choice 1 
+        # choice 2: skip S[i]
+        visit(i + 1)
+    visit(0)
+    return res 
+
+def generate_permutation(arr):
+    res = []
+    perm = arr.copy()
+    def visit(i):
+        if i == len(perm) - 1:
+            res.append(perm.copy())
+            return 
+        for j in range(i, len(perm)):
+            perm[i], perm[j] = perm[j], perm[i] # pick perm[j]
+            visit(i + 1)
+            perm[i], perm[j] = perm[j], perm[i] # cleanup work, undo change 
+    visit(0)
+    return res 
+
+def generate_sentences(sentence, synonyms):
+    words = sentence.split()
+    res = []
+    cur_sentence = []
+    def visit(i):
+        if i == len(words):
+            res.append(" ".join(cur_sentence))
+            return 
+        if words[i] not in synonyms:
+            choices = [words[i]]
+        else:
+            choices = synonyms.get(words[i])
+        for choice in choices:
+            cur_sentence.append(choice)
+            visit(i + 1)
+            cur_sentence.pop() # undo change 
+    visit(0)
+    return res 
+
+def jumping_numbers(n):
+    res = []
+    def visit(num):
+        if num >= n:
+            return 
+        res.append(num)
+        last_digit = num % 10 
+        if last_digit > 0:
+            visit(num * 10 + (last_digit - 1))
+        if last_digit < 9:
+            visit(num * 10 + (last_digit + 1))
+    for num in range(1, 10):
+        visit(num)
+    return sorted(res)
+
+def maximize_style(budget, prices, ratings):
+    best_rating_sum = 0
+    best_items = []
+    n = len(prices)
+    items = []
+    def visit(i, cur_cost, cur_rating_sum):
+        nonlocal best_items, best_rating_sum
+        if i == n:
+            if cur_rating_sum > best_rating_sum:
+                best_rating_sum = cur_rating_sum
+                best_items = items.copy()
+                return 
+            # choice 1: skip item i 
+            visit(i + 1, cur_cost, cur_rating_sum)
+            # choice 2: pick item i (if within budget)
+            if cur_cost + prices[i] <= budget:
+                items.append(i)
+                visit(i + 1, cur_cost + prices[i], cur_rating_sum + ratings[i])
+                items.pop()
+    visit(0, 0, 0)
+    return best_items
 ```
 
 <!-- TOC --><a name="40-dynamic-programming"></a>
