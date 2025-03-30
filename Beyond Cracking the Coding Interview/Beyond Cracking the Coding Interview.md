@@ -2624,7 +2624,152 @@ def maximize_style(budget, prices, ratings):
 ## 40. Dynamic Programming
 
 ```py
+def delay(times): 
+    n = len(times)
+    if n < 3:
+        return 0
+    memo = {}
+    def delay_rec(i):
+        if i >= n - 3:
+            return times[i]
+        if i in memo:
+            return memo[i]
+        memo[i] = times[i] + min(delay_rec(i + 1), delay_rec(i + 2), delay_rec(i + 3))
+        return memo[i]
+    return min(delay_rec[0], delay_rec(1), delay_rec(2))
 
+# memoization
+# memo = empty map 
+# f(subproblem_id):
+#     if subproblem is base case:
+#         return result direcly 
+#     if subproblem in memo map:
+#         return cached result 
+#     memo[subproblem_id] = recurrence relation formula 
+#     return memo[subproblem_id]
+# return f(initial subproblem)
+
+def max_path(grid):
+    R, C = len(grid), len(grid[0])
+    memo = {}
+    def max_path_rec(r, c):
+        if r == R - 1 and c == C - 1:
+            return grid[r][c]
+        if (r, c) in memo:
+            return memo[(r, c)]
+        elif r == R - 1:
+            memo[(r, c)] = grid[r][c] + max_path_rec(r, c + 1)
+        elif c == C - 1:
+            memo[(r, c)] = grid[r][c] + max_path_recI(r + 1, c)
+        else:
+            memo[(r, c)] = grid[r][c] + max(max_path_rec(r + 1, c), max_path_rec(r, c + 1))
+        return memo[(r, c)]
+    return max_path_rec(0, 0)
+
+def min_split(arr, k):
+    n = len(arr)
+    memo = {}
+    def min_split_rec(i, x):
+        if (i, x) in memo:
+            return memo[(i, x)]
+        # base case 
+        if n - i == x: # put each element in its own subarray 
+            memo[(i, x)] = max(arr[i:])
+        elif x == 1: # put all elements in one subarray 
+            memo[(i, x)] = sum(arr[i:])
+        else: # general case 
+            current_sum = 0 
+            res = math.inf 
+            for p in range(i, n - x + 1):
+                current_sum += arr[p]
+                res = min(res, max(current_sum, min_split_rec(p + 1, x - 1)))
+            memo[(i, x)] = res 
+        return memo[(i, x)]
+    return min_split_rec(0, k)
+
+def num_ways():
+    memo = {}
+    def num_ways_rec(i):
+        if i > 21:
+            return 1 
+        if 16 <= i <= 21:
+            return 0 
+        if i in memo:
+            return memo[i]
+        memo[i] = 0 
+        for card in range(1, 11):
+            memo[i] += num_ways_rec(i + card)
+        return memo[i]
+    return num_ways_rec(0)
+
+def lcs(s1, s2):
+    memo = {}
+    def lcs_rec(i1, i2):
+        if i1 == len(s1) or i2 == len(s2):
+            return 0 
+        if (i1, i2) in memo:
+            return memo[(i1, i2)]
+        if s1[i1] == s2[i2]:
+            memo[(i1, i2)] = 1 + lcs_rec(i1 + 1, i2 + 1)
+        else:
+            memo[(i1, i2)] = max(lcs_rec(i1 + 1, i2), lcs_rec(i1, i2 + 1))
+        return memo[(i1, i2)]
+    return lcs_rec(0, 0)
+
+def lcs_reconstruction(s1, s2):
+    memo = {}
+    def lcs_res(i1, i2):
+        if i1 == len(s1) or i2 == len(s2):
+            return ""
+        if (i1, i2) in memo:
+            return memo[(i1, i2)]
+        if s1[i1] == s2[i2]:
+            memo[(i1, i2)] = s1[i1] + lcs_res(i1 + 1, i2 + 1)
+        else:
+            opt1, opt2 = lcs_rec(i1 + 1, i2), lcs_res(i1, i2 + 1)
+            if len(opt1) >= len(opt2):
+                memo[(i1, i2)] = opt1
+            else:
+                memo[(i1, i2)] = opt2 
+        return memo[(i1, i2)]
+    return lcs_res(0, 0)
+
+def lcs_reconstruction_optimal(s1, s2):
+    memo = {}
+    def lcs_rec(s1, s2):
+        # same as before
+    i1, i2 = 0, 0 
+    res = []
+    while i1 < len(s1) and i2 < len(s2):
+        if s1[i1] == s2[i2]:
+            res.append(s1[i1])
+            i1 += 1 
+            i2 += 1 
+        elif lcs_rec(i1 + 1, i2) > lcs_rec(i1, i2 + 1):
+            i1 += 1 
+        else:
+            i2 += 1 
+    return ''.join(res)
+
+def delay(times):
+    n = len(times)
+    if n < 3:
+        return 0 
+    dp = [0] * n 
+    dp[n - 1], dp[n - 2], dp[n - 3] = times[n - 1], times[n - 2], times[n - 3]
+    for i in range(n - 4, -1, -1):
+        dp[i] = times[i] + min(dp[i + 1], dp[i + 2], dp[i + 3])
+    return min(dp[0], dp[1], dp[2])
+
+def delay_optimized(times):
+    n = len(times)
+    if n < 3: 
+        return 0 
+    dp1, dp2, dp3 = times[n - 3], times[n - 2], times[n - 1]
+    for i in range(n - 4, -1, -1):
+        cur = times[i] + min(dp1, dp2, dp3)
+        dp1, dp2, dp3 = cur, dp1, dp2
+    return min(dp1, dp2, dp3)
 ```
 
 <!-- TOC --><a name="41-greedy-algorithms"></a>
