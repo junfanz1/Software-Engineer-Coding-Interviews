@@ -2225,7 +2225,281 @@ def sum_of_powers(primes, n):
 ## 38. Sliding Windows 
 
 ```py
+def most_weekly_sales(sales):
+    l, r = 0, 0 
+    window_sum = 0 
+    cur_max = 0
+    while r < len(sales):
+        window_sum += sales[r]
+        r += 1 
+        if r - l == 7:
+            cur_max = max(cur_max, window_sum)
+            window_sum -= sales[l]
+            l += 1 
+    return cur_max 
 
+def has_unique_k_days(best_seller, k):
+    l, r = 0, 0 
+    window_counts = {}
+    while r < len(best_seller):
+        if not best_seller[r] in window_counts:
+            window_counts[best_seller[r]] = 0 
+        window_counts[best_seller[r]] += 1 
+        r += 1 
+        if r - l == k:
+            if len(window_counts) == k:
+                return True 
+            window_counts[best_seller[l]] -= 1 
+            if window_counts[best_seller[l]] == 0:
+                del window_counts[best_seller[l]]
+            l += 1 
+    return False 
+
+def max_no_bad_days(sales):
+    l, r = 0, 0 
+    cur_max = 0
+    while r < len(sales):
+        can_grow = sales[r] >= 10 
+        if can_grow:
+            r += 1 
+            cur_max = max(cur_max, r - l)
+        else:
+            l = r + 1 
+            r = r + 1 
+    return cur_max 
+
+def has_enduring_best_seller_streak(best_seller, k):
+    l, r = 0, 0 
+    cur_max = 0 
+    while r < len(best_seller):
+        can_grow = l == r or best_seller[l] == best_seller[r]
+        if can_grow:
+            r += 1 
+            if r - l == k:
+                return True 
+        else:
+            l = r 
+    return False 
+
+def max_subarray_sum(arr):
+    max_val = max(arr)
+    if max_val <= 0: # edge case without positive values 
+        return max_val 
+    l, r = 0, 0
+    window_sum = 0
+    cur_max = 0 
+    while r < len(arr):
+        can_grow = window_sum + arr[r] >= 0
+        if can_grow:
+            window_sum += arr[r]
+            r += 1 
+            cur_max = max(cur_max, window_sum)
+        else:
+            window_sum = 0 
+            l = r + 1 
+            r = r + 1 
+    return cur_max 
+
+def max_at_most_3_bad_days(sales):
+    l, r = 0, 0 
+    window_bad_days = 0 
+    cur_max = 0
+    while r < len(sales):
+        can_grow = sales[r] >= 10 or window_bad_days < 3 
+        if can_grow:
+            if sales[r] < 10:
+                window_bad_days += 1 
+            r += 1 
+            cur_max = max(cur_max, r - l)
+        else:
+            if sales[l] < 10:
+                window_bad_days -= 1 
+            l += 1 
+    return cur_max 
+
+def max_consecutive_with_k_boosts(projected_sales, k):
+    l, r = 0, 0 
+    used_boosts = 0 
+    cur_max = 0
+    while r < len(projected_sales):
+        can_grow = used_boosts + max(10 - projected_sales[r], 0) <= k
+        if can_grow:
+            used_boosts += max(10 - projected_sales[r], 0)
+            r += 1 
+            cur_max = max(cur_max, r - l)
+        elif l == r:
+            r += 1 
+            l += 1 
+        else:
+            used_boosts -= max(10 - projected_sales[l], 0)
+            l += 1
+    return cur_max 
+
+def max_at_most_k_distinct(best_seller, k):
+    l, r = 0, 0 
+    window_counts = {}
+    cur_max = 0
+    while r < len(best_seller):
+        can_grow = best_seller[r] in window_counts or len(window_counts) + 1 <= k
+        if can_grow:
+            if not best_seller[r] in window_counts:
+                window_counts[best_seller[r]] = 0 
+            window_counts[best_seller[r]] += 1 
+            r += 1 
+            cur_max = max(cur_max, r - l)
+        else:
+            window_counts[best_seller[l]] -= 1 
+            if window_counts[best_seller[l]] == 0:
+                del window_counts[best_seller[l]]
+            l += 1 
+    return cur_max 
+
+def shortest_over_20_sales(sales):
+    l, r = 0, 0
+    window_sum = 0
+    cur_min = math.inf 
+    while True:
+        must_grow = window_sum <= 20 
+        if must_grow:
+            if r == len(sales):
+                break 
+            window_sum += sales[r]
+            r += 1 
+        else:
+            cur_min = min(cur_min, r - l)
+            window_sum -= sales[l]
+            l += 1 
+    if cur_min == math.inf:
+        return -1 
+    return cur_min 
+
+def shortest_with_all_letters(s1, s2):
+    l, r = 0, 0 
+    missing = {}
+    for c in s2:
+        if not c in missing:
+            missing[c] = 0
+        missing[c] += 1 
+    distinct_missing = len(missing)
+    cur_min = math.inf 
+    while True:
+        must_grow = distinct_missing > 0 
+        if must_grow:
+            if r == len(s1):
+                break 
+            if s1[r] in missing:
+                missing[s1[r]] -= 1
+                if missing[s1[r]] == 0:
+                    distinct_missing -= 1
+            r += 1
+        else:
+            cur_min = min(cur_min, r - l)
+            if s1[l] in missing:
+                missing[s1[l]] += 1 
+                if missing[s1[l]] == 1:
+                    distinct_missing += 1 
+            l += 1 
+    return cur_min if cur_min != math.inf else -1 
+
+def smallest_range_with_k_elements(arr, k):
+    arr.sort()
+    l, r = 0, 0 
+    best_low, best_high = 0, math.inf 
+    while True:
+        must_grow = (r - l) < k 
+        if must_grow:
+            if r == len(arr):
+                break 
+            r += 1 
+        else:
+            if arr[r - 1] - arr[l] < best_high - best_low:
+                best_low, best_high = arr[l], arr[r - 1]
+            l += 1 
+    return [best_low, best_high]
+
+def count_at_most_k_bad_days(sales, k):
+    l, r = 0, 0 
+    window_bad_days = 0
+    count = 0 
+    while r < len(sales):
+        can_grow = sales[r] >= 10 or window_bad_days < k
+        if can_grow:
+            if sales[r] < 10:
+                window_bad_days += 1 
+            r += 1 
+            count += r - l 
+        else:
+            if sales[l] < 10:
+                window_bad_days -= 1 
+            l += 1 
+    return count 
+
+def count_exactly_k_bad_days(sales, k):
+    if k == 0:
+        return count_at_most_k_bad_days(sales, 0)
+    return count_at_most_k_bad_days(sales, k) - count_at_most_k_bad_days(sales, k - 1)
+
+def count_at_least_k_bad_days(sales, k):
+    n = len(sales)
+    total_subarrays = n * (n + 1) // 2 
+    if k == 0:
+        return total_subarrays
+    return total_subarrays - count_at_most_k_bad_days(sales, k - 1)
+
+def count_at_most_k_drops(arr, k):
+    l, r = 0, 0
+    window_drops = 0 
+    count = 0 
+    while r < len(arr):
+        can_grow = r == 0 or arr[r] >= arr[r - 1] or window_drops < k 
+        if can_grow:
+            if r > 0 and arr[r] < arr[r - 1]:
+                window_drops += 1 
+            r += 1 
+            count += r - l 
+        else:
+            if arr[l] > arr[l + 1]:
+                window_drops -= 1
+            l += 1 
+    return count 
+def count_exactly_k_drops(arr, k):
+    if k == 0:
+        return count_at_least_k_drops(arr, 0)
+    return count_at_most_k_drops(arr, k) - count_at_most_k_drops(arr, k - 1)
+def count_at_least_k_drops(arr, k):
+    n = len(arr)
+    total_count = n * (n + 1) // 2 
+    if k == 0:
+        return total_count
+    return total_count - count_at_most_k_drops(arr, k - 1)
+
+def count_bad_days_range(sales, k1, k2):
+    if k1 == 0:
+        return count_at_least_k_bad_days(sales, k2)
+    return count_at_least_k_bad_days(sales, k2) - count_at_least_k_bad_days(sales, k1 - 1)
+
+def count_all_3_groups(arr):
+    n = len(arr)
+    total_count = n * (n + 1) // 2 
+    return total_count - count_at_most_2_groups(arr)
+def count_at_most_2_groups(arr):
+    l, r = 0, 0 
+    window_counts = {}
+    count = 0 
+    while r < len(arr):
+        can_grow = arr[r] % 3 in window_counts or len(window_counts) < 2 
+        if can_grow:
+            if not arr[r] % 3 in window_counts:
+                window_counts[arr[r] % 3] = 0 
+            window_counts[arr[r] % 3] += 1 
+            r += 1 
+            count += r - l 
+        else:
+            window_counts[arr[l] % 3] -= 1 
+            if window_counts[arr[l] % 3] == 0:
+                del window_counts[arr[l] % 3]
+            l += 1 
+    return count 
 ```
 
 <!-- TOC --><a name="39-backtracking"></a>
