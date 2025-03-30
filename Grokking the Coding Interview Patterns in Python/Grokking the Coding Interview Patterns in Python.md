@@ -40,7 +40,204 @@
 ## 1. Two Pointers
 
 ```py
+def is_palindrome(s):
+    left = 0 
+    right = len(s) - 1 
+    while left < right: 
+        if s[left] != s[right]:
+            return False 
+        left += 1 
+        right -= 1 
+    return True 
 
+def three_sum(nums):
+    nums.sort()
+    result = []
+    n = len(nums)
+    for pivot in range(n - 2):
+        # if current number > 0, break the loop as no valid triplets possible
+        if nums[pivot] > 0:
+            break 
+        # skip duplciate values for pivot 
+        if pivot > 0 and nums[pivot] == nums[pivot - 1]:
+            continue 
+        # two pointer 
+        low, high = pivot + 1, n - 1 
+        while low < high:
+            total = nums[pivot] + nums[low] + nums[high]
+            if total < 0:
+                low += 1 
+            elif total > 0:
+                high -= 1
+            else:
+                # find triplet 
+                result.append([nums[pivot], nums[low], nums[high]])
+                low += 1 
+                high -= 1 
+                # skip duplicates for low and high pointers 
+                while low < high and nums[low] == nums[low - 1]:
+                    low += 1
+                while low < high and nums[high] == nums[high + 1]:
+                    high -= 1 
+    return result
+
+def remove_nth_last_node(head, n):
+    right = head 
+    left = head 
+    # move right pointer n elements away from left pointer
+    for i in range(n):
+        right = right.next 
+    # remove head node
+    if not right:
+        return head.next 
+    # move both pointers until right pointer reaches last node
+    while right.next:
+        right = right.next 
+        left = left.next 
+    # left pointer now at n-1 th element, link it to next next element
+    left.next = left.next.next
+    return head 
+
+def sort_colors(colors):
+    start, current, end = 0, 0, len(colors) - 1 
+    # iterate through list until current pointer exceeds end pointer 
+    while current <= end:
+        if colors[current] == 0:
+            colors[start], colors[current] = colors[current], colors[start]
+            # move both start and current pointers forward
+            current += 1 
+            start += 1 
+        elif colors[current] == 1:
+            current += 1 
+        else:
+            colors[current], colors[end] = colors[end], colors[current]
+            end -= 1 
+    return colors 
+
+def reverse_words(sentence):
+    sentence = sentence.strip()
+    result = sentence.split()
+    left, right = 0, len(result) - 1 
+    while left <= right:
+        result[left], result[right] = result[right], result[left]
+        left += 1 
+        right -= 1 
+    return " ".join(result)
+
+def valid_word_abbreviation(word, abbr):
+    word_index, abbr_index = 0, 0
+    while abbr_index < len(abbr):
+        if abbr[abbr_index].isdigit():
+            # check if there's leading zero 
+            if abbr[abbr_index] == '0':
+                return False 
+            num = 0 
+            while abbr_index < len(abbr) and abbr[abbr_index].isdigit():
+                num = num * 10 + int(abbr[abbr_index])
+                abbr_index += 1 
+            # skip the number of characters in word as found in abbreviation
+            word_index += num
+        else:
+            # check if characters the match, then increment pointers, otherwise return False 
+            if word_index >= len(word) or word[word_index] != abbr[abbr_index]:
+                return False 
+            word_index += 1 
+            abbr_index += 1 
+    # both indices have reached the end of their strings
+    return word_index == len(word) and abbr_index == len(abbr)
+
+def is_strobogrammatic(num):
+    dict = {'0':'0', '1':'1', '8':'8', '6':'9', '9':'6'}
+    left = 0 
+    right = len(num) - 1 
+    while left <= right:
+        # if current digit is valid and matches corresponding rotated value 
+        if num[left] not in dict or dict[num[left]] != num[right]:
+            return False 
+        left += 1 
+        right -= 1 
+    return True # if all digit pairs are valid 
+
+def min_moves_to_make_palindrome(s):
+    s = list(s) # string to list 
+    moves = 0 
+    i, j = 0, len(s) - 1 
+    while i < j:
+        k = j 
+        while k > i:
+            # if matching found
+            if s[i] == s[k]:
+                # move matching character to correct position on the right
+                for m in range(k, j):
+                    s[m], s[m + 1] = s[m + 1], s[m]
+                    moves += 1 
+                j -= 1 
+                break
+            k -= 1 
+        # if no matching character found, move to center of palindrome
+        if k == i:
+            moves += len(s) // 2 - i 
+        i += 1 
+    return moves 
+
+ def find_next_permutation(digits):
+    # find first digit smaller than digit after it 
+    i = len(digits) - 2 
+    while i >= 0 and digits[i] >= digits[i + 1]:
+        i -= 1 
+    if i == -1:
+        return False 
+    # find next largest digit to swap with digits[i]
+    j = len(digits) - 1 
+    while digits[j] <= digits[i]:
+        j -= 1 
+    # swap and reverse rest to get smallest next permutation 
+    digits[i], digits[j] = digits[j], digits[i]
+    digits[i + 1:] = reversed(digits[i + 1:])
+    return True 
+def find_next_palindrome(num_str):
+    n = len(num_str)
+    if n == 1:
+        return ""
+    half_length = n // 2 
+    left_half = list(num_str[:half_length])
+    if not find_next_permutation(left_half):
+        return ""
+    if n % 2 == 0:
+        next_palindrome = ''.join(left_half + left_half[::-1])
+    else:
+        middle_digit = num_str[half_length]
+        next_palindrome = ''.join(left_half + [middle_digit] + left_half[::-1])
+    if next_palindrome > num_str:
+        return next_palindrome
+    return ""
+
+def lowest_common_ancestor(p, q):
+    ptr1, ptr2 = p, q 
+    while ptr1 != ptr2:
+        # Move ptr1 to parent node or switch to the other node if reached the root
+        if ptr1.parent:
+            ptr1 = ptr1.parent 
+        else:
+            ptr1 = q 
+        if ptr2.parent:
+            ptr2 = ptr2.parent 
+        else:
+            ptr2 = p 
+    # ptr1 ptr2 are the same at this point
+    return ptr1 
+
+def count_pairs(nums, target):
+    nums.sort()
+    count = 0 
+    low, high = 0, len(nums) - 1
+    while low < high:
+        if nums[low] + nums[high] < target:
+            count += high - low 
+            low += 1 
+        else:
+            high -= 1 
+    return count 
 ```
 
 <!-- TOC --><a name="2-fast-slow-pointers"></a>
