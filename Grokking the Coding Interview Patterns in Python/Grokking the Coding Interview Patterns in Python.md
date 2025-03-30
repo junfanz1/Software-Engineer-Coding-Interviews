@@ -244,7 +244,169 @@ def count_pairs(nums, target):
 ## 2. Fast Slow Pointers
 
 ```py
+def is_happy_number(n):
+    def sum_of_squared_digits(number):
+        total_sum = 0
+        while number > 0:
+            number, digit = divmod(number, 10)
+            total_sum += digit ** 2 
+        return total_sum
+    slow_pointer = n
+    fast_pointer = sum_of_squared_digits(n)
+    while fast_pointer != 1 and slow_pointer != fast_pointer:
+        slow_pointer = sum_of_squared_digits(slow_pointer)
+        fast_pointer = sum_of_squared_digits(sum_of_squared_digits(fast_pointer))
+    if (fast_pointer == 1):
+        return True 
+    return False 
 
+def detect_cycle(head):
+    if head is None:
+        return False 
+    slow, fast = head, head 
+    # run the loop until we reach the end of linked list or find cycle 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+        if slow == fast:
+            return True 
+    # if reach the end not found cycle
+    return False 
+
+def get_middle_node(head):
+    slow = head 
+    fast = head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+    return slow 
+
+def circular_array_loop(nums):
+    size = len(nums)
+    for i in range(size):
+        slow = fast = i 
+        # set true in forward if element > 0, false otherwise 
+        forward = nums[i] > 0 
+        while True:
+            # move slow pointer to one step 
+            slow = next_step(slow, nums[slow], size)
+            # if cycle not possible, break loop and start from next element 
+            if is_not_cycle(nums, forward, slow):
+                break 
+            # first move of fast pointer 
+            fast = next_step(fast, nums[fast], size)
+            if is_not_cycle(nums, forward, fast):
+                break 
+            # second move of fast pointer
+            fast = next_step(fast, nums[fast], size)
+            if is_not_cycle(nums, forward, fast):
+                break 
+            if slow == fast:
+                return True 
+    return False 
+def next_step(pointer, value, size):
+    return (pointer + value) % size 
+def is_not_cycle(nums, prev_direction, pointer):
+    curr_direction = nums[pointer] >= 0 
+    if (prev_direction != curr_direction) or (nums[pointer] % len(nums) == 0):
+        return True 
+    else:
+        return False 
+    
+def find_duplicate(nums):
+    fast = slow = nums[0]
+    # traverse until intersection point is found 
+    while True:
+        slow = nums[slow]
+        # move fast pointer two times fast 
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break # intersection found as two pointers meet 
+    # slow pointer start at starting point 
+    slow = nums[0]
+    while slow != fast:
+        slow = nums[slow]
+        fast = nums[fast]
+    return fast 
+
+def palindrome(head):
+    slow = head 
+    fast = head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+    revert_data = reverse_linked_list(slow)
+    check = compare_two_halves(head, revert_data)
+    reverse_linked_list(revert_data)
+    if check:
+        return True 
+    return False 
+def compare_two_halves(first_half, second_half):
+    while first_half and second_half:
+        if first_half.val != second_half.val:
+            return False 
+        else:
+            first_half = first_half.next 
+            second_half = second_half.next 
+    return True 
+def reverse_linked_list(slow_ptr):
+    prev = None 
+    next = None 
+    curr = slow_ptr
+    while curr is not None:
+        next = curr.next 
+        curr.next = prev 
+        prev = curr 
+        curr = next 
+    return prev 
+
+def twin_sum(head):
+    slow, fast = head, head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+    curr, prev = slow, None 
+    while curr:
+        temp = curr.next 
+        curr.next = prev 
+        prev = curr 
+        curr = temp 
+    max_sum = 0
+    curr = head 
+    while prev:
+        max_sum = max(max_sum, curr.val + prev.val)
+        prev = prev.next 
+        curr = curr.next 
+    return max_sum 
+
+def split_circular_linked_list(head):
+    slow = fast = head 
+    while fast.next != head and fast.next.next != head:
+        slow = slow.next 
+        fast = fast.next.next 
+    head1 = head 
+    head2 = slow.next 
+    slow.next = head1 
+    fast = head2 
+    while fast.next != head:
+        fast = fast.next 
+    fast.next = head2 
+    return [head1, head2]
+
+def count_cycle_length(head):
+    slow = head 
+    fast = head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+        if slow == fast:
+            length = 1 
+            slow = slow.next 
+            while slow != fast:
+                length += 1 
+                slow = slow.next
+            return length 
+    return 0 # now cycle found
 ```
 
 <!-- TOC --><a name="3-sliding-window"></a>
