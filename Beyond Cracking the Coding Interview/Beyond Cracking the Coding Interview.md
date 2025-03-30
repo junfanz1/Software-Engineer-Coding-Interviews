@@ -2017,7 +2017,208 @@ def can_reach(furniture, d):
 ## 37. Heaps 
 
 ```py
+def first_k(arr, k):
+    arr.sort()
+    return arr[:k]
+def first_k_min_heap(arr, k):
+    min_heap = Heap(priority_comparator=lambda x, y: x < y, heap=arr)
+    res = []
+    for i in range(k):
+        res.append(min_heap.pop())
+    return res 
 
+def parent(idx):
+    if idx == 0:
+        return -1 # root has no parent 
+    return (idx - 1) // 2 
+def left_child(idx):
+    return 2 * idx + 1 
+def right_child(idx):
+    return 2 * idx + 2 
+
+class Heap:
+    # if higher_priority(x, y) is True, x has higher priority than y
+    def __init__(self, higher_priority=lambda x, y: x < y, heap=None):
+        self.heap = []
+        if heap is not None:
+            self.heap = heap
+        self.heap = heap if heap is not None else []
+        self.higher_priority = higher_priority
+        if heap:
+            self.heapify()
+    def size(self):
+        return len(self.heap)
+    def top(self):
+        if not self.heap:
+            return None 
+        return self.heap[0]
+    def push(self, elem):
+        self.heap.append(elem)
+        self.bubble_up(len(self.heap)-1)
+    def bubble_up(self, idx):
+        if idx == 0:
+            return # root can't be bubbled up 
+        parent_idx = parent(idx)
+        if self.higher_priority(self.heap[idx], self.heap[parent_idx]):
+            self.heap[idx], self.heap[parent_idx] = self.heap[parent_idx], self.heap[idx]
+            self.bubble_up[parent_idx]
+    def pop(self):
+        if not self.heap: return None 
+        top = self.heap[0]
+        if len(self.heap) == 1:
+            self.heap = []
+            return top 
+        self.heap[0] = self.heap[-1]
+        self.heap.pop()
+        self.bubble_down(0)
+        return top 
+    def bubble_down(self, idx): 
+        l_i, r_i = left_child(idx), right_child(idx)
+        is_leaf = l_i >= len(self.heap)
+        if is_leaf: return # leaves can't be bubbled down
+        child_i = l_i # index for highest priority child 
+        if r_i < len(self.heap) and self.higher_priority(self.heap[r_i], self.heap[l_i]):
+            child_i = r_i 
+        if self.higher_priority(self.heap[child_i], self.heap[idx]):
+            self.heap[idx], self.heap[child_i] = self.heap[child_i], self.heap[idx]
+            self.bubble_down(child_i)
+    def heapify(self):
+        for idx in range(len(self.heap) // 2, -1, -1):
+            self.bubble_down(idx)
+    
+def heapsort(arr):
+    min_heap = Heap(priority_comparator=lambda x, y: x < y, heap=arr)
+    res = []
+    for _ in range(len(arr)):
+        res.append(min_heap.pop())
+    return res 
+
+class TopSongs:
+    def __init__(self, k):
+        self.k = k 
+        self.min_heap = Heap(higher_priority=lambda x, y: x[1] < y[1])
+    def register_plays(self, title, plays):
+        if self.min_heap.size() < self.k:
+            self.min_heap.push((title, plays))
+        elif plays > self.min_heap.top()[1]:
+            self.min_heap.pop()
+            self.min_heap.push((title, plays))
+    def top_k(self):
+        top_songs = []
+        for title, _ in self.min_heap.heap:
+            top_songs.append(title)
+        return top_songs 
+    
+class TopSongsWithUpdates:
+    def __init__(self, k):
+        self.k = k 
+        self.max_heap = Heap(higher_priority=lambda x, y: x[1] > y[1])
+        self.total_plays = {}
+    def register_plays(self, title, plays):
+        new_total_plays = plays 
+        if title in self.total_plays:
+            new_total_plays += self.total_plays[title]
+        sekf.total_plays[title] = new_total_plays
+        self.max_heap.push((title, new_total_plays))
+    def top_k(self):
+        top_songs = []
+        while len(top_songs) < self.k and self.max_heap.size() > 0:
+            title, plays = self.max_heap.pop()
+            if self.total_plays[title] == plays: # not stale 
+                top_songs.append(title)
+        # restore max-heap 
+        for title in top_songs:
+            self.max_heap.push((title, self.total_plays[title]))
+        return top_songs
+    
+class PopularSongs:
+    def __init__(self):
+        # max-heap for lower half 
+        self.lower_max_heap = Heap(higher_priority=lambda x, y: x > y)
+        # min-heap for upper half 
+        self.upper_min_heap = Heap()
+        self.play_counts = {}
+    def register_plays(self, title, plays):
+        self.play_counts[title] = plays 
+        if self.upper_min_heap.size() == 0 or plays >= self.upper_min_heap.top():
+            self.upper_min_heap.push(plays)
+        else:
+            self.lower_max_heap.push(plays)
+        # distribute elements if they're off by more than one 
+        if self.lower_max_heap.size() > self.upper_min_heap.size():
+            self.upper_min_heap.push(self.lower_max_heap.pop())
+        elif self.upper_min_heap.size() > self.lower_max_heap.size() + 1:
+            self.lower_max_heap.push(self.upper_min_heap.pop())
+    def is_popular(self, title):
+        if title not in self.play_counts:
+            return False 
+        if self.lower_max_heap.size() == self.upper_min_heap.size():
+            median = (self.upper_min_heap.top() + self.lower_max_heap.top()) / 2 
+        else:
+            median = self.upper_min_heap.top()
+        return self.play_counts[title] > median 
+    
+def top_k_across_genres(genres, k):
+    initial_elems = [] # (plays, genre_index, song_index) tuples.
+    for genre_index, song_list in enumerate(genres):
+        plays = song_list[0][1]
+        initial_elems.append((plays, genre_index, 0))
+    max_heap = Heap(higher_priority=lambda x, y: x[0] > y[0], heap=initial_elems)
+    top_k = []
+    while len(top_k) < k and max_heap.size() > 0:
+        plays, genre_index, song_index = max_heap.pop()
+        song_name = genres[genre_index][song_index][0]
+        top_k.append(song_name)
+        song_index += 1 
+        if song_index < len(genres[genre_index]):
+            plays = genres[genre_index][song_index][1]
+            max_heap.push((plays, genre_index, song_index))
+    return top_k 
+
+def make_playlist(songs):
+    # group songs by artist
+    artist_to_songs = {}
+    for song, artist in songs:
+        if artist not in artist_to_songs:
+            artist_to_songs[artist] = []
+        artist_to_songs[artist].append(song)
+    heap = Heap(higher_priority=lambda a, b: len(a[1]) > len(b[1]))
+    for artist, song_list in artist_to_songs.items():
+        heap.push((artist, song_list))
+    res = []
+    last_artist = None 
+    while heap.size() > 0:
+        artist, song_list = heap.pop()
+        if artist != last_artist:
+            res.append(song_list.pop())
+            last_artist = artist
+            if song_list: # if artist has more songs, readd it
+                heap.push((artist, song_list))
+        else:
+            # find different artist 
+            if heap.size() == 0:
+                return [] # no valid solution 
+            artist2, song_list2 = heap.pop()
+            res.append(song_list2.pop())
+            last_artist = artist2 
+            # readd artists we popped 
+            if song_list2:
+                heap.push((artist2, song_list2))
+            heap.push((artist, song_list))
+    return res 
+
+def sum_of_powers(primes, n):
+    m = 10**9 + 7 
+    # initialize heap with first power of each prime 
+    # each element is tuple (power, base)
+    elems = [(p, p) for p in primes]
+    min_heap = Heap(higher_priority=lambda x, y: x[0] < y[0], heap=elems)
+    res = 0 
+    for _ in range(n):
+        power, base = min_heap.pop()
+        res = (res + power) % m 
+        min_heap.push(((power * base) % m, base))
+    return res 
 ```
 
 <!-- TOC --><a name="38-sliding-windows"></a>
