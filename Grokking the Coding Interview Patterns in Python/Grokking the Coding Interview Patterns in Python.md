@@ -1376,7 +1376,148 @@ def nth_super_ugly_number(n, primes):
 ## 8. Top K Elements
 
 ```py
+import heapq 
+class KthLargest:
+    def __init__(self, k, nums):
+        self.top_k_heap = []
+        self.k = k 
+        for element in nums:
+            self.add(element)
+    def add(self, val):
+        if len(self.top_k_heap) < self.k:
+            heapq.heappush(self.top_k_heap, val)
+        elif val > self.top_k_heap[0]:
+            heapq.heappop(self.top_k_heap)
+            heapq.heappush(self.top_k_heap, val)
+        return self.top_k_heap[0]
+    
+from collections import Counter 
+def reorganize_string(str):
+    char_counter = Counter(str)
+    most_freq_chars = []
+    for char, count in char_counter.items():
+        most_freq_chars.append([-count, char])
+    heapq.heapify(most_freq_chars)
+    previous = None 
+    result = ""
+    while len(most_freq_chars) > 0 or previous:
+        if previous and len(most_freq_chars) == 0:
+            return ""
+        count, char = heapq.heappop(most_freq_chars)
+        result = result + char 
+        count = count + 1 
+        if previous:
+            heapq.heappush(most_freq_chars, previous)
+            previous = None 
+        if count != 0:
+            previous = [count, char]
+    return result 
 
+from point import Point
+def k_closest(points, k):
+    points_max_heap = []
+    for i in range(k):
+        heapq.heappush(points_max_heap, points[i])
+    for i in range(k, len(points)):
+        if points[i].distance_from_origin() < points_max_heap[0].distance_from_origin():
+            heapq.heappop(points_max_heap)
+            heapq.heappush(points_max_heap, points[i])
+    return list(points_max_heap)
+
+from heapq import heappush, heappop
+def top_k_frequent(arr, k):
+    num_frequency_map = {}
+    for num in arr:
+        num_frequency_map[num] = num_frequency_map.get(num, 0) + 1 
+    top_k_elements = []
+    for num, frequency in num_frequency_map.items():
+        heappush(top_k_elements, (frequency, num))
+        if len(top_k_elements) > k:
+            heappop(top_k_elements)
+    top_numbers = []
+    while top_k_elements:
+        top_numbers.append(heappop(top_k_elements)[1])
+    return top_numbers
+
+def find_kth_largest(nums, k):
+    k_numbers_min_heap = []
+    # add first k elements to the list 
+    for i in range(k):
+        heapq.heappush(k_numbers_min_heap, nums[i])
+    # remaining elements in nums array
+    for i in range(k, len(nums)):
+        if nums[i] > k_numbers_min_heap[0]:
+            heapq.heappop(k_numbers_min_heap) # remove smallest
+            heapq.heappush(k_numbers_min_heap, nums[i]) # add current
+    return k_numbers_min_heap # root of heap as kth largest element
+
+from collections import defaultdict
+def third_max(nums):
+    heap = []
+    taken = set()
+    for index in range(len(nums)):
+        # skip number if already in set duplicate
+        if nums[index] in taken:
+            continue 
+        if len(heap) == 3:
+            if heap[0] < nums[index]:
+                # remove smallest from both heap and set
+                taken.remove(heap[0])
+                heapq.heappop(heap)
+                heapq.heappush(heap, nums[index])
+                taken.add(nums[index])
+        else:
+            heapq.heappush(heap, nums[index])
+            taken.add(nums[index])
+    if len(heap) == 1:
+        return heap[0]
+    elif len(heap) == 2:
+        first_num = heap[0]
+        heapq.heappop(heap)
+        return max(first_num, heap[0])
+    return heap[0]
+
+def max_subsequence(nums, k):
+    min_heap = []
+    for i, num in enumerate(nums):
+        heapq.heappush(min_heap, (num, i))
+        if len(min_heap) > k:
+            heapq.heappop(min_heap)
+    result = sorted(min_heap, key=lambda x: x[1]) # sort by original index 
+    return [x[0] for x in result] # extract values 
+
+def min_cost_to_hire_workers(quality, wage, k):
+    workers = sorted([(w / q, q) for w, q in zip(wage, quality)])
+    heap = []
+    total_quality = 0 
+    min_cost = float('inf')
+    for ratio, q in workers:
+        heapq.heappush(heap, -q)
+        total_quality += q 
+        if len(heap) > k: # more than k workers, remove the largest quality
+            total_quality += heapq.heappop(heap)
+        if len(heap) == k:
+            min_cost = min(min_cost, ratio * total_quality)
+    return min_cost
+
+def max_score(nums, k):
+    max_heap = [-num for num in nums]
+    heapq.heapify(max_heap)
+    score = 0
+    for _ in range(k):
+        largest = -heapq.heappop(max_heap)
+        score += largest 
+        reduced = (largest + 2) // 3 
+        heapq.heappush(max_heap, -reduced) # negate for max heap
+    return score
+
+def kth_largest_integer(nums, k):
+    heap = []
+    for num in nums:
+        heapq.heappush(heap, int(num))
+        if len(heap) > k:
+            heapq.heappop(heap)
+    return str(heap[0])
 ```
 
 <!-- TOC --><a name="9-modified-binary-search"></a>
