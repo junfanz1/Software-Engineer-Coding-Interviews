@@ -1805,7 +1805,172 @@ def letter_case_permutation(s):
 ## 11. Greedy Algorithm
 
 ```py
+def jump_game(nums):
+    target_num_index = len(nums) - 1 
+    for i in range(len(nums) - 2, -1, -1):
+        if target_num_index <= i + nums[i]:
+            target_num_index = i 
+    if target_num_index == 0:
+        return True
+    return False 
 
+def rescue_boats(people, limit):
+    people.sort()
+    left = 0 
+    right = len(people) - 1
+    boats = 0
+    while left <= right:
+        if people[left] + people[right] <= limit:
+            left += 1 
+        right -= 1
+        boats += 1 
+    return boats 
+
+def gas_station_journey(gas, cost):
+    if sum(cost) > sum(gas):
+        return -1 
+    current_gas, starting_index = 0, 0
+    for i in range(len(gas)):
+        current_gas += (gas[i] - cost[i])
+        if current_gas < 0:
+            current_gas = 0
+            starting_index = i + 1 
+    return starting_index
+
+def two_city_scheduling(costs):
+    total_cost = 0 
+    costs.sort(key=lambda x: x[0] - x[1])
+    cost_length = len(costs)
+    for i in range(cost_length // 2):
+        total_cost = total_cost + costs[i][0] + costs[cost_length-i-1][1]
+    return total_cost
+
+import heapq
+def min_refuel_stops(target, start_fuel, stations):
+    if start_fuel >= target:
+        return 0
+    max_heap = []
+    i, n = 0, len(stations)
+    stops = 0 
+    max_distance = start_fuel
+    while max_distance < target:
+        if i < n and stations[i][0] <= max_distance:
+            heapq.heappush(max_heap, -stations[i][1])
+            i += 1 
+        elif not max_heap:
+            return -1 
+        else:
+            max_distance += -heapq.heappop(max_heap)
+            stops += 1 
+    return stops 
+
+from collections import Counter 
+def largest_palindrome(num):
+    # count freq of each digit in input string
+    occurences = Counter(num)
+    first_half = []
+    middle = ""
+    for digit in range(9, -1, -1):
+        digit_char = str(digit)
+        if digit_char in occurences:
+            digit_count = occurences[digit_char]
+            num_pairs = digit_count // 2 
+            if num_pairs:
+                if not first_half and not digit:
+                    occurences["0"] = 1 
+                else:
+                    first_half.append(digit_char * num_pairs)
+        if digit_count % 2 and not middle:
+            middle = digit_char
+    if not middle and not first_half:
+        return "0"
+    return "".join(first_half + [middle] + first_half[::-1])
+
+def find_content_children(greed_factors, cookie_sizes):
+    greed_factors.sort()
+    cookie_sizes.sort()
+    current_child, current_cookie = 0, 0 
+    content_children = 0 
+    while current_child < len(greed_factors) and current_cookie < len(cookie_sizes):
+        if cookie_sizes[current_cookie] >= greed_factors[current_child]:
+            content_children += 1 
+            current_child += 1 
+        current_cookie += 1 
+    return content_children
+
+from collections import Counter 
+import heapq 
+def min_cost_to_rearrange_fruits(basket1, basket2):
+    combined = basket1 + basket2 
+    combined_counter = Counter(combined)
+    for count in combined_counter.values():
+        if count % 2 != 0:
+            return -1 
+    counter1 = Counter(basket1)
+    counter2 = Counter(basket2)
+    excess1 = []
+    excess2 = []
+    for fruit in combined_counter:
+        diff = counter1[fruit] - counter2[fruit]
+        if diff > 0:
+            excess1.extend([fruit] * (diff // 2))
+        elif diff < 0:
+            excess2.extend([fruit] * (-diff // 2))
+    excess1.sort()
+    excess2.sort(reverse=True)
+    min_fruit_cost = min(combined_counter.keys())
+    total_cost = 0 
+    for i in range(len(excess1)):
+        total_cost += min(2 * min_fruit_cost, excess1[i], excess2[i])
+    return total_cost
+
+def num_steps(str):
+    length = len(str)
+    steps = 0
+    c = 0
+    for i in range(length - 1, 0, -1):
+        digit = int(str[i]) + c 
+        if digit % 2 == 1:
+            steps += 2 
+            c = 1 
+        else:
+            steps += 1 
+    return steps + c 
+
+def max_swap(num):
+    num_string = list(str(num))
+    n = len(num_string)
+    max_digit_index = index_1 = index_2 = -1
+    for i in range(n - 1, -1, -1):
+        if max_digit_index == -1 or num_string[i] > num_string[max_digit_index]:
+            max_digit_index = i 
+        elif num_string[i] < num_string[max_digit_index]:
+            index_1 = i 
+            index_2 = max_digit_index
+    if index_1 != -1 and index_2 != -1:
+        num_string[index_1], num_string[index_2] = num_string[index_2], num_string[index_1]
+    return int("".join(num_string))
+
+def can_place_flowers(flowerbed, n):
+    count = 0 
+    for i in range(len(flowerbed)):
+        if flowerbed[i] == 0:
+            left = i == 0 or flowerbed[i - 1] == 0 
+            right = i == len(flowerbed) - 1 or flowerbed[i + 1] == 0 
+            # if both left and right are empty, plant a flower
+            if left and right:
+                flowerbed[i] = 1 
+                count += 1 
+                # if n flowers are planted, true
+                if count == n:
+                    return True 
+    return count >= n 
+
+def largest_odd_number(num):
+    for i in range(len(num) - 1, -1, -1):
+        if int(num[i]) % 2 == 1:
+            return num[:i + 1]
+    return "" # if no odd digit found, return empty string
 ```
 
 <!-- TOC --><a name="12-backtracking"></a>
