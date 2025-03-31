@@ -973,7 +973,268 @@ def delete_nodes(head, m, n):
 ## 6. Heaps
 
 ```py
+from heapq import heappush, heappop 
+import heapq
 
+def maximum_capital(c, k, capitals, profits):
+    current_capital = c 
+    capitals_min_heap = []
+    profits_max_heap = []
+    # insert all capitals values to minheap
+    for x in range(0, len(capitals)):
+        heappush(capitals_min_heap, (capitals[x], x))
+    for _ in range(k):
+        # store negative as we need max heap
+        while capitals_min_heap and capitals_min_heap[0][0] <= current_capital:
+            c, i = heappop(capitals_min_heap)
+            heappush(profits_max_heap, (-profits[i]))
+        # if max heap empty
+        if not profits_max_heap:
+            break 
+        # select from maxheap with max profit, pop a negated element
+        j = -heappop(profits_max_heap)
+        current_capital = current_capital + j
+    return current_capital
+
+class MedianOfStream:
+    def __init__(self):
+        self.max_heap_for_smallnum = []
+        self.min_heap_for_largenum = []
+    def insert_num(self, num):
+        if not self.max_heap_for_smallnum or -self.max_heap_for_smallnum[0] >= num:
+            heappush(self.max_heap_for_smallnum, -num)
+        else:
+            heappush(self.min_heap_for_largenum, num)
+        if len(self.max_heap_for_smallnum) > len(self.min_heap_for_largenum) + 1:
+            heappush(self.min_heap_for_largenum, -heappop(self.max_heap_for_smallnum))
+        elif len(self.max_heap_for_smallnum) < len(self.min_heap_for_largenum):
+            heappush(self.max_heap_for_smallnum, -heappop(self.min_heap_for_largenum))
+    def find_median(self):
+        if len(self.max_heap_for_smallnum) == len(self.min_heap_for_largenum):
+            return -self.max_heap_for_smallnum[0] / 2.0 + self.min_heap_for_largenum[0] / 2.0
+        return -self.max_heap_for_smallnum[0] / 1.0
+    
+def median_sliding_window(nums, k):
+    medians = []
+    outgoing_num = {}
+    small_list = [] # max heap
+    large_list = [] # min heap
+    # * -1 for max heap
+    for i in range(0, k):
+        heappush(small_list, -1 * nums[i])
+    # transfer top 50% of numbers from max heap to min heap while restoring sign of each number
+    for i in range(0, k // 2):
+        element = heappop(small_list)
+        heappush(large_list, -1 * element)
+    # keep heaps balanced
+    balance = 0
+    i = k 
+    while True:
+        # window size odd
+        if (k & 1) == 1:
+            medians.append(float(small_list[0] * -1))
+        else:
+            medians.append((float(small_list[0] * -1) + float(large_list[0])) * 0.5)
+        # all element processed, break loop
+        if i >= len(nums):
+            break 
+        # outgoing number
+        out_num = nums[i - k]
+        # incoming number
+        in_num = nums[i]
+        i += 1
+        # if outgoing number from max heap
+        if out_num <= (small_list[0] * -1):
+            balance -= 1
+        else:
+            balance += 1 
+        # add/update outgoing number in hash map
+        if out_num in outgoing_num:
+            outgoing_num[out_num] = outgoing_num[out_num] + 1
+        else:
+            outgoing_num[out_num] = 1 
+        # if incoming number < top of max heap, add in heap, otherwise add in min heap 
+        if small_list and in_num <= (small_list[0] * -1):
+            balance += 1 
+            heappush(small_list, in_num * -1)
+        else:
+            balance -= 1 
+            heappush(large_list, in_num)
+        if balance < 0:
+            heappush(small_list, (-1 * large_list[0]))
+            heappop(large_list)
+        elif balance > 0:
+            heappush(large_list, (-1 * small_list[0]))
+            heappop(small_list)
+        # heaps balanced, reset balance to 0
+        balance = 0 
+        # remove invalid numbers in hash map from top of max heap
+        while (small_list[0] * -1) in outgoing_num and (outgoing_num[(small_list[0] * -1)] > 0):
+            outgoing_num[small_list[0] * -1] = outgoing_num[small_list[0] * -1] - 1
+            heappop(small_list)
+        # remove invalid numbers in hash map from top of min heap
+        while large_list and large_list[0] in outgoing_num and (outgoing_num[large_list[0]] > 0):
+            outgoing_num[large_list[0]] = outgoing_num[large_list[0]] - 1
+            heappop(large_list)
+    return medians 
+
+def min_machines(tasks):
+    tasks.sort()
+    machines = [] # min heap
+    for task in tasks:
+        start, end = task 
+        if machines and machines[0] <= start:
+            # if earliest machine is free, reuse machine 
+            heapq.heappop(machines)
+        heapq.heappush(machines, end) # assign a machine 
+    # return size of heap as min number of machine 
+    return len(machines)
+
+
+def most_booked(meetings, rooms):
+    count = [0] * rooms 
+    available = [i for i in range(rooms)]
+    used_rooms = []
+    meetings.sort()
+    for start_time, end_time in meetings:
+        # free up rooms that have finished 
+        while used_rooms and used_rooms[0][0] <= start_time:
+            ending, room = heapq.heappop(used_rooms)
+            heapq.heappush(available, room)
+        # if no rooms available, delay meeting 
+        if not available:
+            end, room = heapq.heappop(used_rooms)
+            end_time = end + (end_time - start_time)
+            heapq.heappush(available, room)
+        # allocate meeting to available room with lowest number 
+        room = heapq.heappop(available)
+        heapq.heappush(used_rooms, (end_time, room))
+        count[room] += 1
+    # room held most meetings 
+    return count.index(max(count))
+
+def largest_integer(num):
+    digits = [int(d) for d in str(num)]
+    odd_heap = []
+    even_heap = []
+    for d in digits:
+        if d % 2 == 0:
+            heapq.heappush(even_heap, -d) # negative for max heap
+        else:
+            heapq.heappush(odd_heap, -d)
+    result = []
+    for d in digits:
+        if d % 2 == 0:
+            largest_even = -heapq.heappop(even_heap)
+            result.append(largest_even)
+        else:
+            largest_odd = -heapq.heappop(odd_heap)
+            result.append(largest_odd)
+    return int(''.join(map(str, result)))
+
+def find_right_interval(intervals):
+    result = [-1] * len(intervals)
+    start_heap = []
+    end_heap = []
+    for i, interval in enumerate(intervals):
+        heapq.heappush(start_heap, (interval[0], i))
+        heapq.heappush(end_heap, (interval[1], i))
+    # process each interval based on end points 
+    while end_heap:
+        value, index = heapq.heappop(end_heap)
+        # remove all start points from start_heap < current end point 
+        while start_heap and start_heap[0][0] < value:
+            heapq.heappop(start_heap)
+        # if start heap not empty, top element is smallest valid right interval 
+        if start_heap:
+            result[index] = start_heap[0][1]
+    return result 
+
+def connect_sticks(sticks):
+    heapq.heapify(sticks) # convert list to minheap
+    total_cost = 0 
+    # continue until only one stick in the heap
+    while len(sticks) > 1:
+        first = heapq.heappop(sticks)
+        second = heapq.heappop(sticks)
+        cost = first + second 
+        total_cost += cost 
+        # push combined stick back into heap
+        heapq.heappush(sticks, cost)
+    return total_cost
+
+def longest_diverse_string(a, b, c):
+    pq = []
+    if a > 0:
+        heapq.heappush(pq, (-a, "a")) # push a with its count 
+    if b > 0:
+        heapq.heappush(pq, (-b, "b"))
+    if c > 0:
+        heapq.heappush(pq, (-c, "c"))
+    result = []
+    while pq:
+        # pop character with highest remaining freq
+        count, character = heapq.heappop(pq)
+        count = -count # convert back to positive 
+        if (
+            len(result) >= 2 
+            and result[-1] == character 
+            and result[-2] == character
+        ):
+            # rule violated, no alternative character exists
+            if not pq:
+                break 
+            # use next most frequent character temporarily
+            tempCnt, tempChar = heapq.heappop(pq)
+            result.append(tempChar) # add alternative character
+            # push alternative character back with its updated count
+            if (tempCnt + 1) < 0:
+                heapq.heappush(pq, (tempCnt + 1, tempChar))
+            # push original character back to heap to try adding it later 
+            heapq.heappush(pq, (-count, character))
+        else:
+            # if no violation, add current character to result 
+            count -= 1 
+            result.append(character)
+            # push character back to heap if still has remaining
+            if count > 0:
+                heapq.heappush(pq, (-count, character))
+    return "".join(result)
+
+def gain(passes, total):
+    return (float(passes + 1) / (total + 1)) - (float(passes) / total)
+def max_average_ratio(classes, extraStudents):
+    max_heap = []
+    for passes, total in classes:
+        heapq.heappush(max_heap, (-gain(passes, total), passes, total))
+    # distributed extra students
+    for _ in range(extraStudents):
+        current_gain, passes, total = heapq.heappop(max_heap)
+        passes += 1
+        total += 1
+        heapq.heappush(max_heap, (-gain(passes, total), passes, total))
+    total_ratio = sum(float(passes) / total for _, passes, total in max_heap)
+    return total_ratio / len(classes)
+
+def smallest_chair(times, target_friend):
+    sorted_friends = sorted(enumerate(times), key=lambda x: x[1][0])
+    available_chairs = []
+    occupied_chairs = []
+    chair_index = 0
+    # process each friend in order of arrival time
+    for friend_id, (arrival, leaving) in sorted_friends:
+        while occupied_chairs and occupied_chairs[0][0] <= arrival:
+            _, freed_chair = heapq.heappop(occupied_chairs) # remove release chair
+            heapq.heappush(available_chairs, freed_chair)
+        # assign smallest available chair
+        if available_chairs:
+            assigned_chair = heapq.heappop(available_chairs)
+        else:
+            assigned_chair = chair_index # use new chair if none are available
+            chair_index += 1 # move to next available chair number
+        heapq.heappush(occupied_chairs, (leaving, assigned_chair)) # store chair assignment with leaving time 
+        if friend_id == target_friend:
+            return assigned_chair
 ```
 
 <!-- TOC --><a name="7-k-way-merge"></a>
