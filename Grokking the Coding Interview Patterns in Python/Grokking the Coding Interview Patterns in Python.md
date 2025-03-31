@@ -12,7 +12,7 @@
    * [6. Heaps](#6-heaps)
    * [7. K-way merge ](#7-k-way-merge)
    * [8. Top K Elements](#8-top-k-elements)
-   * [9. Modified Binary Search](#9-modified-binary-search)
+   * [9. Binary Search](#9-binary-search)
    * [10. Subsets](#10-subsets)
    * [11. Greedy Algorithm](#11-greedy-algorithm)
    * [12. Backtracking](#12-backtracking)
@@ -1520,11 +1520,193 @@ def kth_largest_integer(nums, k):
     return str(heap[0])
 ```
 
-<!-- TOC --><a name="9-modified-binary-search"></a>
-## 9. Modified Binary Search
+<!-- TOC --><a name="9-binary-search"></a>
+## 9. Binary Search
 
 ```py
+def binary_search(nums, target):
+    low = 0 
+    high = len(nums) - 1 
+    while low <= high:
+        mid = low + ((high - low) // 2)
+        if nums[mid] == target:
+            return mid 
+        elif target < nums[mid]:
+            high = mid - 1 
+        elif target > nums[mid]:
+            low = mid + 1 
+    return -1 
 
+def binary_search_rotated(nums, target):
+    low = 0
+    high = len(nums) - 1 
+    while low <= high:
+        mid = low + (high - low) // 2 
+        if nums[mid] == target:
+            return mid 
+        if nums[low] <= nums[mid]:
+            if nums[low] <= target and target < nums[mid]:
+                high = mid - 1 
+            else:
+                low = mid + 1 
+        else:
+            if nums[mid] < target and target <= nums[high]:
+                low = mid + 1 
+            else:
+                high = mid - 1 
+    return -1 
+
+from bad_version import BadVersion 
+class Solution(BadVersion):
+    def first_bad_version(self, n):
+        first = 1 
+        last = n 
+        while first <= last:
+            mid = first + (last - first) // 2 
+            if self.is_bad_version(mid):
+                last = mid - 1 
+            else:
+                first = mid + 1 
+        return first 
+    
+import random 
+class RandomPickWithWeight:
+    def __init__(self, weights):
+        self.running_sums = []
+        running_sum = 0
+        for w in weights:  
+            running_sum += w 
+            self.running_sums.append(running_sum)
+        self.total_sum = running_sum
+    def pick_index(self):
+        target = random.randint(1, self.total_sum)
+        low = 0 
+        high = len(self.running_sums)
+        while low < high:
+            mid = low + (high - low) // 2 
+            if target > self.running_sums[mid]:
+                low = mid + 1 
+            else:
+                high = mid 
+        return low 
+
+def binary_search(array, target):
+    left = 0 
+    right = len(array) - 1 
+    while left <= right:
+        mid = (left + right) // 2 
+        if array[mid] == target:
+            return mid 
+        if array[mid] < target:
+            left = mid + 1 
+        else:
+            right = mid - 1 
+    return left 
+def find_closest_elements(nums, k, target):
+    if len(nums) == k:
+        return nums 
+    if target <= nums[0]:
+        return nums[0:k]
+    if target >= nums[-1]:
+        return nums[len(nums)-k : len(nums)]
+    first_closest = binary_search(nums, target)
+    window_left = first_closest - 1 
+    window_right = window_left + 1 
+    while (window_right - window_left - 1) < k:
+        if window_left == -1:
+            window_right += 1 
+            continue 
+        # if right pointer out of bound, or element pointed to by left pointer is closer to target
+        if window_right == len(nums) or abs(nums[window_left] - target) <= abs(nums[window_right] - target):
+            window_left -= 1 
+        else:
+            window_right += 1 
+    return nums[window_left + 1: window_right]
+
+def single_non_duplicate(nums):
+    l = 0 
+    r = len(nums) - 1 
+    while l != r:
+        mid = l + (r - l) // 2 
+        if mid % 2 == 1:
+            mid -= 1
+        if nums[mid] == nums[mid + 1]:
+            l = mid + 2 
+        else:
+            r = mid 
+    return nums[l]
+
+def calculate_sum(index, mid, n):
+    count = 0
+    if mid > index:
+        count += (mid + mid - index) * (index + 1) // 2 
+    else:
+        count += (mid + 1) * mid // 2 + index - mid + 1 
+    if mid >= n - index:
+        count += (mid + mid - n + 1 + index) * (n - index) // 2 
+    else:
+        count += (mid + 1) * mid // 2 + n - index - mid 
+    return count - mid 
+def max_value(n, index, maxSum):
+    left, right = 1, maxSum 
+    while left < right:
+        mid = (left + right + 1) // 2 
+        if calculate_sum(index, mid, n) <= maxSum:
+            left = mid 
+        else:
+            right = mid - 1 
+    return left 
+
+def find_k_weakest_rows(matrix, k):
+    m = len(matrix)
+    n = len(matrix[0])
+    def binary_search(row):
+        low = 0 
+        high = n 
+        while low < high:
+            mid = low + (high - low) // 2 
+            if row[mid] == 1:
+                low = mid + 1 
+            else:
+                high = mid 
+        return low 
+    # priority queue / minheap to store k weakest rows
+    pq = []
+    for i, row in enumerate(matrix):
+        strength = binary_search(row) # find strength of row
+        entry = (-strength, -i) # negative to prioritize weak rows and small index
+        if len(pq) < k or entry > pq[0]: # add row to heap if haven't found k rows
+            heapq.heappush(pq, entry)
+        if len(pq) > k: # remove strongest row if heap has >k rows
+            heapq.heappop(pq)
+    indexes = [] # k weakest rows from heap
+    while pq:
+        strength, i = heapq.heappop(pq)
+        indexes.append(-i) # append index of weakest row 
+    indexes = indexes[::-1] # reverse to get order from weakest to strongest
+    return indexes 
+
+def can_split(nums, k, mid):
+    subarrays = 1 
+    current_sum = 0
+    for num in nums:
+        if current_sum + num > mid:
+            subarrays += 1 
+            current_sum = num 
+            if subarrays > k:
+                return False 
+        else:
+            current_sum += num 
+    return True 
+def split_array(nums, k):
+    left, right = max(nums), sum(nums)
+    while left < right:
+        mid = (left + right) // 2 
+        if can_split(nums, k, mid):
+            right = mid 
+        else:
+            left = mid + 1 
+    return left 
 ```
 
 <!-- TOC --><a name="10-subsets"></a>
