@@ -413,7 +413,250 @@ def count_cycle_length(head):
 ## 3. Sliding Window 
 
 ```py
+def findRepeatedDnaSequences(s):
+    to_int = {"A": 0, "C": 1, "G": 2, "T": 3}
+    encoded_sequence = [to_int[c] for c in s]
+    k = 10 
+    n = len(s)
+    if n <= k:
+        return []
+    a = 4 # base-4 encoding
+    h = 0 # hash
+    seen_hashes, output = set(), set() # to track hashes and repeated sequences 
+    a_k = 1 # stores a^L for efficient rolling hash updates 
+    # initial hash computation for first 10-letter substring 
+    for i in range(k):
+        h = h * a + encoded_sequence[i]
+        a_k *= a 
+    seen_hashes.add(h) # store initial hash 
+    # sliding window to update hash 
+    for start in range(1, n - k + 1):
+        # remove leftmost character and add new rightmost character
+        h = h * a - encoded_sequence[start - 1] * a_k + encoded_sequence[start + k - 1]
+        # if hash has been seen_hashes before, add substring to output
+        if h in seen_hashes:
+            output.add(s[start: start + k])
+        else:
+            seen_hashes.add(h)
+    return list(output) # convert set to list 
 
+from collections import deque
+# clean up deque
+def clean_up(i, current_window, nums):
+    # remove all indexes from current_window whose corresponding values <= current element
+    while current_window and nums[i] >= nums[current_window[-1]]:
+        current_window.pop()
+# find max in all possible windows
+def find_max_sliding_window(nums, w):
+    if len(nums) == 1:
+        return nums 
+    output = []
+    current_window = deque()
+    for i in range(w):
+        clean_up(i, current_window, nums)
+        current_window.append(i)
+    output.append(nums[current_window[0]])
+    for i in range(w, len(nums)):
+        clean_up(i, current_window, nums)
+        if current_window and current_window[0] <= (i - w):
+            current_window.popleft()
+        current_window.append(i)
+        output.append(nums[current_window[0]])
+    return output 
+
+def min_window(str1, str2):
+    size_str1, size_str2 = len(str1), len(str2)
+    min_sub_len = float('inf')
+    index_s1, index_s2 = 0, 0 
+    min_subsequence = ""
+    while index_s1 < size_str1:
+        if str1[index_s1] == str2[index_s2]:
+            index_s2 += 1 
+            # if index_s2 has reached the end of str2
+            if index_s2 == size_str2:
+                start, end = index_s1, index_s1 
+                index_s2 -= 1 
+                # decrement pointer index_s2 and start reverse loop 
+                while index_s2 >= 0:
+                    if str1[start] == str2[index_s2]:
+                        index_s2 -= 1
+                    # decrement start pointer to find the start point of required subsequence 
+                    start -= 1 
+                start += 1 
+                # check if min_sub_len of sub sequence pointed by start and end pointers < current min min_sub_len 
+                if end - start < min_sub_len:
+                    min_sub_len = end - start 
+                    min_subsequence = str1[start:end+1] # update to new shorter string 
+                index_s1 = start 
+                index_s2 = 0 
+        # increment pointer to check next character in str1
+        index_s1 += 1 
+    return min_subsequence
+
+def longest_repeating_character_replacement(s, k):
+    string_length = len(s)
+    length_of_max_substring = 0
+    start = 0 
+    char_freq = {}
+    most_freq_char = 0 
+    for end in range(string_length):
+        if s[end] not in char_freq:
+            char_freq[s[end]] = 1 
+        else:
+            char_freq[s[end]] += 1 
+        most_freq_char = max(most_freq_char, char_freq[s[end]])
+        # if number of replacements in current window exceed limit, slide the window
+        if end - start + 1 - most_freq_char > k:
+            char_freq[s[start]] -= 1
+            start += 1 
+        # if window is the longest, update length of max substring 
+        length_of_max_substring = max(end - start + 1, length_of_max_substring)
+    return length_of_max_substring
+
+def min_window(s: str, t: str) -> str:
+    if not t:
+        return ""
+    req_count = {}
+    window = {}
+    # populate req_count with character frequencies of t
+    for char in t:
+        req_count[char] = req_count.get(char, 0) + 1 
+    current = 0
+    required = len(req_count) # total number of unique characters in t 
+    # result variables to track best window
+    res = [-1, -1] # start, end indices of min window 
+    res_len = float("inf") # length of min window 
+    left = 0 
+    for right in range(len(s)):
+        char = s[right]
+        # if char in t, update window count 
+        if char in req_count:
+            window[char] = window.get(char, 0) + 1 
+            # if freq of char in window match required frequency, update current
+            if window[char] == req_count[char]:
+                current += 1 
+        # contract window while all required chars are present 
+        while current == required:
+            # update result if current window < previous best
+            if (right - left + 1) < res_len:
+                res = [left, right]
+                res_len = (right - left + 1)
+            left_char = s[left]
+            if left_char in req_count:
+                window[left_char] -= 1 
+                # if frequency of left_char in window < required, update frequency 
+                if window[left_char] < req_count[left_char]:
+                    current -= 1 
+            left += 1 # move left pointer to shrink window 
+    # return min window if found, otherwise empty string
+    return s[res[0]:res[1] + 1] if res_len != float("inf") else ""
+
+def find_longest_substring(input_str):
+    if len(input_str) == 0:
+        return 0 
+    window_start, longest, window_length = 0, 0, 0
+    last_seen_at = {}
+    for index, val in enumerate(input_str):
+        # if current element not in hash map, store it 
+        if val not in last_seen_at:
+            last_seen_at[val] = index 
+        else:
+            # element have appeared before, check if it occurs before or after window_start
+            if last_seen_at[val] >= window_start:
+                window_length = index - window_start
+                if longest < window_length:
+                    longest = window_length 
+                window_start = last_seen_at[val] + 1 
+            # update last occurrence of element in hash map 
+            last_seen_at[val] = index 
+    index += 1
+    # uopdate longest substring's length and start
+    if longest < index - window_start:
+        longest = index - window_start
+    return longest 
+
+def min_sub_array_len(target, nums):
+    window_size = float('inf')
+    start = 0
+    sum = 0
+    for end in range(len(nums)):
+        sum += nums[end]
+        # remove elements from window start while sum > target 
+        while sum >= target:
+            curr_subarr_size = (end + 1) - start 
+            window_size = min(window_size, curr_subarr_size)
+            # remove element from window start 
+            sum -= nums[start]
+            start += 1 
+    if window_size != float('inf'):
+        return window_size
+    return 0 
+
+def find_max_average(nums, k):
+    current_sum = sum(nums[:k])
+    max_sum = current_sum 
+    for i in range(k, len(nums)):
+        current_sum += nums[i] - nums[i - k]
+        max_sum = max(max_sum, current_sum)
+    return max_sum / k
+
+def diet_plan_performance(calories, k, lower, upper):
+    points = 0 
+    # initial window of first k days
+    current_sum = sum(calories[:k])
+    if current_sum < lower:
+        points -= 1 
+    elif current_sum > upper:
+        points += 1 
+    # slide window across rest of days 
+    for i in range(k, len(calories)):
+        current_sum = current_sum - calories[i - k] + calories[i]
+        if current_sum < lower:
+            points -= 1 
+        elif current_sum > upper:
+            points += 1 
+    return points 
+
+def total_fruit(fruits):
+    baskets = {}
+    collected = 0
+    left = 0 
+    for right in range(len(fruits)):
+        baskets[fruits[right]] = baskets.get(fruits[right], 0) + 1 
+        while len(baskets) > 2:
+            baskets[fruits[left]] -=1 
+            # remove fruit type from basket if count = 0
+            if baskets[fruits[left]] == 0:
+                del baskets[fruits[left]]
+            left += 1 
+        collected = max(collected, right - left + 1)
+    return collected
+            
+def contains_nearby_duplicate(nums, k):
+    seen = set()
+    for i in range(len(nums)):
+        if nums[i] in seen:
+            return True # duplicate found within range
+        seen.add(nums[i])
+        # maintain sliding window size 
+        if len(seen) > k:
+            seen.remove(nums[i - k]) # remove oldest element outside range 
+    return False # no duplicate found 
+
+def max_frequency(nums, k):
+    nums.sort()
+    left = 0 
+    max_freq = 0 
+    window_sum = 0
+    for right in range(len(nums)):
+        target = nums[right] 
+        window_sum += target 
+        # check if total required increments > k
+        while (right - left + 1) * target > window_sum + k:
+            window_sum -= nums[left] # remove leftmost element 
+            left += 1 # shrink window
+        max_freq = max(max_freq, right - left + 1)
+    return max_freq
 ```
 
 <!-- TOC --><a name="4-merge-intervals"></a>
