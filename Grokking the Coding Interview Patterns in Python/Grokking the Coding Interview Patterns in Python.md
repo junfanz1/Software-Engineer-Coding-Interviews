@@ -2728,7 +2728,258 @@ def longest_path(parent, s):
 ## 16. Sort and Search
 
 ```py
+def find_distance_value(arr1, arr2, d):
+    arr2.sort()
+    distance = 0 
+    for i in range(len(arr1)):
+        left, right = 0, len(arr2) - 1 
+        valid = True 
+        while left <= right:
+            mid = (left + right) // 2 
+            if arr2[mid] == arr1[i]:
+                valid = False 
+                break 
+            elif arr2[mid] < arr1[i]:
+                left = mid + 1 
+            else:
+                right = mid - 1 
+        if left < len(arr2) and abs(arr2[left] - arr1[i]) <= d:
+            valid = False 
+        if right >= 0 and abs(arr2[right] - arr1[i]) <= d:
+            valid = False 
+        if valid:
+            distance += 1 
+    return distance 
 
+def answer_queries(nums, queries):
+    nums.sort()
+    prefix_sum = [0] * len(nums) 
+    prefix_sum[0] = nums[0]
+    for i in range(1, len(nums)):
+        prefix_sum[i] = prefix_sum[i - 1] + nums[i]
+    def binary_search(prefix_sum, target):
+        low, high = 0, len(prefix_sum) - 1 
+        while low <= high:
+            mid = (low + high) // 2 
+            if prefix_sum[mid] <= target:
+                low = mid + 1 
+            else:
+                high = mid - 1 
+        return low 
+    
+    answer = []
+    for q in queries:
+        index = binary_search(prefix_sum, q)
+        answer.append(index)
+    return answer 
+
+def target_indices(nums, target):
+    nums.sort()
+    result = []
+    for i in range(len(nums)):
+        if nums[i] == target:
+            result.append(i)
+    return result 
+
+def count_pairs(nums1, nums2):
+    n = len(nums1)
+    difference = [nums1[i] - nums2[i] for i in range(n)]
+    difference.sort()
+    count_of_valid_pairs = 0 
+    for i in range(0, n):
+        if difference[i] > 0:
+            count_of_valid_pairs += n - i - 1 
+        else:
+            left = i + 1 
+            right = n - 1 
+            while left <= right:
+                mid = (left + right) // 2 
+                if difference[i] + difference[mid] > 0:
+                    right = mid - 1 
+                else:
+                    left = mid + 1 
+            count_of_valid_pairs += n - left 
+    return count_of_valid_pairs
+
+def triangle_number(nums):
+    nums.sort()
+    count = 0
+    for i in range(len(nums) - 1, 1, -1):
+        left, right = 0, i - 1 
+        while left < right:
+            if nums[left] + nums[right] > nums[i]:
+                count += right - left 
+                right -= 1 
+            else:
+                left += 1 
+    return count 
+
+def min_operations(nums, queries):
+    nums.sort()
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    def binary_search(arr, target):
+        low, high = 0, len(arr) - 1 
+        while low <= high:
+            mid = (low + high) // 2
+            if arr[mid] < target: 
+                low = mid + 1 
+            else:
+                high = mid -1 
+        return low 
+    answer = []
+    for query in queries:
+        idx = binary_search(nums, query)
+        left_operations = query * idx - prefix[idx]
+        right_operations = (prefix[n] - prefix[idx]) - query * (n - idx)
+        answer.append(left_operations + right_operations)
+    return answer 
+
+def find_best_value(arr, target):
+    arr.sort()
+    n = len(arr)
+    remaining_target = target 
+    for i, num in enumerate(arr):
+        if remaining_target <= num * (n - i):
+            replacement_value = remaining_target / (n - i)
+            if replacement_value - int(replacement_value) == 0.5:
+                return int(replacement_value)
+            return round(replacement_value)
+        remaining_target -= num 
+    return arr[-1]
+
+def range_sum(nums, n, left, right):
+    mod = 10 ** 9 + 7 
+    result = (
+        sum_of_first_k(nums, n, right) - sum_of_first_k(nums, n, left- 1)
+    ) % mod 
+    return (result + mod) % mod 
+def sum_of_first_k(nums, n, k):
+    min_sum = min(nums)
+    max_sum = sum(nums)
+    T_left = min_sum 
+    T_right = max_sum 
+    while T_left <= T_right:
+        mid = T_left + (T_right - T_left) // 2 
+        if count_and_sum(nums, n, mid)[0] >= k:
+            T_right = mid - 1 
+        else:
+            T_left = mid + 1 
+    count, total_sum = count_and_sum(nums, n, T_left)
+    return total_sum - T_left * (count - k)
+def count_and_sum(nums, n, target):
+    count = 0
+    current_sum = 0 
+    total_sum = 0 
+    window_sum = 0 
+    i = 0 
+    for j in range(n):
+        current_sum += nums[j]
+        window_sum += nums[j] * (j - i + 1)
+        while current_sum > target:
+            window_sum -= current_sum 
+            current_sum -= nums[i]
+            i += 1 
+        count += j - i + 1 
+        total_sum += window_sum
+    return count, total_sum
+
+def can_place_balls(x, position, m):
+    prev = position[0]
+    balls = 1 
+    for i in range(1, len(position)):
+        curr = position[i]
+        if curr - prev >= x:
+            balls += 1 
+            prev = curr 
+            if balls == m:
+                return True 
+    return False
+def max_distance(position, m):
+    position.sort()
+    force = 0
+    low = 1 
+    high = (position[-1] - position[0]) // (m - 1)
+    while low <= high:
+        mid = (low + high) // 2 
+        if can_place_balls(mid, position, m):
+            force = mid 
+            low = mid + 1 
+        else:
+            high = mid - 1 
+    return force 
+
+def count_pairs_with_distance(nums, d):
+    count = 0 
+    left = 0
+    for right in range(len(nums)):
+        while nums[right] - nums[left] > d:
+            left += 1 
+        count += right - left 
+    return count 
+def smallest_distance_pair(nums, k):
+    nums.sort()
+    low = 0 
+    high = nums[-1] - nums[0]
+    while low < high:
+        mid = (low + high) // 2 
+        count = count_pairs_with_distance(nums, mid)
+        if count < k: 
+            low = mid + 1 
+        else:
+            high = mid 
+    return low 
+
+def binary_search(array, target, start):
+    low, high = start, len(array) - 1 
+    while low <= high:
+        mid = (low + high) // 2 
+        if array[mid] <= target:
+            low = mid + 1 
+        else:
+            high = mid - 1
+    return low 
+def min_wasted_space(packages, boxes):
+    MOD = 10 ** 9 + 7 
+    packages.sort()
+    total_package_size = sum(packages)
+    min_waste = float('inf')
+    for box_sizes in boxes:
+        box_sizes.sort()
+        if box_sizes[-1] < packages[-1]:
+            continue 
+        total_space_used = 0 
+        start_index = 0
+        for box_size in box_sizes:
+            end_index = binary_search(packages, box_size, start_index)
+            num_packages = end_index - start_index 
+            total_space_used += box_size * num_packages 
+            start_index = end_index
+        min_waste = min(min_waste, total_space_used - total_package_size)
+    return (min_waste) % MOD if min_waste != float('inf') else -1 
+
+def find_position(lis, height):
+    left, right = 0, len(lis) - 1 
+    while left <= right:
+        mid = (left + right) // 2 
+        if lis[mid] < height:
+            left = mid + 1 
+        else:
+            right = mid - 1 
+    return left 
+def max_envelopes(envelopes):
+    # sort by width in ascending order, if widths are same, sort by height in descending order
+    envelopes.sort(key=lambda x: (x[0], -x[1]))
+    lis = []
+    for width, height in envelopes:
+        position = find_position(lis, height)
+        if position == len(lis):
+            lis.append(height)
+        else:
+            lis[position] = height 
+    return len(lis)
 ```
 
 <!-- TOC --><a name="17-matrices"></a>
