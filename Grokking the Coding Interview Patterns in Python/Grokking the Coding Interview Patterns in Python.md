@@ -771,7 +771,202 @@ def count_days(days, meetings):
 ## 5. Manipulation of Linked List 
 
 ```py
+def reverse(head):
+    prev, next = None, None 
+    curr = head 
+    while curr is not None:
+        next = curr.next 
+        curr.next = prev 
+        prev = curr 
+        curr = next 
+    head = prev 
+    return head 
 
+def reverse_linked_list(head, k):
+    previous, current, next = None, head, None 
+    for _ in range(k):
+        next = current.next 
+        current.next = previous 
+        previous = current 
+        current = next 
+    return previous, current 
+def reverse_k_groups(head, k):
+    dummy = ListNode(0)
+    dummy.next = head 
+    ptr = dummy 
+    while (ptr != None):
+        tracker = ptr 
+        for i in range(k):
+            if tracker == None:
+                break 
+            tracker = tracker.next 
+        if tracker == None:
+            break 
+        previous, current = reverse_linked_list(ptr.next, k)
+        last_node_of_reversed_group = ptr.next 
+        last_node_of_reversed_group.next = current 
+        ptr.next = previous 
+        ptr = last_node_of_reversed_group
+    return dummy.next 
+
+def reverse_between(head, left, right):
+    if not head or left == right:
+        return head 
+    dummy = ListNode(0)
+    dummy.next = head 
+    prev = dummy 
+    # move prev to the node before left position
+    for _ in range(left - 1):
+        prev = prev.next
+    curr = prev.next 
+    for _ in range(right - left):
+        next_node = curr.next 
+        curr.next = next_node.next 
+        next_node.next = prev.next 
+        prev.next = next_node 
+    # updated head of linked list
+    return dummy.next 
+
+def reorder_list(head):
+    if not head:
+        return head 
+    # fine middle of linked list 
+    slow = fast = head 
+    while fast and fast.next:
+        slow = slow.next 
+        fast = fast.next.next 
+    # reverse second part of list, 123456 -> 123 654
+    prev, curr = None, slow
+    while curr:
+        curr.next, prev, curr = prev, curr, curr.next 
+    # merge 123 654 to 162534 
+    first, second = head, prev 
+    while second.next:
+        first.next, first = second, first.next 
+        second.next, second = first, second.next 
+    return head 
+
+def swap(node1, node2):
+    temp = node1.val 
+    node1.val = node2.val 
+    node2.val = temp 
+def swap_nodes(head, k):
+    count = 0 
+    front, end = None, None 
+    curr = head 
+    while curr:
+        count += 1 
+        if end is not None: # kth node has been found
+            end = end.next # move end pointer to find kth node from end of linked list 
+        if count == k: # curr is at kth node from start
+            front = curr 
+            end = head 
+        curr = curr.next 
+    swap(front, end)
+    return head
+
+def reverse_even_length_groups(head):
+    prev = head 
+    group_len = 2 
+    while prev.next:
+        node = prev 
+        num_nodes = 0 
+        for i in range(group_len):
+            if not node.next:
+                break 
+            num_nodes += 1 
+            node = node.next 
+        # odd length 
+        if num_nodes % 2:
+            prev = node 
+        # even length 
+        else:
+            reverse = node.next 
+            curr = prev.next 
+            for j in range(num_nodes):
+                curr_next = curr.next 
+                curr.next = reverse 
+                reverse = curr 
+                curr = curr_next 
+            prev_next = prev.next 
+            prev.next = node 
+            prev = prev_next 
+        group_len += 1 
+    return head 
+
+def remove_duplicates(head):
+    current = head 
+    while current is not None and current.next is not None:
+        if current.next.val == current.val:
+            # if duplicate, skip it
+            current.next = current.next.next 
+        else:
+            # if not duplicate, just move to next
+            current = current.next 
+    return head 
+
+def remove_elements(head, k):
+    dummy = ListNode(0)
+    dummy.next = head 
+    prev = dummy 
+    curr = head 
+    while curr is not None:
+        if curr.val == k:
+            # update next pointer of previous node to skip current node
+            prev.next = curr.next 
+            curr = curr.next 
+        else:
+            # current node's data doesn't match k, move both pointers forward
+            prev = curr 
+            curr = curr.next 
+    return dummy.next
+
+def split_list_to_parts(head, k):
+    ans = [None] * k 
+    size = 0 
+    current = head 
+    while current is not None:
+        size += 1 
+        current = current.next 
+    # base size of each part 
+    split = size // k 
+    remaining = size % k 
+    current = head 
+    prev = current 
+    for i in range(k):
+        new = current 
+        current_size = split 
+        if remaining > 0:
+            remaining -= 1
+            current_size += 1 
+        # traverse current part to its end 
+        j = 0 
+        while j < current_size:
+            prev = current 
+            if current is not None:
+                current = current.next 
+            j += 1 
+        # disconnect current part from rest of list 
+        if prev is not None:
+            prev.next = None 
+        ans[i] = new 
+    return ans 
+
+def delete_nodes(head, m, n):
+    current = head 
+    last_m_node = head 
+    while current:
+        m_count = m 
+        while current and m_count > 0:
+            last_m_node = current 
+            current = current.next 
+            m_count -= 1 
+        n_count = n 
+        while current and n_count > 0:
+            current = current.next 
+            n_count -= 1 
+        last_m_node.next = current 
+    return head 
 ```
 
 <!-- TOC --><a name="6-heaps"></a>
