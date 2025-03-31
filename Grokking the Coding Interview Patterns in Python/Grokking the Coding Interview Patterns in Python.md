@@ -1713,7 +1713,92 @@ def split_array(nums, k):
 ## 10. Subsets
 
 ```py
+def get_bit(num, bit):
+    temp = (1 << bit)
+    temp = temp & num 
+    if temp == 0:
+        return 0 
+    return 1 
+def find_all_subsets(nums):
+    subsets = []
+    if not nums:
+        return [[]]
+    else:
+        subsets_count = 2 ** len(nums)
+        for i in range(0, subsets_count):
+            subset = set()
+            for j in range(0, len(nums)):
+                if get_bit(i, j) == 1 and nums[j] not in subset:
+                    subset.add(nums[j])
+            if i == 0:
+                subsets.append([])
+            else:
+                subsets.append(list(subset))
+    return subsets 
 
+def swap_char(word, i, j):
+    swap_index = list(word)
+    swap_index[i], swap_index[j] = swap_index[j], swap_index[i]
+    return ''.join(swap_index)
+def permute_string_rec(word, current_index, result):
+    if current_index == len(word) - 1:
+        result.append(word)
+        return 
+    for i in range(current_index, len(word)):
+        swapped_str = swap_char(word, current_index, i)
+        permute_string_rec(swapped_str, current_index + 1, result)
+def permute_word(word):
+    result = []
+    permute_string_rec(word, 0, result)
+    return result
+
+def backtrack(index, path, digits, letters, combinations):
+    if len(path) == len(digits):
+        combinations.append(''.join(path))
+        return 
+    possible_letters = letters[digits[index]]
+    if possible_letters:
+        for letter in possible_letters:
+            path.append(letter)
+            backtrack(index + 1, path, digits, letters, combinations)
+            path.pop()
+def letter_combinations(digits):
+    combinations = []
+    if len(digits) == 0:
+        return []
+    digits_mapping = {
+        "1": [""],
+        "2": ["a", "b", "c"],
+        "3": ["d", "e", "f"],
+        "4": ["g", "h", "i"],
+        "5": ["j", "k", "l"],
+        "6": ["m", "n", "o"],
+        "7": ["p", "q", "r", "s"],
+        "8": ["t", "u", "v"],
+        "9": ["w", "x", "y", "z"]}
+    backtrack(0, [], digits, digits_mapping, combinations)
+    return combinations
+
+def back_track(n, left_count, right_count, output, result):
+    if left_count >= n and right_count >= n:
+        result.append("".join(output))
+    if left_count < n: 
+        output.append('(')
+        back_track(n, left_count + 1, right_count, output, result)
+        output.pop()
+    if right_count < left_count:
+        output.append(')')
+        back_track(n, left_count, right_count + 1, output, result)
+        output.pop()
+
+def letter_case_permutation(s):
+    result = [""]
+    for ch in s:
+        if ch.isalpha():
+            result = [str + ch.lower() for str in result] + [str + ch.upper() for str in result]
+        else:
+            result = [str + ch for str in result]
+    return result 
 ```
 
 <!-- TOC --><a name="11-greedy-algorithm"></a>
