@@ -2529,7 +2529,199 @@ def sort_array_by_parityII(nums):
 ## 15. Topological Sort 
 
 ```py
+from collections import deque 
+def find_compilation_order(dependencies):
+    sorted_order = []
+    graph = {}
+    inDegree = {}
+    for x in dependencies:
+        parent, child = x[1], x[0]
+        graph[parent], graph[child] = [], []
+        inDegree[parent], inDegree[child] = 0, 0
+    if len(graph) <= 0:
+        return sorted_order 
+    for dependency in dependencies:
+        parent, child = dependency[1], dependency[0]
+        graph[parent].append(child)
+        inDegree[child] += 1 
+    sources = deque()
+    for key in inDegree:
+        if inDegree[key] == 0:
+            sources.append(key)
+    while sources:
+        vertex = sources.popleft()
+        sorted_order.append(vertex)
+        for child in graph[vertex]:
+            inDegree[child] -= 1 
+            if inDegree[child] == 0:
+                sources.append(child)
+    if len(sorted_order) != len(graph):
+        return []
+    return sorted_order
 
+from collections import defaultdict, Counter, deque 
+def alien_order(words):
+    adj_list = defaultdict(set)
+    counts = Counter({c: 0 for word in words for c in word})
+    for word1, word2 in zip(words, words[1:]):
+        for c, d in zip(word1, word2):
+            if c != d:
+                if d not in adj_list[c]:
+                    adj_list[c].add(d)
+                    counts[d] += 1 
+                break 
+        else:
+            if len(word2) < len(word1):
+                return ""
+    result = []
+    sources_queue = deque([c for c in counts if counts[c] == 0])
+    while sources_queue:
+        c = sources_queue.popleft()
+        result.append(c)
+        for d in adj_list[c]:
+            counts[d] -= 1 
+            if counts[d] == 0:
+                sources_queue.append(d)
+    if len(result) < len(counts):
+        return ""
+    return "".join(result)
+
+def verify_alien_dictionary(words, order):
+    if len(words) == 1:
+        return True 
+    order_map = {}
+    for index, val in enumerate(order):
+        order_map[val] = index 
+        for i in range(len(words) - 1):
+            for j in range(len(words[i])):
+                if j >= len(words[i + 1]):
+                    return False 
+                # if letters in same position in two words are different
+                if words[i][j] != words[i + 1][j]:
+                    # if rank of letter in the current word > rank in the same position in next word
+                    if order_map[words[i][j]] > order_map[words[i + 1][j]]:
+                        return False 
+                    # if find first different character and they're sorted, no need to check remaining letters 
+                    break
+    return True  
+
+def find_order(n, prerequisites):
+    sorted_order = []
+    if n <= 0:
+        return sorted_order
+    in_degree = {i: 0 for i in range(n)}
+    graph = {i: [] for i in range(n)} # adjacency list graph 
+    for prerequisite in prerequisites:
+        parent, child = prerequisite[1], prerequisite[0]
+        graph[parent].append(child)
+        in_degree[child] += 1 
+    sources = deque()
+    for key in in_degree:
+        if in_degree[key] == 0:
+            sources.append(key)
+    while sources:
+        vertex = sources.popleft()
+        sorted_order.append(vertex)
+        for child in graph[vertex]:
+            in_degree[child] -= 1 
+            if in_degree[child] == 0:
+                sources.append(child)
+    # topological sort is not possible as graph has cycle
+    if len(sorted_order) != n:
+        return []
+    return sorted_order
+
+def can_finish(num_courses, prerequisites):
+    counter = 0 
+    if num_courses <= 0:
+        return True 
+    inDegree = {i: 0 for i in range(num_courses)}
+    graph = {i: [] for i in range(num_courses)}
+    for edge in prerequisites:
+        parent, child = edge[1], edge[0]
+        graph[parent].append(child)
+        inDegree[child] += 1 
+    sources = deque()
+    for key in inDegree:
+        if inDegree[key] == 0:
+            sources.append(key)
+    while sources:
+        course = sources.popleft()
+        counter += 1 
+        for child in graph[course]:
+            inDegree[child] -= 1 
+            if inDegree[child] == 0:
+                sources.append(child)
+    return counter == num_courses
+
+def build_matrix(k, row_conditions, col_conditions):
+    order_rows = topological_sort(row_conditions, k)
+    order_columns = topological_sort(col_conditions, k)
+    if not order_rows or not order_columns:
+        return []
+    matrix = [[0] * k for _ in range(k)]
+    pos_row = {num: i for i, num in enumerate(order_rows)}
+    pos_col = {num: i for i, num in enumerate(order_columns)}
+    for num in range(1, k + 1):
+        if num in pos_row and num in pos_col:
+            matrix[pos_row[num]][pos_col[num]] = num 
+    return matrix 
+def topological_sort(edges, n):
+    adj = defaultdict(list)
+    order = []
+    # 0 = unvisited, 1 = visiting, 2 = processed
+    visited = [0] * (n + 1)
+    for x, y in edges:
+        adj[x].append(y)
+    for i in range(1, n + 1):
+        if visited[i] == 0:
+            if dfs(i, adj, visited, order): # cycle detected
+                return []
+    order.reverse()
+    return order
+def dfs(node, adj, visited, order):
+    visited[node] = 1 
+    for neighbor in adj[node]:
+        if visited[neighbor] == 0:
+            # of neighbor unvisited, dfs 
+            if dfs(neighbor, adj, visited, order):
+                return True # if cycle detected
+        elif visited[neighbor] == 1: # if neighbor is being visited, cycle detected
+            return True 
+    visited[node] = 2 
+    order.append(node)
+    return False 
+
+def longest_path(parent, s):
+    n = len(parent)
+    in_degree = [0] * n 
+    for node in range(1, n):
+        in_degree[parent[node]] += 1 
+    queue = deque()
+    longest_chains = [[0, 0] for _ in range(n)]
+    longest_path = 1 
+    for node in range(n):
+        if in_degree[node] == 0:
+            longest_chains[node][0] = 1 
+            queue.append(node)
+    while queue:
+        current_node = queue.popleft()
+        par = parent[current_node]
+        # if node is not root, has a parent 
+        if par != -1:
+            longest_chain_from_current = longest_chains[current_node][0]
+            if s[current_node] != s[par]:
+                if longest_chain_from_current > longest_chains[par][0]:
+                    longest_chains[par][1] = longest_chains[par][0]
+                    longest_chains[par][0] = longest_chain_from_current
+                elif longest_chain_from_current > longest_chains[par][1]:
+                    longest_chains[par][1] = longest_chain_from_current
+            longest_path = max(longest_path, longest_chains[par][0] + longest_chains[par][1] + 1)
+            in_degree[par] -= 1 
+            if in_degree[par] == 0:
+                longest_chains[par][0] += 1 
+                queue.append(par)
+    return longest_path
 ```
 
 <!-- TOC --><a name="16-sort-and-search"></a>
