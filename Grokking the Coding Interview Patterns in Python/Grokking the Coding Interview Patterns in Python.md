@@ -1241,7 +1241,135 @@ def smallest_chair(times, target_friend):
 ## 7. K-way merge 
 
 ```py
+import heapq
+def merge_sorted(nums1, m, nums2, n):
+    p1 = m - 1 
+    p2 = n - 1
+    for p in range(n + m - 1, -1, -1):
+        if p2 < 0:
+            break 
+        if p1 >= 0 and nums1[p1] > nums2[p2]:
+            nums1[p] = nums1[p1]
+            p1 -= 1 
+        else:
+            nums1[p] = nums2[p2]
+            p2 -= 1
+    return nums1 
 
+def k_smallest_number(lists, k):
+    list_length = len(lists)
+    kth_smallest = []
+    for index in range(list_length):
+        if len(list[index]) == 0: # if no elements in input list, continue to next iteration
+            continue 
+        else:
+            # place first element of each list in minheap
+            heappush(kth_smallest, (lists[index][0], index, 0))
+    # set a counter to match if kth element = that counter, return number 
+    numbers_checked, smallest_number = 0, 0
+    while kth_smallest:
+        smallest_number, list_index, num_index = heappop(kth_smallest)
+        numbers_checked += 1 
+        if numbers_checked == k:
+            break 
+        # if more elements in list of top element, add next element of that list to minheap 
+        if num_index + 1 < len(list[list_index]):
+            heappush(
+                kth_smallest, (lists[list_index][num_index + 1], list_index, num_index + 1)
+            )
+    return smallest_number
+
+def k_smallest_pairs(list1, list2, k):
+    list_length = len(list1)
+    min_heap = []
+    pairs = []
+    for i in range(min(k, list_length)):
+        heappush(min_heap, (list1[i] + list2[0], i, 0))
+    counter = 1 
+    while min_heap and counter <= k:
+        sum_of_pairs, i, j = heappop(min_heap) 
+        pairs.append([list1[i], list2[j]])
+        next_element = j + 1
+        # if next element available for list2 then add to heap
+        if len(list2) > next_element:
+            heappush(
+                min_heap,
+                (list1[i] + list2[next_element], i, next_element)
+            )
+        counter += 1 
+    return pairs 
+
+def merge_2_lists(head1, head2):
+    dummy = ListNode(-1)
+    prev = dummy 
+    while head1 and head2:
+        if head1.val <= head2.val:
+            prev.next = head1 
+            head1 = head1.next 
+        else:
+            prev.next = head2 
+            head2 = head2.next 
+        prev = prev.next 
+    if head1 is not None:
+        prev.next = head1 
+    else:
+        prev.next = head2 
+    return dummy.next 
+def merge_k_lists(lists):
+    if len(lists) > 0:
+        step = 1 
+        while step < len(lists):
+            # merge lists that're step apart
+            for i in range(0, len(lists) - step, step * 2):
+                lists[i].head = merge_2_lists(lists[i].head, lists[i + step].head)
+            step *= 2 
+        return lists[0].head 
+    return 
+
+def kth_smallest_element(matrix, k):
+    row_count = len(matrix)
+    min_numbers = []
+    for index in range(min(row_count, k)):
+        heappush(min_numbers, (matrix[index][0], index, 0))
+    numbers_checked, smallest_element = 0, 0
+    while min_numbers:
+        smallest_element, row_index, col_index = heappop(min_numbers)
+        numbers_checked += 1 
+        if numbers_checked == k:
+            break # return smallest element
+        # if current popped element has next element in its row, add next element to minheap
+        if col_index + 1 < len(matrix[row_index]):
+            heappush(min_numbers, (matrix[row_index][col_index + 1], row_index, col_index + 1))
+    return smallest_element
+
+def kth_smallest_prime_fraction(arr, k):
+    n = len(arr)
+    min_heap = []
+    for j in range(1, n):
+        min_heap.append((arr[0] / arr[j], 0, j))
+    heapq.heapify(min_heap)
+    # remove smallest fraction k - 1 times 
+    for _ in range(k - 1):
+        value, i, j = heapq.heappop(min_heap)
+        if i + 1 < j:
+            heapq.heappush(min_heap, (arr[i + 1] / arr[j], i + 1, j))
+    # kth smallest fraction now at top of min heap
+    _, i, j = heapq.heappop(min_heap)
+    return [arr[i], arr[j]]
+
+def nth_super_ugly_number(n, primes):
+    ugly = [1]
+    # each prime starts with value as first multiple, and index 0 (pointing to 1 in ugly list)
+    min_heap = [(prime, prime, 0) for prime in primes]
+    heapq.heapify(min_heap) # convert list to heap to maintain minheap
+    # until find n super ugly numbers 
+    while len(ugly) < n:
+        next_ugly, prime, index = heapq.heappop(min_heap)
+        # avoid duplicates by only appending if different from last added 
+        if next_ugly != ugly[-1]:
+            ugly.append(next_ugly)
+        heapq.heappush(min_heap, (prime * ugly[index + 1], prime, index + 1))
+    return ugly[-1]
 ```
 
 <!-- TOC --><a name="8-top-k-elements"></a>
