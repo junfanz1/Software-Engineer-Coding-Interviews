@@ -2229,7 +2229,237 @@ def backtrack(s, start, seen):
 ## 13. Dynamic Programming
 
 ```py
+def find_max_knapsack_profit(capacity, weights, values):
+    n = len(weights)
+    dp = [0] * (capacity + 1)
+    for i in range(n):
+        for j in range(capacity, weights[i] - 1, -1):
+            dp[j] = max(values[i] + dp[j - weights[i]], dp[j])
+    return dp[capacity]
 
+def calculate_min_coins(coins, remaining_amount, counter):
+    if remaining_amount < 0:
+        return -1 
+    if remaining_amount == 0:
+        return 0 
+    if counter[remaining_amount - 1] != float('inf'):
+        return counter[remaining_amount - 1]
+    minimum = float('inf')
+    for s in coins:
+        result = calculate_min_coins(coins, remaining_amount - s, counter)
+        if result >= 0 and result < minimum:
+            minimum = 1 + result 
+    counter[remaining_amount - 1] = minimum if minimum != float('inf') else -1 
+    return counter[remaining_amount - 1]
+def coin_change(coins, total):
+    if total < 1:
+        return 0 
+    return calculate_min_coins(coins, total, [float('inf')] * total)
+
+def find_tribonacci(n):
+    if n < 3:
+        return 1 if n else 0 
+    first_num, second_num, third_num = 0, 1, 1 
+    for _ in range(n - 2):
+        first_num, second_num, third_num = second_num, third_num, first_num + second_num + third_num 
+    return third_num
+
+def can_partition_array(nums):
+    array_sum = sum(nums)
+    if array_sum % 2 != 0:
+        return False 
+    subset_sum = array_sum // 2 
+    dp = [[False for i in range(len(nums) + 1)] for j in range(subset_sum + 1)]
+    for i in range(0, len(nums) + 1):
+        dp[0][i] = True 
+    for i in range(1, subset_sum + 1):
+        for j in range(1, len(nums) + 1):
+            if nums[j - 1] > i:
+                dp[i][j] = dp[i][j - 1]
+            else:
+                dp[i][j] = dp[i - nums[j - 1]][j - 1] or dp[i][j - 1]
+    return dp[subset_sum][len(nums)]
+
+def counting_bits(n):
+    result = [0] * (n + 1)
+    if n == 0:
+        return result 
+    result[0] = 0 
+    result[1] = 1 
+    for x in range(2, n + 1):
+        if x % 2 == 0:
+            result[x] = result[x // 2]
+        else:
+            result[x] = result[x // 2] + 1 
+    return result 
+
+def update_matrix(mat):
+    m, n = len(mat), len(mat[0])
+    for r in range(m):
+        for c in range(n):
+            if mat[r][c] > 0:
+                above = mat[r - 1][c] if r > 0 else math.inf 
+                left = mat[r][c - 1] if c > 0 else math.inf 
+                mat[r][c] = min(above, left) + 1 
+    for r in range(m - 1, -1, -1):
+        for c in range(n - 1, -1, -1):
+            if mat[r][c] > 0:
+                below = mat[r + 1][c] if r < m - 1 else math.inf 
+                right = mat[r][c + 1] if c < n - 1 else math.inf
+                min_distance = min(below, right) + 1 
+                mat[r][c] = min(mat[r][c], min_distance)
+    return mat 
+
+def house_robber(money):
+    if len(money) == 0 or money is None:
+        return 0 
+    if len(money) == 1:
+        return money[0]
+    return max(house_robber_helper(money[:-1]), house_robber_helper(money[1:]))
+def house_robber_helper(money):
+    lookup_array = [0 for x in range(len(money) + 1)]
+    lookup_array[0] = 0
+    lookup_array[1] = money[0]
+    for i in range(2, len(money)+1):
+        lookup_array[i] = max(money[i-1] + lookup_array[i-2], lookup_array[i-1])
+    return lookup_array[len(money)]
+
+def max_product(nums):
+    if len(nums) == 0:
+        return 0 
+    max_so_far = nums[0]
+    min_so_far = nums[0]
+    result = max_so_far 
+    for i in range(1, len(nums)):
+        curr = nums[i]
+        prev_max_so_far = max_so_far 
+        max_so_far = max(curr, max_so_far * curr, min_so_far * curr)
+        min_so_far = min(curr, prev_max_so_far * curr, min_so_far * curr)
+        result = max(max_so_far, result)
+    return result 
+
+def combination_sum(nums, target):
+    dp = [[] for _ in range(target + 1)]
+    dp[0].append([])
+    for i in range(1, target + 1):
+        for j in range(len(nums)):
+            if nums[j] <= i:
+                for prev in dp[i - nums[j]]:
+                    temp = prev + [nums[j]]
+                    temp.sort()
+                    if temp not in dp[i]:
+                        dp[i].append(temp)
+    return dp[target]
+
+def word_break(s, word_dict):
+    n = len(s)
+    word_set = set(word_dict)
+    dp = [False] * (n + 1)
+    dp[0] = True 
+    dp[0] = True 
+    for i in range(1, n + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True 
+                break # if substring is found, no need to check further smaller substrings
+    return dp[n]
+
+def count_palindromic_substrings(s):
+    count = 0 
+    dp = [[False for i in range(len(s))] for i in range(len(s))]
+    for i in range(len(s)):
+        dp[i][i] = True 
+        count += 1 
+    for i in range(len(s) - 1):
+        dp[i][i + 1] = (s[i] == s[i + 1])
+        count += dp[i][i + 1]
+    for length in range(3, len(s) + 1):
+        i = 0 
+        for j in range(length - 1, len(s)):
+            dp[i][j] = dp[i + 1][j - 1] and (s[i] == s[j])
+            count += dp[i][j]
+            i += 1
+    return count 
+
+def longest_common_subsequence(str1, str2):
+    n = len(str1)
+    m = len(str2)
+    dp = [[-1 for x in range(m)] for y in range(n)]
+    return longest_common_subsequence_helper(str1, str2, 0, 0, dp)
+def longest_common_subsequence_helper(str1, str2, i, j, dp):
+    if i == len(str1) or j == len(str2):
+        return 0 
+    elif dp[i][j] == -1:
+        if str1[i] == str2[j]:
+            dp[i][j] = 1 + longest_common_subsequence_helper(str1, str2, i+1, j+1, dp)
+        else:
+            dp[i][j] = max(
+                longest_common_subsequence_helper(str1, str2, i+1, j, dp),
+                longest_common_subsequence_helper(str1, str2, i, j+1, dp)
+            )
+    return dp[i][j]
+
+def word_break(s, word_dict):
+    dp = [[]] * (len(s) + 1)
+    dp[0] = [""]
+    for i in range(1, len(s) + 1):
+        prefix = s[:i]
+        temp = []
+        for j in range(0, i):
+            suffix = prefix[j:]
+            if suffix in word_dict:
+                for substring in dp[j]:
+                    # merge suffix with already calculated results
+                    temp.append((substring + " " + suffix).strip())
+        dp[i] = temp 
+    return dp[len(s)] # all sentences formed from complete string s 
+
+def num_of_decodings(decode_str):
+    str_len = len(decode_str)
+    dp = [0] * (str_len + 1)
+    dp[0] = 1 
+    if decode_str[0] != '0':
+        dp[1] = 1 
+    else:
+        return 0 
+    for i in range(2, str_len + 1):
+        if decode_str[i - 1] != '0':
+            dp[i] += dp[i - 1]
+        if decode_str[i - 2] == '1' or (decode_str[i - 2] == '2' and decode_str[i - 1] <= '6'):
+            dp[i] += dp[i - 2]
+    return dp[str_len]
+
+MOD = 10 ** 9 + 7 
+def count_good_subsequences(s):
+    N = len(s) + 1 
+    factorials = [1] * N 
+    inverses = [1] * N 
+    for i in range(1, N):
+        factorials[i] = factorials[i - 1] * i % MOD 
+        inverses[i] = quick_modular_inverse(factorials[i], MOD - 2, MOD)
+    frequency_count = [0] * 26 
+    max_count = 1 
+    for char in s:
+        max_count = max(max_count, frequency_count[ord(char) - ord('a')] + 1)
+        frequency_count[ord(char) - ord('a')] += 1 
+    final_count = 0 
+    for i in range(1, max_count + 1):
+        count = 1 
+        for j in range(26):
+            if frequency_count[j] >= i:
+                count = count * (combination(frequency_count[j], i, factorials, inverses))
+        final_count = (final_count + count - 1) % MOD 
+    return int(final_count)
+def quick_modular_inverse(base, exponent, modulus):
+    result = 1 
+    while exponent != 0:
+        if (exponent & 1) == 1:
+            result = result * base % modulus 
+        exponent >>= 1 
+        base = base * base % modulus 
+    return result 
+def combination(n, k, factorials, inverses):
+    return (factorials[n] * inverses[k] % MOD) * inverses[n - k] % MOD 
 ```
 
 <!-- TOC --><a name="14-cyclic-sort"></a>
