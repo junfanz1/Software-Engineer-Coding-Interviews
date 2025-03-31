@@ -2466,7 +2466,63 @@ def combination(n, k, factorials, inverses):
 ## 14. Cyclic Sort 
 
 ```py
+def find_missing_number(nums):
+    len_nums = len(nums)
+    index = 0 
+    while index < len_nums:
+        value = nums[index]
+        if value < len_nums and value != nums[value]:
+            nums[index], nums[value] = nums[value], nums[index]
+        else:
+            index += 1 
+    for x in range(len_nums):
+        if x != nums[x]:
+            return x 
+    return len_nums 
 
+def smallest_missing_positive_integer(nums):
+    i = 0
+    while i < len(nums):
+        correct_spot = nums[i] - 1 
+        if 0 <= correct_spot < len(nums) and nums[i] != nums[correct_spot]:
+            nums[i], nums[correct_spot] = nums[correct_spot], nums[i]
+        else:
+            i += 1 
+    for i in range(len(nums)):
+        if i + 1 != nums[i]:
+            return i + 1 
+    return len(nums) + 1 
+
+def find_corrupt_pair(nums):
+    missing = None 
+    duplicated = None 
+    def swap(arr, first, second):
+        arr[first], arr[second] = arr[second], arr[first]
+    i = 0 
+    while i < len(nums):
+        correct = nums[i] - 1 
+        if nums[i] != nums[correct]:
+            swap(nums, i, correct)
+        else:
+            i += 1 
+    for j in range(len(nums)):
+        if nums[j] != j + 1:
+            duplicated = nums[j]
+            missing = j + 1 
+    return [missing, duplicated]
+
+def sort_array_by_parityII(nums):
+    i, j = 0, 1 
+    while i < len(nums) and j < len(nums):
+        if nums[i] % 2 == 0:
+            i += 2 
+        elif nums[j] % 2 == 1:
+            j += 2 
+        else:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 2 
+            j += 2
+    return nums 
 ```
 
 <!-- TOC --><a name="15-topological-sort"></a>
