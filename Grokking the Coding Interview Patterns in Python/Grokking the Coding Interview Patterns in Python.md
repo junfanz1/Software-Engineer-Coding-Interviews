@@ -663,7 +663,108 @@ def max_frequency(nums, k):
 ## 4. Merge Intervals 
 
 ```py
+def merge_intervals(intervals):
+    if not intervals:
+        return None 
+    result = []
+    result.append([intervals[0][0], intervals[0][1]])
+    for i in range(1, len(intervals)):
+        last_added_interval = result[len(result) - 1]
+        cur_start = intervals[i][0]
+        cur_end = intervals[i][1]
+        prev_end = last_added_interval[1]
+        if cur_start <= prev_end:
+            result[-1][-1] = max(cur_end, prev_end)
+        else:
+            result.append([cur_start, cur_end])
+    return result 
 
+def insert_interval(existing_intervals, new_interval):
+    new_start, new_end = new_interval[0], new_interval[1]
+    i = 0 
+    n = len(existing_intervals)
+    output = []
+    while i < n and existing_intervals[i][0] < new_start:
+        output.append(existing_intervals[i])
+        i = i + 1 
+    if not output or output[-1][1] < new_start:
+        output.append(new_interval)
+    else:
+        output[-1][-1] = max(output[-1][1], new_end)
+    while i < n:
+        ei = existing_intervals[i]
+        start, end = ei[0], ei[1]
+        if output[-1][1] < start:
+            output.append(ei)
+        else:
+            output[-1][1] = max(output[-1][1], end)
+        i += 1 
+    return output 
+
+def intervals_intersection(interval_list_a, interval_list_b):
+    intersections = []
+    i = j = 0
+    while i < len(interval_list_a) and j < len(interval_list_b):
+        start = max(interval_list_a[i][0], interval_list_b[j][0])
+        end = min(interval_list_a[i][1], interval_list_b[j][1])
+        if start <= end: # if intersection
+            intersections.append([start, end])
+        if interval_list_a[i][1] < interval_list_b[j][1]:
+            i += 1 
+        else:
+            j += 1 
+    return intersections
+
+class Interval:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.closed = True  # by default, the interval is closed
+    # set the flag for closed/open
+    def set_closed(self, closed):
+        self.closed = closed
+    def __str__(self):
+        return "[" + str(self.start) + ", " + str(self.end) + "]" \
+            if self.closed else \
+                "(" + str(self.start) + ", " + str(self.end) + ")"
+import heapq 
+def employee_free_time(schedule):
+    heap = []
+    # iterate for all employees' schedules, add start of each schedule's first interval
+    for i in range(len(schedule)):
+        heap.append((schedule[i][0].start, i, 0))
+    # heap from array elements 
+    heapq.heapify(heap)
+    result = []
+    previous = schedule[heap[0][1]][heap[0][2]].start 
+    # iterate till heap is empty 
+    while heap:
+        # pop element from heap and set value of i, j
+        _, i, j = heapq.heappop(heap)
+        interval = schedule[i][j]
+        if interval.start > previous:
+            # means interval is free, so add it 
+            result.append(Interval(previous, interval.start))
+        previous = max(previous, interval.end)
+        # if another interval in current employee's schedule, push into heap
+        if j + 1 < len(schedule[i]):
+            heapq.heappush(heap, (schedule[i][j + 1].start, i, j + 1))
+    # when heap empty, return result 
+    return result 
+
+def count_days(days, meetings):
+    meetings.sort()
+    occupied = 0 
+    start, end = meetings[0]
+    for i in range(1, len(meetings)):
+        # if meeting overlaps with current merged meeting
+        if meetings[i][0] <= end:
+            end = max(end, meeting[i][1])
+        else:
+            occupied += (end - start + 1)
+            start, end = meetings[i]
+    occupied += (end - start + 1)
+    return days - occupied
 ```
 
 <!-- TOC --><a name="5-manipulation-of-linked-list"></a>
