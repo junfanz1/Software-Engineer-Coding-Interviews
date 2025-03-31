@@ -1977,7 +1977,252 @@ def largest_odd_number(num):
 ## 12. Backtracking
 
 ```py
+def is_valid_move(proposed_row, proposed_col, solution):
+    for i in range(0, proposed_row):
+        old_row = i 
+        old_col = solution[i]
+        diagonal_offset = proposed_row - old_row 
+        if (old_col == proposed_col or old_col == proposed_col - diagonal_offset 
+            or old_col == proposed_col + diagonal_offset):
+            return False 
+    return True 
+# recursive worker function
+def solve_n_queens_rec(n, solution, row, results):
+    if row == n:
+        results.append(solution[:])
+        return 
+    for i in range(0, n):
+        valid = is_valid_move(row, i, solution)
+        if valid:
+            solution[row] = i 
+            solve_n_queens_rec(n, solution, row + 1, results)
+def solve_n_queens(n):
+    results = []
+    solution = [-1] * n 
+    solve_n_queens_rec(n, solution, 0, results)
+    return len(results)
 
+# stack version queen
+def solve_n_queens(n):
+    results = []
+    solution = [-1] * n 
+    sol_stack = []
+    row = 0 
+    col = 0
+    while row < n:
+        # check if queen can be placed in any column of this row 
+        while col < n:
+            if is_valid_move(row, col, solution):
+                # save to current solution on stack
+                sol_stack.append(col)
+                solution[row] = col 
+                row += 1 
+                col = 0 
+                # move on to check next row and break out inner loop
+                break 
+            col += 1 
+
+        # if checked all columns
+        if col == n:
+            # if working on solution 
+            if sol_stack:
+                # backtracking, as current row doesn't offer safe spot given previous move
+                # get setup to check previous row with next column
+                col = sol_stack[-1] + 1 
+                sol_stack.pop()
+                row -= 1 
+            else:
+                # backtracked all the way and found dead-end, break out inner loop, no more solutions exist 
+                break
+
+        if row == n:
+            # add solution to results 
+            results.append(solution[:])
+            row -= 1 # backtrack for next solution 
+            col = sol_stack[-1] + 1 
+            sol_stack.pop()
+    return len(results)
+
+def word_search(grid, word):
+    n = len(grid)
+    m = len(grid[0])
+    for row in range(n):
+        for col in range(m):
+            if dfs(row, col, word, 0, grid):
+                return True 
+    return False 
+def dfs(row, col, word, index, grid):
+    if len(word) == index:
+        return True 
+    if row < 0 or row >= len(grid) or col < 0 or col >= len(grid[0]) or grid[row][col] != word[index]:
+        return False 
+    temp = grid[row][col]
+    grid[row][col] = '*'
+    for rowOffset, colOffset in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        if dfs(row + rowOffset, col + colOffset, word, index + 1, grid):
+            return True 
+    grid[row][col] = temp 
+    return False 
+
+from TreeNode import * 
+from BinaryTree import * 
+def rob(root):
+    return max(heist(root))
+def heist(root):
+    if root == None:
+        return [0, 0]
+    left_subtree = heist(root.left)
+    right_subtree = heist(root.right)
+    include_root = root.data + left_subtree[1] + right_subtree[1]
+    exclude_root = max(left_subtree) + max(right_subtree)
+    return [include_root, exclude_root]
+
+def valid(segment):
+    segment_length = len(segment)
+    if segment_length > 3: 
+        return False 
+    return int(segment) <= 255 if segment[0] != '0' else len(segment) == 1 
+def update_segment(s, curr_dot, segments, result):
+    segment = s[curr_dot + 1: len(s)]
+    if valid(segment):
+        segments.append(segment)
+        result.append('.'.join(segments))
+        segments.pop()
+def backtrack(s, prev_dot, dots, segments, result):
+    size = len(s)
+    for curr_dot in range(prev_dot + 1, min(size - 1, prev_dot + 4)):
+        segment = s[prev_dot + 1: curr_dot + 1]
+        if valid(segment):
+            segments.append(segment)
+            if dots - 1 == 0:
+                update_segment(s, curr_dot, segments, result)
+            else:
+                backtrack(s, curr_dot, dots - 1, segments, result)
+            segments.pop()
+def restore_ip_addresses(s):
+    result, segments = [], []
+    backtrack(s, -1, 3, segments, result)
+    return result 
+
+def flood_fill(grid, sr, sc, target):
+    if grid[sr][sc] == target:
+        return grid 
+    else:
+        old_target = grid[sr][sc]
+        grid[sr][sc] = target 
+        dfs(grid, sr, sc, old_target, target)
+        return grid 
+def dfs(grid, row, col, old_target, new_target):
+    adjacent_cells = [[0, 1], [1, 0], [-1, 0], [0, -1]]
+    grid_length = len(grid)
+    total_cells = len(grid[0])
+    for cell_value in adjacent_cells:
+        i = row + cell_value[0]
+        j = col + cell_value[1]
+        if i < grid_length and i >= 0 and j < total_cells and j >= 0 and grid[i][j] == old_target:
+            grid[i][j] = new_target
+            dfs(grid, i, j, old_target, new_target)
+
+def min_moves(grid):
+    zeros = []
+    extras = []
+    min_moves = float('inf')
+    total_stones = sum(sum(row) for row in grid)
+    if total_stones != 9:
+        return -1 
+    def solve(i, count):
+        if i >= len(zeros):
+            nonlocal min_moves 
+            min_moves = min(min_moves, count)
+            return 
+        for k in range(len(extras)):
+            if extras[k][2] != 0:
+                extras[k][2] -= 1 
+                solve(i + 1, abs(extras[k][0] - zeros[i][0]) + abs(extras[k][1] - zeros[i][1]) + count)
+                extras[k][2] += 1 
+    for x in range(3):
+        for y in range(3):
+            if grid[x][y] == 0:
+                zeros.append([x, y])
+            elif grid[x][y] > 1:
+                extras.append([x, y, grid[x][y] - 1])
+    if len(zeros) == 0:
+        return 0 
+    solve(0, 0)
+    return min_moves 
+
+from binarytree import BinaryTree
+from treenode import TreeNode 
+def binary_tree_path(root):
+    def backtrack(root, path):
+        if root:
+            path += str(root.data)
+            if not root.left and not root.right:
+                paths.append(path)
+            else:
+                path += '->'
+                backtrack(root.left, path)
+                backtrack(root.right, path)
+    paths = []
+    backtrack(root, '')
+    return paths 
+
+from math import pow 
+def binary_watch_rec(position, hours, minutes, enabled, result):
+    if enabled == 0:
+        if hours <= 11 and minutes <= 59:
+            time = f"{hours}:{'0' if minutes < 10 else ''}{minutes}"
+            result.append(time)
+        return # end recursion
+    for i in range(position, 10):
+        h, m = hours, minutes 
+        if i <= 3:
+            hours += int(pow(2, i))
+        else:
+            minutes += int(pow(2, i - 4))
+        binary_watch_rec(i + 1, hours, minutes, enabled - 1, result)
+        hours, minutes = h, m 
+def read_binary_watch(enabled):
+    result = []
+    binary_watch_rec(0, 0, 0, enabled, result)
+    return result 
+
+import collections 
+def dfs(current, n, balance):
+    while current < n and not balance[current]:
+        current += 1 
+    if current == n:
+        return 0 
+    cost = float('inf')
+    for next in range(current + 1, n):
+        if balance[next] * balance[current] < 0:
+            balance[next] += balance[current]
+            cost = min(cost, 1 + dfs(current + 1, n, balance))
+            balance[next] -= balance[current]
+    return cost 
+def min_transfers(transactions):
+    balance_map = collections.defaultdict(int)
+    for a, b, amount in transactions:
+        balance_map[a] += amount 
+        balance_map[b] -= amount 
+    balance = [amount for amount in balance_map.values() if amount]
+    n = len(balance)
+    return dfs(0, n, balance)
+
+def max_unique_split(s):
+    seen = set()
+    return backtrack(s, 0, seen)
+def backtrack(s, start, seen):
+    if start == len(s):
+        return 0
+    max_count = 0
+    for end in range(start + 1, len(s) + 1):
+        sub_string = s[start: end]
+        if sub_string not in seen:
+            seen.add(sub_string)
+            max_count = max(max_count, 1 + backtrack(s, end, seen))
+            seen.remove(sub_string)
+    return max_count 
 ```
 
 <!-- TOC --><a name="13-dynamic-programming"></a>
