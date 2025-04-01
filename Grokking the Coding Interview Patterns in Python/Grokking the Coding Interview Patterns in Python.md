@@ -3611,7 +3611,169 @@ def min_length(s):
 ## 19. Graphs
 
 ```py
+from queue import PriorityQueue
+from collections import defaultdict
+def network_delay_time(times, n, k):
+    adjacency = defaultdict(list)
+    for src, dst, t in times:
+        adjacency[src].append((dst, t))
+    pq = PriorityQueue()
+    pq.put((0, k))
+    visited = set()
+    delays = 0
+    while not pq.empty():
+        time, node = pq.get()
+        if node in visited:
+            continue 
+        visited.add(node)
+        delays = max(delays, time)
+        neighbors = adjacency[node]
+        for neighbor in neighbors:
+            neighbor_node, neighbor_time = neighbor 
+            if neighbor_node not in visited:
+                new_time = time + neighbor_time 
+                pq.put((new_time, neighbor_node))
+    if len(visited) == n:
+        return delays 
+    return -1 
 
+def number_of_paths(n, corridors):
+    neighbors = defaultdict(set)
+    cycles = 0 
+    for room1, room2 in corridors:
+        neighbors[room1].add(room2)
+        neighbors[room2].add(room1)
+        cycles += len(neighbors[room1].intersection(neighbors[room2]))
+    
+from graph_utility import *
+def clone_helper(root, nodes_completed):
+    if root == None:
+        return None 
+    cloned_node = Node(root.data)
+    nodes_completed[root] = cloned_node 
+    for p in root.neighbors:
+        x = nodes_completed.get(p)
+        if not x:
+            cloned_node.neighbors += [clone_helper(p, nodes_completed)]
+        else:
+            cloned_node.neighbors += [x]
+    return cloned_node
+def clone(root):
+    nodes_completed = {}
+    return clone_helper(root, nodes_completed)
+
+def valid_tree(n, edges):
+    if len(edges) != n - 1:
+        return False 
+    adjacency = [[] for _ in range(n)]
+    for x, y in edges:
+        adjacency[x].append(y)
+        adjacency[y].append(x)
+    visited = {0}
+    stack = [0]
+    while stack:
+        node = stack.pop()
+        for neighbor in adjacency[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                stack.append(neighbor)
+    return len(visited) == n 
+
+def min_buses(routes, src, dest):
+    adj_list = {}
+    for i, stations in enumerate(routes):
+        for station in stations:
+            if station not in adj_list:
+                adj_list[station] = []
+            adj_list[station].append(i)
+    queue = deque()
+    queue.append([src, 0])
+    visited_buses = set()
+    while queue:
+        station, buses_taken = queue.popleft()
+        if station == dest:
+            return buses_taken
+        if station in adj_list:
+            for bus in adj_list[station]:
+                if bus not in visited_buses:
+                    for s in routes[bus]:
+                        queue.append([s, buses_taken + 1])
+                    visited_buses.add(bus)
+    return -1 
+
+def find_itinerary(tickets):
+    flight_map = defaultdict(list)
+    result = []
+    for departure, arrival in tickets:
+        flight_map[departure].append(arrival)
+    for departure in flight_map:
+        flight_map[departure].sort(reverse=True)
+    dfs_traversal('JFK', flight_map, result)
+    return result[::-1]
+def dfs_traversal(current, flight_map, result):
+    destinations = flight_map[current]
+    while destinations:
+        next_destination = destinations.pop()
+        dfs_traversal(next_destination, flight_map, result)
+    result.append(current)
+
+def find_judge(n, trust):
+    if len(trust) < n - 1:
+        return -1 
+    indegree = [0] * (n + 1)
+    outdegree = [0] * (n + 1)
+    for a, b in trust:
+        outdegree[a] += 1 
+        indegree[b] += 1 
+    for i in range(1, n + 1):
+        if indegree[i] == n - 1 and outdegree[i] == 0:
+            return i
+    return -1 
+
+def find_center(edges):
+    first = edges[0]
+    second = edges[1]
+    if first[0] in second:
+        return first[0]
+    else:
+        return first[1]
+    
+def lucky_numbers(matrix):
+    M, N = len(matrix), len(matrix[0])
+    r_largest_min = float('-inf')
+    for i in range(N):
+        r_min = min(matrix[i])
+        r_largest_min = max(r_largest_min, r_min)
+    c_smallest_max = float('inf')
+    for i in range(M):
+        c_max = max(matrix[j][i] for j in range(N))
+        c_smallest_max = min(c_smallest_max, c_max)
+    if r_largest_min == c_smallest_max:
+        return [r_largest_min]
+    else:
+        return []
+    
+def max_probability(n, edges, succProb, start, end):
+    graph = defaultdict(list)
+    for i, (u, v) in enumerate(edges):
+        graph[u].append((v, succProb[i]))
+        graph[v].append((u, succProb[i]))
+    max_prob = [0.0] * n 
+    max_prob[start] = 1.0 
+    pq = [(-1.0, start)]
+    while pq:
+        cur_prob, cur_node = heapq.heappop(pq)
+        if cur_node == end:
+            return -cur_prob 
+        if graph[cur_node]:
+            for neighbor, edge_prob in graph[cur_node]:
+                new_prob = -cur_prob * edge_prob 
+                if new_prob > max_prob[neighbor]:
+                    max_prob[neighbor] = new_prob
+                    heapq.heappush(pq, (-new_prob, neighbor))
+            # clear current node's list of neighbors to prevent revisiting it 
+            graph[cur_node].clear() 
+    return 0.0
 ```
 
 <!-- TOC --><a name="20-tree-dfs"></a>
