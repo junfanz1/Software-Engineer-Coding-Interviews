@@ -4652,7 +4652,201 @@ def unique_occurrences(nums):
 ## 24. Knowing what to Track
 
 ```py
+def permute_palindrome(st):
+    frequencies = {}
+    for i in st:
+        if i in frequencies:
+            frequencies[i] += 1 
+        else:
+            frequencies[i] = 1 
+    count = 0
+    for ch in frequencies.keys():
+        if frequencies[ch] % 2:
+            count += 1
+    if count <= 1:
+        return True 
+    else:
+        return False 
+    
+def is_anagram(str1, str2):
+    if len(str1) != len(str2):
+        return False 
+    table = {}
+    for i in str1:
+        if i in table:
+            table[i] += 1
+        else:
+            table[i] = 1 
+    for i in str2:
+        if i in table:
+            table[i] -= 1 
+        else:
+            return False 
+    for key in table:
+        if table[key] != 0:
+            return False 
+    return True
 
+class TicTacToe:
+    def __init__(self, n):
+        self.rows = [0] * (n)
+        self.cols = [0] * (n)
+        self.diagonal = 0 
+        self.anti_diagonal = 0 
+    def move(self, row, col, player):
+        current_player = -1 
+        if player == 1:
+            current_player = 1 
+        n = len(self.rows)
+        self.rows[row] += current_player 
+        self.cols[col] += current_player
+        if row == col:
+            self.diagonal += current_player
+        if abs(self.rows[row]) == n or abs(self.cols[col]) == n or abs(self.diagonal) == n or abs(self.anti_diagonal) == n:
+            return player 
+        return 0 
+
+def group_anagrams(strs):
+    res = {}
+    for s in strs:
+        count = [0] * 26 
+        for i in s:
+            index = ord(i) - ord('a')
+            count[index] += 1 
+        key = tuple(count)
+        if key in res:
+            res[key].append(s)
+        else:
+            res[key] = [s]
+    return res.values()
+
+from collections import defaultdict
+class FreqStack:
+    def __init__(self):
+        self.frequency = defaultdict(int)
+        self.group = defaultdict(list)
+        self.max_frequency = 0
+    def push(self, value):
+        freq = self.frequency[value] + 1 
+        self.frequency[value] = freq 
+        if freq > self.max_frequency:
+            self.max_frequency = freq 
+        self.group[freq].append(value)
+    def pop(self):
+        value = ""
+        if self.max_frequency > 0:
+            value = self.group[self.max_frequency].pop()
+            self.frequency[value] -= 1 
+            if not self.group[self.max_frequency]:
+                self.max_frequency -= 1
+                if not self.group[self.max_frequency]:
+                    self.max_frequency -= 1 
+        else:
+            return -1 
+        return value 
+
+def first_unique_char(s):
+    character_count = {}
+    string_length = len(s)
+    for i in range(string_length):
+        if s[i] in character_count:
+            character_count[s[i]] += 1 
+        else:
+            character_count[s[i]] = 1 
+    for i in range(string_length):
+        if character_count[s[i]] == 1:
+            return i 
+    return -1 
+
+def find_anagrams(a, b):
+    if len(b) > len(a):
+        return []
+    ans = []
+    hash_a = defaultdict(int)
+    hash_b = defaultdict(int)
+    for i in range(len(b)):
+        hash_b[b[i]] += 1 
+    for window_end in range(len(a)):
+        hash_a[window_end] += 1 
+        if window_end >= len(b):
+            window_start = window_end - len(b)
+            if hash_a[a[window_start]] == 1:
+                del hash_a[a[window_start]]
+            else:
+                hash_a[a[window_start]] -= 1
+        if hash_a == hash_b:
+            start_index = window_end - len(b) + 1
+            ans.append(start_index)
+    return ans
+
+from collections import Counter
+def longest_palindrome(words):
+    frequencies = Counter(words)
+    count = 0
+    central = False 
+    for word, frequency in frequencies.items():
+        if word[0] == word[1]:
+            if frequency % 2 == 0:
+                count += frequency
+            else:
+                count += frequency - 1 
+                central = True 
+        elif word[1] > word[0]:
+            count += 2 * min(frequency, frequencies[word[1] + word[0]])
+    if central:
+        count += 1 
+    return 2 * count 
+
+def rank_teams(votes):
+    counts = [[0] * 27 for _ in range(26)]
+    for t in range(26):
+        counts[t][26] = chr(ord('A') + t)
+    for i in range(len(votes)):
+        for j, c in enumerate(votes[i]):
+            counts[ord(c) - ord('A')][j] -= 1 
+    counts.sort()
+    res = ""
+    for i in range(len(votes[0])):
+        res += counts[i][26]
+    return res 
+
+def num_pairs_divisible_by_60(time):
+    remainders = [0] * 60 
+    count = 0
+    for t in time:
+        remainder = t % 60 
+        if remainder == 0:
+            count += remainders[0]
+        else:
+            count += remainders[60 - remainder]
+        remainders[remainder] += 1
+    return count 
+
+def min_pushes(word):
+    frequencies = [0] * 26 
+    for c in word:
+        frequencies[ord(c) - ord('a')] += 1 
+    frequencies.sort(reverse=True)
+    pushes = 0
+    for i in range(26):
+        if frequencies[i] == 0:
+            break 
+        pushes += (i // 8 + 1) * frequencies[i]
+    return pushes 
+
+def least_interval(tasks, n):
+    frequencies = [0] * 26 
+    for task in tasks:
+        frequencies[ord(task) - ord('A')] += 1 
+    frequencies.sort(reverse=True)
+    max_gaps = frequencies[0] - 1
+    idle_slots = max_gaps * n 
+    for i in range(1, 26):
+        if frequencies[i] == 0:
+            break 
+        idle_slots -= min(max_gaps, frequencies[i])
+    idle_slots = max(0, idle_slots)
+    return len(tasks) + idle_slots
 ```
 
 <!-- TOC --><a name="25-union-find"></a>
