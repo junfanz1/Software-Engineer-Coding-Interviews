@@ -2986,7 +2986,473 @@ def max_envelopes(envelopes):
 ## 17. Matrices
 
 ```py
+def find_distance_value(arr1, arr2, d):
+    arr2.sort()
+    distance = 0 
+    for i in range(len(arr1)):
+        left, right = 0, len(arr2) - 1 
+        valid = True 
+        while left <= right:
+            mid = (left + right) // 2 
+            if arr2[mid] == arr1[i]:
+                valid = False 
+                break 
+            elif arr2[mid] < arr1[i]:
+                left = mid + 1 
+            else:
+                right = mid - 1 
+        if left < len(arr2) and abs(arr2[left] - arr1[i]) <= d:
+            valid = False 
+        if right >= 0 and abs(arr2[right] - arr1[i]) <= d:
+            valid = False 
+        if valid:
+            distance += 1 
+    return distance 
 
+def answer_queries(nums, queries):
+    nums.sort()
+    prefix_sum = [0] * len(nums) 
+    prefix_sum[0] = nums[0]
+    for i in range(1, len(nums)):
+        prefix_sum[i] = prefix_sum[i - 1] + nums[i]
+    def binary_search(prefix_sum, target):
+        low, high = 0, len(prefix_sum) - 1 
+        while low <= high:
+            mid = (low + high) // 2 
+            if prefix_sum[mid] <= target:
+                low = mid + 1 
+            else:
+                high = mid - 1 
+        return low 
+    
+    answer = []
+    for q in queries:
+        index = binary_search(prefix_sum, q)
+        answer.append(index)
+    return answer 
+
+def target_indices(nums, target):
+    nums.sort()
+    result = []
+    for i in range(len(nums)):
+        if nums[i] == target:
+            result.append(i)
+    return result 
+
+def count_pairs(nums1, nums2):
+    n = len(nums1)
+    difference = [nums1[i] - nums2[i] for i in range(n)]
+    difference.sort()
+    count_of_valid_pairs = 0 
+    for i in range(0, n):
+        if difference[i] > 0:
+            count_of_valid_pairs += n - i - 1 
+        else:
+            left = i + 1 
+            right = n - 1 
+            while left <= right:
+                mid = (left + right) // 2 
+                if difference[i] + difference[mid] > 0:
+                    right = mid - 1 
+                else:
+                    left = mid + 1 
+            count_of_valid_pairs += n - left 
+    return count_of_valid_pairs
+
+def triangle_number(nums):
+    nums.sort()
+    count = 0
+    for i in range(len(nums) - 1, 1, -1):
+        left, right = 0, i - 1 
+        while left < right:
+            if nums[left] + nums[right] > nums[i]:
+                count += right - left 
+                right -= 1 
+            else:
+                left += 1 
+    return count 
+
+def min_operations(nums, queries):
+    nums.sort()
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    def binary_search(arr, target):
+        low, high = 0, len(arr) - 1 
+        while low <= high:
+            mid = (low + high) // 2
+            if arr[mid] < target: 
+                low = mid + 1 
+            else:
+                high = mid -1 
+        return low 
+    answer = []
+    for query in queries:
+        idx = binary_search(nums, query)
+        left_operations = query * idx - prefix[idx]
+        right_operations = (prefix[n] - prefix[idx]) - query * (n - idx)
+        answer.append(left_operations + right_operations)
+    return answer 
+
+def find_best_value(arr, target):
+    arr.sort()
+    n = len(arr)
+    remaining_target = target 
+    for i, num in enumerate(arr):
+        if remaining_target <= num * (n - i):
+            replacement_value = remaining_target / (n - i)
+            if replacement_value - int(replacement_value) == 0.5:
+                return int(replacement_value)
+            return round(replacement_value)
+        remaining_target -= num 
+    return arr[-1]
+
+def range_sum(nums, n, left, right):
+    mod = 10 ** 9 + 7 
+    result = (
+        sum_of_first_k(nums, n, right) - sum_of_first_k(nums, n, left- 1)
+    ) % mod 
+    return (result + mod) % mod 
+def sum_of_first_k(nums, n, k):
+    min_sum = min(nums)
+    max_sum = sum(nums)
+    T_left = min_sum 
+    T_right = max_sum 
+    while T_left <= T_right:
+        mid = T_left + (T_right - T_left) // 2 
+        if count_and_sum(nums, n, mid)[0] >= k:
+            T_right = mid - 1 
+        else:
+            T_left = mid + 1 
+    count, total_sum = count_and_sum(nums, n, T_left)
+    return total_sum - T_left * (count - k)
+def count_and_sum(nums, n, target):
+    count = 0
+    current_sum = 0 
+    total_sum = 0 
+    window_sum = 0 
+    i = 0 
+    for j in range(n):
+        current_sum += nums[j]
+        window_sum += nums[j] * (j - i + 1)
+        while current_sum > target:
+            window_sum -= current_sum 
+            current_sum -= nums[i]
+            i += 1 
+        count += j - i + 1 
+        total_sum += window_sum
+    return count, total_sum
+
+def can_place_balls(x, position, m):
+    prev = position[0]
+    balls = 1 
+    for i in range(1, len(position)):
+        curr = position[i]
+        if curr - prev >= x:
+            balls += 1 
+            prev = curr 
+            if balls == m:
+                return True 
+    return False
+def max_distance(position, m):
+    position.sort()
+    force = 0
+    low = 1 
+    high = (position[-1] - position[0]) // (m - 1)
+    while low <= high:
+        mid = (low + high) // 2 
+        if can_place_balls(mid, position, m):
+            force = mid 
+            low = mid + 1 
+        else:
+            high = mid - 1 
+    return force 
+
+def count_pairs_with_distance(nums, d):
+    count = 0 
+    left = 0
+    for right in range(len(nums)):
+        while nums[right] - nums[left] > d:
+            left += 1 
+        count += right - left 
+    return count 
+def smallest_distance_pair(nums, k):
+    nums.sort()
+    low = 0 
+    high = nums[-1] - nums[0]
+    while low < high:
+        mid = (low + high) // 2 
+        count = count_pairs_with_distance(nums, mid)
+        if count < k: 
+            low = mid + 1 
+        else:
+            high = mid 
+    return low 
+
+def binary_search(array, target, start):
+    low, high = start, len(array) - 1 
+    while low <= high:
+        mid = (low + high) // 2 
+        if array[mid] <= target:
+            low = mid + 1 
+        else:
+            high = mid - 1
+    return low 
+def min_wasted_space(packages, boxes):
+    MOD = 10 ** 9 + 7 
+    packages.sort()
+    total_package_size = sum(packages)
+    min_waste = float('inf')
+    for box_sizes in boxes:
+        box_sizes.sort()
+        if box_sizes[-1] < packages[-1]:
+            continue 
+        total_space_used = 0 
+        start_index = 0
+        for box_size in box_sizes:
+            end_index = binary_search(packages, box_size, start_index)
+            num_packages = end_index - start_index 
+            total_space_used += box_size * num_packages 
+            start_index = end_index
+        min_waste = min(min_waste, total_space_used - total_package_size)
+    return (min_waste) % MOD if min_waste != float('inf') else -1 
+
+def find_position(lis, height):
+    left, right = 0, len(lis) - 1 
+    while left <= right:
+        mid = (left + right) // 2 
+        if lis[mid] < height:
+            left = mid + 1 
+        else:
+            right = mid - 1 
+    return left 
+def max_envelopes(envelopes):
+    # sort by width in ascending order, if widths are same, sort by height in descending order
+    envelopes.sort(key=lambda x: (x[0], -x[1]))
+    lis = []
+    for width, height in envelopes:
+        position = find_position(lis, height)
+        if position == len(lis):
+            lis.append(height)
+        else:
+            lis[position] = height 
+    return len(lis)
+
+def set_matrix_zeros(mat):
+    rows = len(mat)
+    cols = len(mat[0])
+    fcol = False 
+    frow = False 
+    for i in range(rows):
+        if mat[i][0] == 0:
+            fcol = True 
+    for i in range(cols):
+        if mat[0][i] == 0:
+            frow = True 
+    for i in range(1, rows):
+        for j in range(1, cols):
+            if mat[i][j] == 0:
+                mat[0][j] = mat[i][0] = 0
+    for i in range(1, cols):
+        if mat[0][j] == 0:
+            for i in range(1, rows):
+                mat[i][j] = 0 
+    if fcol:
+        for i in range(rows):
+            mat[i][0] = 0
+    if frow:
+        for j in range(cols):
+            mat[0][j] = 0 
+    return mat 
+
+def rotate_image(matrix):
+    n = len(matrix)
+    for row in range(n // 2):
+        for col in range(row, n - row - 1):
+            matrix[row][col], matrix[col][n - 1 - row] = matrix[col][n - 1 - row], matrix[row][col]
+            matrix[row][col], matrix[n - 1 - row][n - 1 - col] = matrix[n - 1 - row][n - 1 - col], matrix[row][col]
+            matrix[row][col], matrix[n - 1- col][row] = matrix[n - 1- col][row], matrix[row][col]
+    return matrix 
+
+def spiral_order(matrix):
+    rows, cols = len(matrix), len(matrix[0])
+    row, col = 0, -1 
+    direction = 1 
+    result = []
+    while rows > 0 and cols > 0:
+        for _ in range(cols):
+            col += direction 
+            result.append(matrix[row][col])
+        row -= 1 
+        for _ in range(rows):
+            row += direction 
+            result.append(matrix[row][col])
+        cols -= 1 
+        direction *= -1 
+    return result 
+
+def find_exit_column(grid):
+    result = [-1] * len(grid[0])
+    for col in range(len(grid[0])):
+        current_col = col 
+        for row in range(len(grid)):
+            next_col = current_col + grid[row][current_col]
+            if next_col < 0 or next_col > len(grid[0]) - 1 or grid[row][current_col] != grid[row][next_col]:
+                break 
+            if row == len(grid) - 1:
+                result[col] = next_col
+            current_col = next_col 
+    return result 
+
+def transpose_matrix(matrix):
+    rows = len(matrix)
+    columns = len(matrix[0])
+    result = [[0] * rows for _ in range(columns)]
+    for i in range(rows):
+        for j in range(columns):
+            result[j][i] = matrix[i][j]
+    return result 
+
+def count_negatives(grid):
+    count = 0 
+    n = len(grid[0])
+    current_index = n - 1 
+    for row in grid:
+        while current_index >= 0 and row[current_index] < 0:
+            current_index -= 1 
+        count += (n - (current_index + 1))
+    return count 
+
+import collections
+def minimum_seconds(land):
+    m, n = len(land), len(land[0])
+    flood = collections.deque()
+    moves = collections.deque()
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    seconds = 0 
+    for i in range(m):
+        for j in range(n):
+            if land[i][j] == "S":
+                moves.append((i, j))
+            if land[i][j] == "*":
+                flood.append((i, j))
+    while moves:
+        spread, move = len(flood), len(moves)
+        for _ in range(spread):
+            flood_x, flood_y = flood.popleft()
+            for x, y in directions:
+                new_x, new_y = flood_x + x, flood_y + y 
+                if 0 <= new_x < m and 0 <= new_y < n and land[new_x][new_y] == ".":
+                    land[new_x][new_y] = "*"
+                    flood.append((new_x, new_y))
+        for _ in range(move):
+            move_x, move_y = moves.popleft()
+            if land[move_x][move_y] == "D":
+                return seconds 
+            for x, y in directions:
+                new_x, new_y = move_x + x, move_y + y 
+                if 0 <= new_x < m and 0 <= new_y < n and (land[new_x][new_y] == "." or land[new_x][new_y] == "D"):
+                    if land[new_x][new_y] != "D":
+                        land[new_x][new_y] = "*"
+                    moves.append((new_x, new_y))
+        seconds += 1 
+    return -1 
+
+def min_area(image, x, y):
+    def binary_search(image, low, high, check_func):
+        while low < high:
+            mid = (low + high) // 2 
+            if check_func(mid):
+                high = mid 
+            else:
+                low = mid + 1 
+        return low 
+    def contains_black_pixel_in_column(mid):
+        return any(image[i][mid] == '1' for i in range(len(image)))
+    def contains_black_pixel_in_row(mid):
+        return '1' in image[mid]
+    left = binary_search(image, 0, y, contains_black_pixel_in_column)
+    right = binary_search(image, y + 1, len(image[0]), lambda mid: not contains_black_pixel_in_column(mid)) - 1 
+    top = binary_search(image, 0, x, contains_black_pixel_in_row)
+    bottom = binary_search(image, x + 1, len(image), lambda mid: not contains_black_pixel_in_row(mid)) -1 
+    return (right - left + 1) * (bottom - top + 1)
+
+def island_perimeter(grid):
+    rows = len(grid)
+    cols = len(grid[0])
+    perimeter = 0 
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                perimeter += 4
+                if r > 0 and grid[r - 1][c] == 1:
+                    perimeter -=2 
+                if c > 0 and grid[r][c - 1] == 1:
+                    perimeter -= 2 
+    return perimeter
+
+def construct_2D_array(original, m, n):
+    if m * n != len(original):
+        return []
+    result = [[0] * n for _ in range(m)]
+    index = 0 
+    for i in range(m):
+        for j in range(n):
+            result[i][j] = original[index]
+            index += 1 
+    return result 
+
+def generate_matrix(n):
+    matrix = [[0] * n for _ in range(n)]
+    count = 1 
+    for layer in range((n + 1) // 2):
+        for i in range(layer, n - layer):
+            matrix[layer][i] = count 
+            count += 1
+        for i in range(layer + 1, n - layer):
+            matrix[i][n - layer - 1] = count 
+            count += 1 
+        for i in range(n - layer - 2, layer - 1, -1):
+            matrix[n - layer - 1][i] = count 
+            count += 1 
+        for i in range(n - layer - 2, layer, -1):
+            matrix[i][layer] = count 
+            count += 1
+    return matrix
+
+from collections import defaultdict
+def max_equal_rows_after_flips(matrix):
+    frequencies = defaultdict(int)
+    for row in matrix:
+        pattern = ""
+        for col in range(len(row)):
+            if row[0] == row[col]:
+                pattern += "T"
+            else:
+                pattern += "F"
+        frequencies[pattern] += 1 
+    res = 0
+    for count in frequencies.values():
+        res = max(count, res)
+    return res 
+
+def number_of_clean_rooms(room):
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    rows, cols = len(room), len(room[0])
+    cleaned = 0 
+    curr_row, curr_col, direction = 0, 0, 0
+    while not room[curr_row][curr_col] >> (direction + 1) & 1:
+        if room[curr_row][curr_col] == 0:
+            cleaned += 1 
+        room[curr_row][curr_col] |= 1 << (direction + 1)
+        next_row = curr_row + directions[direction][0]
+        next_col = curr_col + directions[direction][1]
+        if 0 <= next_row < rows and 0 <= next_col < cols and room[next_row][next_col] != 1:
+            curr_row, curr_col = next_row, next_col 
+        else:
+            direction = (direction + 1) % 4 
+    return cleaned 
 ```
 
 <!-- TOC --><a name="18-stacks"></a>
