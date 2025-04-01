@@ -3459,7 +3459,152 @@ def number_of_clean_rooms(room):
 ## 18. Stacks
 
 ```py
+def calculator(expression):
+    number = 0 
+    sign_value = 1 
+    result = 0 
+    operations_stack = []
+    for c in expression:
+        if c.isdigit():
+            number = number * 10 + int(c)
+        if c in "+-":
+            result += number * sign_value 
+            sign_value = -1 if c == '-' else 1 
+            number = 0
+        elif c == '(':
+            operations_stack.append(result)
+            operations_stack.append(sign_value)
+            result = 0 
+            sign_value = 1 
+        elif c == ')':
+            result += sign_value * number 
+            pop_sign_value = operations_stack.pop()
+            result *= pop_sign_value
+            second_value = operations_stack.pop()
+            result += second_value 
+            number = 0
+    return result + number * sign_value
 
+def remove_duplicates(s):
+    stack = []
+    for char in s:
+        if stack and stack[-1] == char:
+            stack.pop()
+        else:
+            stack.append(char)
+    return "".join(stack)
+
+def min_remove_parentheses(s):
+    stack = []
+    s_list = list(s)
+    for i, val in enumerate(s):
+        if len(stack) > 0 and stack[-1][0] == '(' and val == ')':
+            stack.pop()
+        elif val == '(' or val == ')':
+            stack.append([val, i])
+    for p in stack:
+        s_list[p[1]] = ""
+    result = ''.join(s_list)
+    return result 
+
+from logs import * 
+def exclusive_time(n, logs):
+    logs_stack = []
+    result = [0] * n 
+    for content in logs:
+        logs = Log(content)
+        if logs.is_start:
+            logs_stack.append(logs)
+        else:
+            top = logs_stack.pop()
+            result[top.id] += (logs.time - top.time + 1)
+            if logs_stack:
+                result[logs_stack[-1].id] -= (logs.time - top.time + 1)
+    return result 
+
+from nested_integers import NestedIntegers 
+class NestedIterator:
+    def __init__(self, nested_list):
+        self.nested_list_stack = list(reversed([NestedIntegers(val) for val in nested_list]))
+    def has_next(self):
+        while len(self.nested_list_stack) > 0:
+            top = self.nested_list_stack[-1]
+            if top.is_integer():
+                return True 
+            top_list = self.nested_list_stack.pop().get_list()
+            i = len(top_list) - 1 
+            while i >= 0:
+                self.nested_list_stack.append(top_list[i])
+                i -= 1 
+        return False 
+    def next(self):
+        if self.has_next():
+            return self.nested_list_stack.pop().get_integer()
+        return None 
+    
+from stack import Stack
+class MyQueue(object):
+    def __init__(self):
+        self.stack1 = Stack()
+        self.stack2 = Stack()
+    def push(self, x):
+        while not self.stack1.is_empty():
+            self.stack2.push(self.stack1.pop())
+        self.stack1.push(x)
+        while not self.stack2.is_empty():
+            self.stack1.push(self.stack2.pop())
+    def pop(self):
+        return self.stack1.pop()
+    def peek(self):
+        return self.stack1.top()
+    def empty(self):
+        return self.stack1.is_empty()
+        
+def daily_temperatures(temperatures):
+    n = len(temperatures)
+    output = [0] * n 
+    stack = []
+    for i in range(n):
+        while stack and temperatures[i] > temperatures[stack[-1]]:
+            j = stack.pop()
+            output[j] = i - j 
+        stack.append(i)
+    return output 
+
+def decode_string(s):
+    count_stack = []
+    string_stack = []
+    current = ""
+    k = 0 
+    for char in s:
+        if char.isdigit():
+            k = 10 * k + int(char)
+        elif char == "[":
+            count_stack.append(k)
+            string_stack.append(current)
+            k = 0 
+            current = ""
+        elif char == "]":
+            popped_string = string_stack.pop()
+            num = count_stack.pop()
+            current = popped_string + current * num 
+        else:
+            current += char 
+    return current 
+
+def min_length(s):
+    stack = []
+    for current_char in s:
+        if not stack:
+            stack.append(current_char)
+            continue 
+        if current_char == "B" and stack[-1] == "A":
+            stack.pop()
+        elif current_char == "D" and stack[-1] == "C":
+            stack.pop()
+        else:
+            stack.append(current_char)
+    return len(stack)
 ```
 
 <!-- TOC --><a name="19-graphs"></a>
