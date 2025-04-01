@@ -4415,7 +4415,237 @@ def index_pairs(text, words):
 ## 23. Hash Maps 
 
 ```py
+from bucket import * 
+class DesignHashMap():
+    def __init__(self):
+        self.key_space = 2069
+        self.bucket = [Bucket() for _ in range(self.key_space)]
+    def put(self, key, value):
+        hash_key = key % self.key_space 
+        self.bucket[hash_key].update(key, value)
+    def get(self, key):
+        hash_key = key % self.key_space 
+        return self.bucket[hash_key].get(key)
+    def remove(self, key):
+        hash_key = key % self.key_space 
+        self.bucket[hash_key].remove(key)
 
+def fraction_to_decimal(numerator, denominator):
+    result, remainder_map = "", {}
+    if numerator == 0:
+        return '0'
+    if (numerator < 0) ^ (denominator < 0):
+        result += '-'
+        nuumerator = abs(numerator)
+        denominator = abs(denominator)
+    quotient = numerator / denominator 
+    remainder = (numerator % denominator) * 10 
+    result += str(int(quotient))
+    if remainder == 0:
+        return result 
+    else:
+        result += "."
+        while remainder != 0:
+            if remainder in remainder_map.keys():
+                beginning = remainder_map.get(remainder)
+                left = result[0: beginning]
+                right = result[beginning: len(result)]
+                result = left + "(" + right + ")"
+                return result 
+            remainder_map[remainder] = len(result)
+            quotient = remainder / denominator 
+            result += str(int(quotient))
+            remainder = (remainder % denominator) * 10 
+        return result 
+    
+class RequestLogger:
+    def __init__(self, time_limit):
+        self.requests = {}
+        self.limit = time_limit 
+    def message_request_decision(self, timestamp, request):
+        if request not in self.requests or timestamp - self.requests[request] >= self.limit:
+            self.requests[request] = timestamp 
+            return True 
+        else:
+            return False 
+
+def next_greater_element(nums1, nums2):
+    stack = []
+    map = {}
+    for current in nums2:
+        while stack and current > stack[-1]:
+            map[stack.pop()] = current 
+        stack.append(current)
+    while stack:
+        map[stack.pop()] = -1 
+    ans = []
+    for num in nums1:
+        ans.append(map[num])
+    return ans 
+
+def is_isomorphic(string1, string2):
+    map_str1_str2 = {}
+    map_str2_str1 = {}
+    for i in range(len(string1)):
+        char1 = string1[i]
+        char2 = string2[i]
+        if char1 in map_str1_str2 and map_str1_str2[char1] != char2:
+            return False 
+        if char2 in map_str2_str1 and map_str2_str1[char2] != char1:
+            return False 
+        map_str1_str2[char1] = char2 
+        map_str2_str1[char2] = char1 
+    return True 
+
+from typing import List 
+from collections import defaultdict 
+def find_duplicate(paths):
+    file_map = defaultdict(list)
+    for path in paths:
+        values = path.slit(' ')
+        for i in range(1, len(values)):
+            name_content = values[i].split('(')
+            content = name_content[1][:-1]
+            directory = values[0]
+            file_name = name_content[0]
+            file_path = f"{directory}/{file_name}"
+            file_map[content].append(file_path)
+    result = []
+    for paths in file_map.values():
+        if len(paths) > 1:
+            result.append(paths)
+    return result 
+
+class SparseVector:
+    def __init__(self, nums):
+        self.hashmap = {}
+        for i, n in enumerate(nums):
+            if n != 0:
+                self.hashmap[i] = n 
+    def dot_product(self, vec):
+        sum = 0 
+        for i, n in self.hashmap.items():
+            if i in vec.hashmap:
+                sum += n * vec.hashmap[i]
+        return sum 
+    
+from heapq import nlargest 
+def high_five(items):
+    dict = defaultdict(list)
+    max_id = 0 
+    for id, score in items:
+        dict[id].append(score)
+        if id > max_id:
+            max_id = id 
+    result = []
+    for i in range(1, max_id + 1):
+        if i in dict:
+            scores = nlargest(5, dict[i])
+            average = sum(scores) // 5 
+            result.append([i, average])
+    return result 
+
+from collections import defaultdict
+def get_hint(secret, guess):
+    dict = defaultdict(int)
+    bulls = cows = 0 
+    for idx, s in enumerate(secret):
+        g = guess[idx]
+        if s == g:
+            bulls += 1 
+        else:
+            cows += int(dict[s] < 0) + int(dict[g] > 0)
+            dict[s] += 1 
+            dict[g] -= 1 
+    return "{}A{}B".format(bulls, cows)
+
+def custom_sort_string(order, s):
+    frequencies = {}
+    for c in s:
+        frequencies[c] = frequencies.get(c, 0) + 1 
+    result = []
+    for c in order:
+        if c in frequencies:
+            result.append(c * frequencies[c])
+            del frequencies[c]
+    for c, count in frequencies.items():
+        result.append(c * count)
+    return ''.join(result)
+
+def dfs(grid, row, col, row_origin, column_origin, path, visited):
+    if (row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]) or 
+        (row, col) in visited or grid[row][col] == 0):
+        return 
+    visited.add((row, col))
+    path.append((row - row_origin, col - column_origin))
+    dfs(grid, row + 1, col, row_origin, column_origin, path, visited)
+    dfs(grid, row - 1, col, row_origin, column_origin, path, visited)
+    dfs(grid, row, col + 1, row_origin, column_origin, path, visited)
+def num_distinct_islands(grid):
+    visited = set()
+    unique_islands = defaultdict(int)
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            if grid[row][col] == 1 and (row, col) not in visited:
+                path = []
+                dfs(grid, row, col, row, col, path, visited)
+                unique_islands[tuple(path)] += 1 
+    return len(unique_islands)
+
+def wonderful_substrings(word):
+    freq = {}
+    freq[0] = 1 
+    mask = 0 
+    res = 0 
+    for c in word:
+        bit = ord(c) - 97  # a is 0, b is 1, ...
+        mask ^= (1 << bit)
+        if mask in freq:
+            res += freq[mask]
+            freq[mask] += 1 
+        else:
+            freq[mask] = 1 
+        for odd_c in range(0, 10):
+            if (mask ^ (1 << odd_c)) in freq:
+                res += freq[mask ^ (1 << odd_c)]
+    return res 
+
+from collections import defaultdict
+def appeal_sum(s):
+    track = defaultdict(lambda: -1)
+    appeal = 0 
+    n = len(s)
+    for i, c in enumerate(s):
+        appeal += (i - track[c]) * (n - i)
+        track[c] = i
+    return appeal 
+
+def check_subarray_sum(nums, k):
+    remainder_map = {0: -1}
+    cumulative_sum = 0
+    for i, num in enumerate(nums):
+        cumulative_sum += num 
+        remainder = cumulative_sum % k 
+        if remainder in remainder_map:
+            if i - remainder_map[remainder] > 1:
+                return True 
+        else:
+            remainder_map[remainder] = i 
+    return False 
+
+def unique_occurrences(nums):
+    frequency = {}
+    for num in nums:
+        if num in frequency:
+            frequency[num] += 1 
+        else:
+            frequency[num] = 1 
+    seen_frequencies = set()
+    for count in frequency.values():
+        if count in seen_frequencies:
+            return False 
+        seen_frequencies.add(count)
+    return True 
 ```
 
 <!-- TOC --><a name="24-knowing-what-to-track"></a>
