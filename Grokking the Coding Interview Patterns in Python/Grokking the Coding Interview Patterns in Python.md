@@ -4207,7 +4207,208 @@ def find_target(root, k):
 ## 22. Trie
 
 ```py
+from trie_node import * 
+class Trie():
+    def __init__(self):
+        self.root = TrieNode()
+    def insert(self, word):
+        node = self.root 
+        for c in word:
+            if c not in node.children:
+                node.children[c] = TrieNode()
+            node = node.children.get(c)
+        node.is_word = True 
+    def search(self, word):
+        node = self.root
+        for c in word:
+            if c not in node.children:
+                return False 
+            node = node.children.get(c)
+        return node.is_word
+    def search_prefix(self, prefix):
+        node = self.root 
+        for c in prefix:
+            if c not in node.children:
+                return False 
+            node = node.children.get(c)
+        return True 
+    
+class Trie(object):
+    def __init__(self):
+        self.root = TrieNode()
+    def insert(self, data):
+        node = self.root 
+        idx = 0 
+        for char in data:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+            if len(node.search_words) < 3:
+                node.search_words.append(data)
+            idx += 1
+    def search(self, word):
+        result, node = [], self.root 
+        for i, char in enumerate(word):
+            if char not in node.children:
+                temp = [[] for _ in range(len(word) - i)]
+                return result + temp 
+            else:
+                node = node.children[char]
+                result.append(node.search_words[:])
+        return result 
+def suggested_products(products, search_word):
+    products.sort()
+    trie = Trie()
+    for x in products:
+        trie.insert(x)
+    return trie.search(search_word)
 
+def replace_words(sentence, dictionary):
+    trie = Trie()
+    for prefix in dictionary:
+        trie.insert(perfix)
+    new_list = sentence.split()
+    for i in range(len(new_list)):
+        new_list[i] = trie.replace(new_list[i])
+    return " ".join(new_list)
+
+class WordDictionary:
+    def __init__(self):
+        self.root = TrieNode()
+        self.can_find = False 
+    def add_word(self, word):
+        n = len(word)
+        cur_node = self.root 
+        for i, val in enumerate(word):
+            index = ord(val) - ord('a')
+            if cur_node.children[index] is None:
+                cur_node.children[index] = TrieNode()
+            cur_node = cur_node.children[index]
+            if i == n - 1:
+                if cur_node.complete:
+                    print("\tWord already present")
+                    return 
+                cur_node.complete = True 
+        print("\tWord added successfully")
+    def search_word(self, word):
+        self.can_find = False 
+        self.search_helper(self.root, word, 0)
+        return self.can_find
+    def search_helper(self, node, word, i):
+        if self.can_find:
+            return 
+        if not node:
+            return 
+        if len(word) == i:
+            if node.complete:
+                self.can_find = True 
+            return 
+        if word[i] == '.':
+            for j in range(ord('a'), ord('z') + 1):
+                self.search_helper(node.children[j - ord('a')], word, i + 1)
+        else:
+            index = ord(word[i]) - ord('a')
+            self.search_helper(node.children[index], word, i + 1)
+    def get_words(self):
+        words_list = []
+        if not self.root:
+            return []
+        return self.dfs(self.root, "", words_list)
+    def dfs(self, node, word, words_list):
+        if not node:
+            return words_list 
+        if node.complete:
+            words_list.append(word)
+        for j in range(ord('a'), ord('z') + 1):
+            prefix = word + chr(j)
+            words_list = self.dfs(node.children[j - ord('a')], prefix, words_list)
+        return words_list
+    
+def print_grid(grid):
+    for i in grid:
+        output = ' '.join(i)
+        print("\t", output)
+def find_strings(grid, words):
+    tried_for_words = Trie()
+    result = []
+    for word in words:
+        tried_for_words.insert(word)
+    for j in range(len(grid)):
+        for i in range(len(grid[0])):
+            dfs(tried_for_words, tried_for_words.root, grid, j, i, result)
+    return result 
+def dfs(words_trie, node, grid, row, col, result, word=''):
+    if node.is_tring:
+        result.append(word)
+        node.is_string = False 
+        words_trie.remove_characters(word)
+    if 0 <= row < len(grid) and 0 <= col < len(grid[0]):
+        char = grid[row][col] 
+        child = node.children.get(char)
+        if child is not None:
+            word += char 
+            grid[row][col] = None 
+            for row_offset, col_offset in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                dfs(words_trie, child, grid, row + row_offset, col + col_offset, result, word)
+            grid[row][col] = char 
+
+def top_k_frequent_words(words, k):
+    frequency_map = defaultdict(int)
+    buckets = [None] * (len(words) + 1)
+    top_k = []
+    for word in words:
+        frequency_map[word] += 1 
+    for word, frequency in frequency_map.items():
+        if buckets[frequency] is None:
+            buckets[frequency] = Trie()
+        buckets[frequency].add_word(word)
+    for i in range(len(buckets) - 1, -1, -1):
+        if buckets[i] is not None:
+            retrieve_words = []
+            buckets[i].get_words(buckets[i].root, retrieve_words)
+            if len(retrieve_words) < k:
+                top_k.extend(retrieve_words)
+                k -= len(retrieve_words)
+            else:
+                top_k.extend(retrieve_words[:k])
+                break 
+    return top_k
+def generate_frequency_map(words):
+    frequency_map = defaultdict(int)
+    for word in words:
+        frequency_map[word] += 1 
+    for key, value in frequency_map.items():
+        print(f"\t{key}: {value}")
+
+def find_longest_common_prefix(trie):
+    prefix = ""
+    node = trie.get_root()
+    while node and not node.is_end_of_word and len(node.children) == 1:
+        char, next_node = list(node.children.items())[0]
+        prefix += char 
+        node = next_node 
+def longest_common_prefix(strs):
+    if not strs:
+        return ""
+    trie = Trie()
+    for word in strs:
+        trie.insert(word)
+    return find_longest_common_prefix(trie)
+
+def index_pairs(text, words):
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+    output = []
+    for i in range(len(text)):
+        node = trie.root 
+        for j in range(i, len(text)):
+            if text[j] not in node.children:
+                break 
+            node = node.children[text[j]]
+            if node.is_end_of_word:
+                output.append([i, j])
+    return output 
 ```
 
 <!-- TOC --><a name="23-hash-maps"></a>
