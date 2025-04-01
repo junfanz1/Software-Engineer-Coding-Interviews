@@ -3780,7 +3780,269 @@ def max_probability(n, edges, succProb, start, end):
 ## 20. Tree DFS
 
 ```py
+from TreeNode import * 
+from BinaryTree import * 
+def flatten_tree(root):
+    if not root:
+        return 
+    current = root 
+    while current:
+        if current.left:
+            last = current.left 
+            while last.right:
+                last = last.right 
+            last.right = current.right
+            current.right = current.left 
+            current.left = None 
+        current = current.right 
+    return root 
 
+def diameter_helper(node, diameter):
+    if node is None:
+        return 0, diameter 
+    else:
+        lh, diameter = diameter_helper(node.left, diameter)
+        rh, diameter = diameter_helper(node.right, diameter)
+        diameter = max(diameter, lh + rh)
+        return max(lh, rh) + 1, diameter 
+def diameter_of_binaryTree(root):
+    diameter = 0 
+    if not root:
+        return 0 
+    _, diameter = diameter_helper(root, diameter)
+    return diameter 
+
+from BinaryTree import * 
+from TreeNode import * 
+MARKER  = "M"
+m = 1 
+def serialize_rec(node, stream):
+    global m 
+    if node is None:
+        stream.append(MARKER + str(m))
+        m += 1 
+        return 
+    stream.append(node.data)
+    serialize_rec(node.left, stream)
+    serialize_rec(node.right, stream)
+def serialize(root):
+    stream = []
+    serialize_rec(root, stream)
+    return stream 
+def deserialize_helper(stream):
+    val = stream.pop()
+    if type(val) is str and val[0] == MARKER:
+        return None
+    node = TreeNode(val)
+    node.left = deserialize_helper(stream)
+    node.right = deserialize_helper(stream)
+    return node 
+def deserialize(stream):
+    stream.reverse()
+    node = deserialize_helper(stream)
+    return node 
+
+from BinaryTree import * 
+from TreeNode import * 
+change = 0 
+master_root = None 
+def mirror_binary_tree(root):
+    global change, master_root
+    if not root:
+        return None 
+    if root.left:
+        mirror_binary_tree(root.left)
+    if root.right:
+        mirror_binary_tree(root.right)
+    root.left, root.right = root.right, root.left 
+    if master_root and (root.left or root.right):
+        change += 1 
+        display_tree(master_root)
+    return root 
+
+global max_sum 
+def max_contrib(root):
+    global max_sum 
+    if not root:
+        return 0 
+    max_left = max_contrib(root.left)
+    max_right = max_contrib(root.right)
+    left_subtree = 0 
+    right_subtree = 0 
+    if max_left > 0:
+        left_subtree = max_left 
+    if max_right > 0:
+        right_subtree = max_right
+    value_new_path = root.data + left_subtree + right_subtree
+    max_sum = max(max_sum, value_new_path)
+    return root.data + max(left_subtree, right_subtree)
+def max_path_sum(root):
+    global max_sum 
+    max_sum = float('-inf')
+    max_contrib(root)
+    return max_sum 
+
+from TreeNode import *
+def sorted_array_to_bst_helper(nums, low, high):
+    if (low > high):
+        return None 
+    mid = low + (high - low) // 2 
+    root = TreeNode(nums[mid])
+    root.left = sorted_array_to_bst_helper(nums, low, mid - 1)
+    root.right = sorted_array_to_bst_helper(nums, mid + 1, high)
+    return root 
+def sorted_array_to_bst(nums):
+    return sorted_array_to_bst_helper(nums, 0, len(nums) - 1)
+
+def build_tree_helper(p_order, i_order, left, right, mapping, p_index):
+    if left > right:
+        return None 
+    curr = p_order[p_index[0]]
+    p_index[0] += 1 
+    root = TreeNode(curr)
+    if left == right:
+        return root 
+    in_index = mapping[curr]
+    root.left = build_tree_helper(p_order, i_order, left, in_index - 1, mapping, p_index)
+    root.right = build_tree_helper(p_order, i_order, in_index + 1, right, mapping, p_index)
+    return root 
+def build_tree(p_order, i_order):
+    p_index = [0]
+    mapping = {}
+    for i in range(len(p_order)):
+        mapping[i_order[i]] = i 
+    return build_tree_helper(p_order, i_order, 0, len(p_order) - 1, mapping, p_index)
+
+from TreeNode import * 
+from BinaryTree import *
+def righ_side_view(root):
+    if root is None:
+        return []
+    rside = []
+    dfs(root, 0, rside)
+    return rside
+def dfs(node, level, rside):
+    if level == len(rside):
+        rside.append(node.data)
+    for child in [node.right, node.left]:
+        if child: # recursively calling dfs on child node 
+            dfs(child, level + 1, rside)
+
+class Solution:
+    def __init__(self):
+        self.lca = None 
+    def lowest_common_ancestor(self, root, p, q):
+        self.lowest_common_ancestor_rec(root, p, q)
+        return self.lca 
+    def lowest_common_ancestor_rec(self, current_node, p, q):
+        if not current_node:
+            return False 
+        left, right, mid = False, False, False 
+        if p == current_node or q == current_node:
+            mid = True 
+        left = self.lowest_common_ancestor_rec(current_node.right, p, q)
+        if not self.lca:
+            right = self.lowest_common_ancestor_rec(current_node.right, p, q)
+        if mid + left + right >= 2:
+            self.lca = current_node 
+        return mid or left or right 
+    
+import math 
+def validate_bst(root):
+    prev = [-math.inf]
+    return validate_bst_helper(root, prev)
+def validate_bst_helper(root, prev):
+    if not root:
+        return True 
+    if not validate_bst_helper(root.left, prev):
+        return False 
+    if root.data <= prev[0]:
+        return False 
+    prev[0] = root.data 
+    return validate_bst_helper(root.right, prev)
+
+from CreateNestedList import * 
+def find_max_depth(nested_list):
+    max_depth = 0
+    for obj in nested_list:
+        if not obj.is_integer() and len(obj.get_list()) > 0:
+            max_depth = max(max_depth, 1 + find_max_depth(obj.get_list()))
+    return max_depth 
+def weighted_depth_sum_rec(nested_list, depth, max_depth):
+    result = 0 
+    for obj in nested_list:
+        if obj.is_integer():
+            result += obj.get_integer() * (max_depth - depth + 1)
+        else:
+            result += weighted_depth_sum_rec(obj.get_list(), depth + 1, max_depth)
+    return result 
+def weighted_depth_sum(nested_list):
+    max_depth = find_max_depth(nested_list)
+    return weighted_depth_sum_rec(nested_list, 0, max_depth)
+
+from BinarySearchTree import * 
+def inorder_successor(root, p):
+    successor = None 
+    while root:
+        if p.data >= root.data:
+            root = root.right 
+        else:
+            successor = root 
+            root = root.left 
+    return successor
+
+import collections 
+def tree_dfs(node, depth, nodeDepth, nodeHeight):
+    if not node:
+        return -1 
+    nodeDepth[node.data] = depth 
+    height = max(tree_dfs(node.left, depth + 1, nodeDepth, nodeHeight), tree_dfs(node.right, depth + 1, nodeDepth, nodeHeight)) + 1
+    nodeHeight[node.data] = height 
+    return height 
+def heights_after_queries(root, queries):
+    nodeDepth, nodeHeight = {}, {}
+    tree_dfs(root, 0, nodeDepth, nodeHeight)
+    depthGroups = collections.defaultdict(list) # group nodes by their depth, keep top 2 heights
+    for value, depth in nodeDepth.items():
+        depthGroups[depth].append((nodeHeight[value], value))
+        depthGroups[depth].sort(reverse=True)
+        if len(depthGroups[depth]) > 2:
+            depthGroups[depth].pop()
+    result = []
+    for q in queries:
+        depth = nodeDepth[q]
+        if len(depthGroups[depth]) == 1:
+            result.append(depth - 1)
+        elif depthGroups[depth][0][1] == q:
+            result.append(depthGroups[depth][1][0] + depth)
+        else:
+            result.append(depthGroups[depth][0][0] + depth)
+    return result 
+
+def return_forest(root, delete_nodes):
+    if not root:
+        return []
+    to_delete = set(delete_nodes)
+    forest = []
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        if node.left:
+            stack.append(node.left)
+            if node.left.data in to_delete:
+                node.left = None 
+        if node.right:
+            stack.append(node.right)
+            if node.right.data in to_delete:
+                node.right = None 
+        if node.data in to_delete:
+            if node.left:
+                forest.append(node.left)
+            if node.right:
+                forest.append(node.right)
+    if root.data not in to_delete:
+        forest.append(root)
+    return forest
 ```
 
 <!-- TOC --><a name="21-tree-bfs"></a>
