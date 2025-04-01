@@ -4049,7 +4049,158 @@ def return_forest(root, delete_nodes):
 ## 21. Tree BFS 
 
 ```py
+from collections import deque 
+from BinaryTree import * 
+from TreeNode import * 
+def level_order_traversal(root):
+    result = []
+    if not root:
+        result = "None"
+        return result 
+    current_queue = deque()
+    current_queue.append(root)
+    while current_queue:
+        level_size = len(current_queue)
+        level_nodes = []
+        for _ in range(level_size):
+            temp = current_queue.popleft()
+            level_nodes.append(str(temp.data))
+            if temp.left:
+                current_queue.append(temp.left)
+            if temp.right:
+                current_queue.append(temp.right)
+        result.append(", ".join(level_nodes))
+    return " : ".join(result)
 
+def zigzag_level_order(root):
+    if root is None:
+        return []
+    results = []
+    dq = deque([root])
+    reverse = False 
+    while len(dq):
+        size = len(dq)
+        results.insert(len(results), [])
+        for i in range(size):
+            if not reverse:
+                node = dq.popleft()
+                results[len(results) - 1].append(node.dta)
+                if node.left:
+                    dq.append(node.left)
+                if node.right:
+                    dq.append(node.right)
+            else:
+                node = dq.pop()
+                results[len(results) - 1].append(node.data)
+                if node.right:
+                    dq.appendleft(node.right)
+                if node.left:
+                    dq.appendleft(node.left)
+        reverse = not reverse # reverse direction of traversal for next level
+    return results
+
+from EduBinaryTree import *
+from EduTreeNode import * 
+def populate_next_pointers(root):
+    if not root:
+        return root 
+    mostleft = root 
+    while mostleft.left:
+        current = mostleft 
+        while current:
+            # connect current node's left child to right child
+            current.left.next = current.right 
+            if current.next:
+                # connect current node's right child to left child
+                current.right.next = current.next.left 
+            current = current.next 
+        # move down to next level 
+        mostleft = mostleft.left 
+    return root 
+
+from collections import defaultdict, deque 
+def vertical_order(root):
+    if root is None:
+        return []
+    node_list = defaultdict(list)
+    min_column = 0 
+    max_index = 0
+    queue = deque([(root, 0)]) # push root into queue
+    while queue:
+        node, column = queue.popleft()
+        if node is not None:
+            temp = node_list[column]
+            temp.append(node.data)
+            node_list[column] = temp 
+            min_column = min(min_column, column)
+            max_index = max(max_index, column)
+            queue.append((node.left, column - 1))
+            queue.append((node.right, column + 1))
+    return [node_list[x] for x in range(min_column, max_index + 1)]
+
+def is_symmetric(root):
+    queue = []
+    queue.append(root.left)
+    queue.append(root.right)
+    while queue:
+        left = queue.pop(0)
+        right = queue.pop(0)
+        # both element null, move to next iteration
+        if not left and not right:
+            continue 
+        # any element is null, tree not symmetric
+        if not left or not right:
+            return False
+        if left.data != right.data:
+            return False 
+        queue.append(left.left)
+        queue.append(right.right)
+        queue.append(left.right)
+        queue.append(right.left)
+    return True 
+
+def word_ladder(src, dest, words):
+    myset = set(words)
+    if dest not in myset:
+        return 0 
+    q = []
+    q.append(src)
+    length = 0 
+    while q:
+        length += 1 
+        size = len(q)
+        for _ in range(size):
+            curr = q.pop(0)
+            for i in range(len(curr)):
+                alpha = "abcdefghijklmnopqrstuvwxyz"
+                for c in alpha:
+                    temp = list(curr)
+                    temp[i] = c 
+                    temp = "".join(temp)
+                    if temp == dest:
+                        return length + 1 
+                    if temp in myset:
+                        q.append(temp)
+                        myset.remove(temp)
+    return 0 # if no sequence exists
+
+def find_target(root, k):
+    if not root:
+        return False 
+    seen = set()
+    q = deque() # level-order traversal of BST
+    q.append(root)
+    while q: 
+        # deque front node from queue
+        curr = q.popleft()
+        if curr:
+            # if complement of current node's value exist in set 
+            if (k - curr.data) in seen:
+                return True 
+            seen.add(curr.data) 
+            q.append(curr.right)
+            q.append(curr.left)
+    return False 
 ```
 
 <!-- TOC --><a name="22-trie"></a>
