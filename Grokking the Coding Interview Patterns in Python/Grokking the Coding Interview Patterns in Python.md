@@ -32,7 +32,6 @@
    * [26. Custom Data Structures ](#26-custom-data-structures)
    * [27. Bitwise Manipulation](#27-bitwise-manipulation)
    * [28. Math and Geometry](#28-math-and-geometry)
-   * [29. Challenges](#29-challenges)
 
 <!-- TOC end -->
 
@@ -5713,12 +5712,3 @@ def minimum_distance(points):
         ans = min(ans, max(adjMaxSum - adjMinSum, adjMaxDiff - adjMinDiff))
     return ans
 ```
-
-<!-- TOC --><a name="29-challenges"></a>
-## 29. Challenges
-
-
-```py
-
-```
-
