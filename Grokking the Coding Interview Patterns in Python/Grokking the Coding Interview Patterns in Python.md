@@ -5043,7 +5043,277 @@ def get_skyline(buildings):
 ## 26. Custom Data Structures 
 
 ```py
+import copy 
+class SnapshotArray:
+    def __init__(self, length):
+        self.snapid = 0 
+        self.node_value = dict()
+        self.node_value[0] = dict()
+        self.ncount = length 
+    def set_value(self, idx, val):
+        if idx < self.ncount:
+            self.node_value[self.snapid][idx] = val 
+    def snapshot(self):
+        self.node_value[self.snapid+1] = copy.deepcopy(self.node_value[self.snapid])
+        self.snapid += 1 
+        return self.snapid - 1 
+    def get_value(self, idx, snapid):
+        if snapid < self.snapid and snapid >= 0 and idx < self.ncount:
+            return self.node_value[snapid][idx] if idx in self.node_value[snapid] else 0
+        else:
+            return None 
+    def __str__(self):
+        return str(self.node_value)
+    
+import random 
+class TimeStamp:
+    def __init__(self):
+        self.values_dict = {}
+        self.timestamps_dict = {}
+    def set_value(self, key, value, timestamp):
+        if key in self.values_dict:
+            if value != self.values_dict[key][len(self.values_dict[key]) - 1]:
+                self.values_dict[key].append(value)
+                self.timestamps_dict[key].append(timestamp)
+        else:
+            self.values_dict[key] = [value]
+            self.timestamps_dict[key] = [timestamp]
+    def search_index(self, n, key, timestamp):
+        left = 0 
+        j = right = n
+        mid = 0 
+        while left < right:
+            mid = (left + right) >> 1 
+            if self.timestamps_dict[key][mid] <= timestamp:
+                left = mid + 1 
+            else:
+                right = mid 
+        return left - 1 
+    def get_value(self, key, timestamp):
+        if key not in self.values_dict:
+            return ""
+        else:
+            index = self.search_index(len(self.timestamps_dict[key]), key, timestamp)
+            if index > -1:
+                return self.values_dict[key][index]
+            return ""
+        
+class LRUCache:
+    def __init__(self, capacity):
+        self.cache_capacity = capacity 
+        self.cache_map = {}
+        self.cache_list = LinkedList()
+    def get(self, key):
+        found_itr = None 
+        if key in self.cache_map:
+            found_itr = self.cache_map[key]
+        else: 
+            return -1 
+        list_iterator = found_itr
+        self.cache_list.move_to_head(found_itr)
+        return list_iterator.pair[1]
+    def set(self, key, value):
+        if key in self.cache_map:
+            found_iter = self.cache_map[key]
+            list_iterator = found_iter
+            self.cache_list.move_to_head(found_iter)
+            list_iterator.pair[1] = value 
+            return 
+        if len(self.cache_map) == self.cache_capacity:
+            key_tmp = self.cache_list.get_tail().pair[0]
+            self.cache_list.remove_tail()
+            del self.cache_map[key_tmp]
+        self.cache_list.insert_at_head([key, value])
+        self.cache_map[key] = self.cache_list.get_head()
 
+from random import choice 
+class RandomSet():
+    def __init__(self):
+        self.indexor = {}
+        self.store = []
+    def insert(self, val):
+        if val in self.indexor:
+            return False 
+        self.indexor[val] = len(self.store)
+        self.store.append(val)
+        return True 
+    def delete(self, val):
+        if val in self.indexor:
+            last, i = self.store[-1], self.indexor[val]
+            self.store[i], self.indexor[last] = last, i 
+            del self.indexor[val]
+            self.store.pop()
+            return True 
+        return False 
+    def get_random(self):
+        return choice(self.store)
+
+from stack import MainStack
+class MinStack:
+    def __init__(self):
+        self.min_stack = MainStack()
+        self.main_stack = MainStack()
+    def pop(self):
+        self.min_stack.pop()
+        return self.main_stack.pop()
+    def push(self, value):
+        self.main_stack.push(value)
+        if self.min_stack.is_empty() or value < self.min_stack.top():
+            self.min_stack.push(value)
+        else:
+            self.min_stack.push(self.min_stack.top())
+    def min_number(self):
+        if self.min_stack.is_empty():
+            return None 
+        else:
+            return self.min_stack.top()
+
+class RangeModule:
+    def __init__(self):
+        self.ranges = []
+    def check_intervals(self, left, right):
+        min_range, max_range = 0, len(self.ranges) - 1 
+        mid = len(self.ranges) // 2 
+        while mid >= 1:
+            while min_range + mid < len(self.ranges) and self.ranges[min_range + mid - 1][1] < left:
+                min_range += mid 
+            while max_range - mid >= 0 and self.ranges[max_range - mid + 1][0] > right:
+                max_range -= mid 
+            mid //= 2
+        return min_range, max_range
+    def add_range(self, left, right):
+        if not self.ranges or self.ranges[-1][1] < left:
+            self.ranges.append((left, right))
+            return 
+        if self.ranges[0][0] > right:
+            self.ranges.insert(0, (left, right))
+            return 
+        min_range, max_range = self.check_intervals(left, right)
+        updated_left = min(self.ranges[min_range][0], left)
+        updated_right = max(self.ranges[min_range][1], right)
+        self.ranges[min_range: max_range + 1] = [(updated_left, updated_right)]
+    def query_range(self, left, right):
+        if not self.ranges:
+            return False 
+        min_range, max_range = self.check_intervals(left, right)
+        return self.ranges[min_range][0] <= left and right <= self.ranges[min_range][1]
+    def remove_range(self, left, right):
+        if not self.ranges or self.ranges[0][0] > right or self.ranges[-1][1] < left:
+            return 
+        min_range, max_range = self.check_intervals(left, right)
+        updated_ranges = []
+        k = min_range
+        while k <= max_range:
+            if self.ranges[k][0] < left:
+                updated_ranges.append((self.ranges[k][0], left))
+            if self.ranges[k][1] > right:
+                updated_ranges.append((right, self.ranges[k][1]))
+            k += 1
+        self.ranges[min_range:max_range + 1] = updated_ranges
+
+from collections import defaultdict
+class WordDistance:
+    def __init__(self, words_dict):
+        self.word_indices = defaultdict(list)
+        for index, word in enumerate(words_dict):
+            self.word_indices[word].append(index)
+    def shortest(self, word1, word2):
+        indices1, indices2 = self.word_indices[word1], self.word_indices[word2]
+        i, j = 0, 0 
+        min_distance = float('inf')
+        while i < len(indices1) and j < len(indices2):
+            min_distance = min(min_distance, abs(indices1[i] - indices2[j]))
+            if indices1[i] < indices2[j]:
+                i += 1 
+            else:
+                j += 1
+        return min_distance
+    
+from bucket import Bucket
+class MyHashSet:
+    def __init__(self):
+        self.key_range = 769 
+        self.bucket_array = [Bucket() for i in range(self.key_range)]
+    def hash(self, key) -> int:
+        return key % self.key_range
+    def add(self, key:int) -> None:
+        bucket_index = self.hash(key)
+        self.bucket_array[bucket_index].add(key)
+    def remove(self, key: int) -> None:
+        bucket_index = self.hash(key)
+        self.bucket_array[bucket_index].remove(key)
+    def contains(self, key: int) -> bool:
+        bucket_index = self.hash(key)
+        return self.bucket_array[bucket_index].contains(key)
+    
+import heapq 
+class MaxStack:
+    def __init__(self):
+        self.stack = []
+        self.max_heap = []
+        self.id_num = 0 
+        self.popped = set()
+    def push(self, x):
+        self.stack.append((x, self.id_num))
+        heapq.heappush(self.max_heap, (-x, -self.id_num))
+        self.id_num += 1 
+    def pop(self):
+        while self.stack and self.stack[-1][1] in self.popped:
+            self.stack.pop()
+        num, idx = self.stack.pop()
+        self.popped.add(idx)
+        return num
+    def top(self):
+        while self.stack and self.stack[-1][1] in self.popped:
+            self.stack.pop()
+        return self.stack[-1][0]
+    def peekMax(self):
+        while self.max_heap and -self.max_heap[0][1] in self.popped:
+            heapq.heappop(self.max_heap)
+        return -self.max_heap[0][0]
+    def popMax(self):
+        while self.max_heap and -self.max_heap[0][1] in self.popped:
+            heapq.heappop(self.max_heap)
+        num, idx = heapq.heappop(self.max_heap)
+        self.popped.add(-idx)
+        return -num
+
+from collections import deque 
+class MovingAverage:
+    def __init__(self, size):
+        self.size = size 
+        self.queue = deque()
+        self.window_sum = 0
+    def next(self, val):
+        self.queue.append(val)
+        self.window_sum += val 
+        if len(self.queue) > self.size:
+            self.window_sum -= self.queue.popleft()
+        return float(self.window_sum) / len(self.queue)
+    
+class TwoSum:
+    def __init__(self):
+        self.nums = {}
+    def add(self, number):
+        if number in self.nums:
+            self.nums[number] += 1 
+        else:
+            self.nums[number] = 1 
+    def find(self, value):
+        for num in self.nums:
+            complement = value - num 
+            if complement in self.nums:
+                if complement != num or self.nums[num] > 1:
+                    return True 
+        return False 
+    
+class NumArray:
+    def __init__(self, nums):
+        self.sum = [0] * (len(nums) + 1)
+        for i in range(len(nums)):
+            self.sum[i + 1] = self.sum[i] + nums[i]
+    def sum_range(self, i, j):
+        return self.sum[j + 1] - self.sum[i]
 ```
 
 <!-- TOC --><a name="27-bitwise-manipulation"></a>
