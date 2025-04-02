@@ -5320,7 +5320,159 @@ class NumArray:
 ## 27. Bitwise Manipulation
 
 ```py
+def extra_character_index(str1, str2):
+    result = 0
+    str1_length = len(str1)
+    str2_length = len(str2)
+    for i in range(str1_length):
+        result = result ^ (ord)(str1[i])
+    for j in range(str2_length):
+        result = result ^ (ord)(str2[j])
+    if len(str1) > len(str2):
+        index = str1.index((chr)(result))
+        return index 
+    else:
+        index = str2.index((chr)(result))
+        return index 
+    
+from math import log2, floor 
+def find_bitwise_complement(num):
+    if num == 0:
+        return 1
+    bit_count = num.bit_length()
+    all_bits_set = (1 << bit_count) - 1 
+    return num ^ all_bits_set
 
+def flip_and_invert_image(image):
+    row_count = len(image)
+    mid = (row_count + 1) // 2 
+    for row in image:
+        for i in range(mid):
+            temp = row[i] ^ 1
+            row[i] = row[len(row) - 1 - i] ^ 1 
+            row[len(row) - 1 - i] = temp 
+    return image
+
+def single_number(nums):
+    result = 0
+    for num in nums:
+        result ^= num 
+    return result 
+
+def two_single_numbers(nums):
+    bitwise_xor = 0 
+    for num in nums:
+        bitwise_xor ^= num 
+    bitwise_mask = bitwise_xor & -bitwise_xor 
+    result = 0 
+    for num in nums:
+        if num & bitwise_mask:
+            result ^= num 
+    return [result, bitwise_xor ^ result]
+
+def encode(strings):
+    encoded_string = ""
+    for x in strings:
+        encoded_string += length_to_bytes(x) + x
+    return encoded_string
+def decode(string):
+    i = 0
+    decoded_string = []
+    while i < len(string):
+        length = bytes_to_length(string[i: i + 4])
+        i += 4 
+        decoded_string.append(string[i: i + length])
+        i += length 
+    return decoded_string 
+def length_to_bytes(x):
+    length = len(x)
+    bytes = []
+    for i in range(4):
+        bytes.append(chr(length >> (i * 8)))
+    bytes.reverse()
+    bytes_string = "".join(bytes)
+    return bytes_string
+def bytes_to_length(bytes_string):
+    result = 0
+    for c in bytes_string:
+        result = result * 256 + ord(c)
+    return result 
+
+def xor_total_sums(nums):
+    output = 0 
+    for num in nums:
+        output = output | num 
+    return output << (len(nums) - 1)
+
+def kth_lucky_number(k):
+    k += 1 
+    result = bin(k)[3:]
+    result = result.replace("0", "4").replace("1", "7")
+    return result 
+
+import collections 
+def min_k_bit_flips(nums, k):
+    n = len(nums)
+    flip_track_queue = collections.deque()
+    is_flipped = 0 
+    total_flips = 0
+    for i, num in enumerate(nums):
+        if i >= k:
+            is_flipped ^= flip_track_queue.popleft()
+        if is_flipped % 2 == nums[i]:
+            if i + k > n:
+                return -1
+            flip_track_queue.append(1)
+            is_flipped ^= 1 
+            total_flips += 1 
+        else:
+            flip_track_queue.append(0)
+    return total_flips
+
+def find_longest_substring(s):
+    prefix_xor = 0 
+    vowel_bit_map = [0] * 26 
+    vowel_bit_map[ord('a') - ord('a')] = 1 
+    vowel_bit_map[ord('e') - ord('a')] = 2 
+    vowel_bit_map[ord('i') - ord('a')] = 4 
+    vowel_bit_map[ord('o') - ord('a')] = 8 
+    vowel_bit_map[ord('u') - ord('a')] = 16
+    first_occurrence = [-1] * 32 
+    first_occurrence[0] = -1 
+    len_longest_substring = 0
+    for i, char in enumerate(s):
+        prefix_xor ^= vowel_bit_map[ord(char) - ord('a')]
+        if first_occurrence[prefix_xor] == -1 and prefix_xor != 0:
+            first_occurrence[prefix_xor] = i 
+        else:
+            len_longest_substring = max(len_longest_substring, i - first_occurrence[prefix_xor]) 
+    return len_longest_substring
+
+from collections import defaultdict
+def count_triplets(arr):
+    count = 0
+    prefix = 0 
+    count_map = defaultdict(int, {0: 1})
+    total_map = defaultdict(int)
+    for i in range(len(arr)):
+        prefix ^= arr[i]
+        count += count_map[prefix] * i - total_map[prefix]
+        count_map[prefix] += 1 
+        total_map[prefix] += i + 1
+    return count 
+
+def longest_subarray(nums):
+    maximum_AND = maximum_length = current_length = 0
+    for num in nums:
+        if maximum_AND < num:
+            maximum_AND = num 
+            maximum_length = current_length = 0
+        if maximum_AND == num:
+            current_length += 1 
+        else:
+            current_length = 0
+        maximum_length = max(maximum_length, current_length)
+    return maximum_length
 ```
 
 <!-- TOC --><a name="28-math-and-geometry"></a>
