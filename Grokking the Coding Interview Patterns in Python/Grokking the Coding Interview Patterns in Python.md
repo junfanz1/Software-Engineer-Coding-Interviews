@@ -4853,7 +4853,190 @@ def least_interval(tasks, n):
 ## 25. Union Find 
 
 ```py
+class UnionFind:
+    def __init__(self, n):
+        self.parent = []
+        self.rank = rank = [1] * (n + 1)
+        for i in range(n + 1):
+            self.parent.append(i)
+    def find_parent(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find_parent(self.parent[x])
+        return self.parent[x]
+    def union(self, v1, v2):
+        p1, p2 = self.find_parent(v1), self.find_parent(v2)
+        if p1 == p2:
+            return False 
+        elif self.rank[p1] > self.rank[p2]:
+            self.parent[p2] = p1 
+            self.rank[p1] = self.rank[p1] + self.rank[p2]
+        else:
+            self.parent[p1] = p2 
+            self.rank[p2] = self.rank[p2] + self.rank[p1]
+        return True 
+def redundant_connection(edges):
+    graph = UnionFind(len(edges))
+    for v1, v2 in edges:
+        if not graph.union(v1, v2):
+            return [v1, v2]
 
+def num_islands(grid):
+    if not grid:
+        return 0
+    cols = len(grid[0])
+    rows = len(grid)
+    union_find = UnionFind(grid)
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':
+                grid[r][c] == '0'
+                if r + 1 < rows and grid[r + 1][c] == '1':
+                    union_find.union(r * cols + c, (r + 1) * cols + c)
+                if c + 1 < cols and grid[r][c + 1] == '1':
+                    union_find.union(r * cols + c, r * cols + c + 1)
+    count = union_find.get_count()
+    return count 
+
+from collections import defaultdict
+def remove_stones(stones):
+    offset = 100000
+    stone = UnionFind()
+    for x, y in stones:
+        stone.union(x, (y + offset))
+    groups = set()
+    for i in stone.parents:
+        groups.add(stone.find(i))
+    return len(stones) - len(groups)
+
+def longest_consecutive_sequence(nums):
+    if len(nums) == 0:
+        return 0
+    ds = UnionFind(nums)
+    for num in nums:
+        if num + 1 in ds.parent:
+            ds.union(num, num + 1)
+    return ds.max_length 
+
+def last_day_to_cross(rows: int, cols: int, water_cells):
+    day = 0
+    matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+    left_node, right_node = 0, rows * cols + 1 
+    water_directions = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+    water_cells = [(r - 1, c - 1) for r, c in water_cells]
+    uf = UnionFind(rows * cols + 2)
+    for row, col in water_cells:
+        matrix[row][col] = 1 
+        for dr, dc in water_directions:
+            if within_bounds(row + dr, col + dc, rows, cols) and matrix[row + dr][col + dc] == 1:
+                uf.union(find_index(row, col, cols), find_index((row + dr), (col + dc), cols))
+        if col == 0:
+            uf.union(find_index(row, col, cols), left_node)
+        if col == cols - 1:
+            uf.union(find_index(row, col, cols), right_node)
+        if uf.find(left_node) == uf.find(right_node):
+            break 
+        day += 1 
+    return day 
+def find_index(current_row, current_col, cols):
+    return current_row * cols + (current_col + 1)
+def within_bounds(row, col, rows, cols):
+    if not (0 <= col < cols): return False 
+    if not (0 <= row < rows): return False 
+    return True 
+
+def regions_by_slashes(grid):
+    N = len(grid)
+    find_union = UnionFind(4 * N * N)
+    for r, row in enumerate(grid):
+        for c, val in enumerate(row):
+            root = 4 * (r * N + c)
+            if val in '/':
+                find_union.union(root + 0, root + 1)
+                find_union.union(root + 2, root + 3)
+            if val in '\ ': 
+                find_union.union(root + 0, root + 2)
+                find_union.union(root + 1, root + 3)
+            if r + 1 < N:
+                find_union.union(root + 3, (root + 4 * N) + 0)
+            if r - 1 >= 0:
+                find_union.union(root + 0, (root - 4 * N) + 3)
+            if c + 1 < N:
+                find_union.union(root + 2, (root + 4) + 1)
+            if c - 1 >= 0:
+                find_union.union(root + 1, (root - 4) + 2)
+    return sum(find_union.find(x) == x for x in range(4 * N * N))
+
+def accounts_merge(accounts):
+    uf = UnionFind(len(accounts))
+    email_mapping = {}
+    for i, account in enumerate(accounts):
+        emails = account[1:]
+        for email in emails:
+            if email in email_mapping:
+                if account[0] != accounts[email_mapping[email]][0]:
+                    return 
+                uf.union(email_mapping[email], i)
+            email_mapping[email] = i 
+    merged_accounts = defaultdict(list)
+    for email, ids in email_mapping.items():
+        merged_accounts[uf.find(ids)].append(email)
+    final_merged = []
+    for parent, emails in merged_accounts.items():
+        final_merged.append([accounts[parent][0]] + sorted(emails))
+    return final_merged
+
+def min_malware_spread(graph, initial):
+    length = len(graph)
+    union_find = UnionFind(length)
+    for x in range(length):
+        for y in range(length):
+            if graph[x][y]:
+                union_find.union(x, y)
+    infected = defaultdict(int)
+    for x in initial:
+        infected[union_find.find(x)] += 1 
+    maximum_size, candidate_node = 0, min(initial)
+    for i in initial:
+        infection_count = infected[union_find.find(i)]
+        component_size = union_find.rank[union_find.find(i)]
+        if infection_count != 1:
+            continue 
+        if component_size > maximum_size:
+            maximum_size = component_size
+            candidate_node = i 
+        elif component_size == maximum_size and i < candidate_node:
+            candidate_node = i 
+    return candidate_node
+
+def valid_path(n, edges, source, destination):
+    uf = UnionFind(n)
+    for x, y in edges:
+        uf.union(x, y)
+    return uf.find(source) == uf.find(destination)
+
+def get_skyline(buildings):
+    coordinates = sorted(list(set([x for building in buildings for x in building[:2]])))
+    n = len(coordinates)
+    heights = [0] * n 
+    index_map = {x: idx for idx, x in enumerate(coordinates)}
+    buildings.sort(key=lambda x: -x[2])
+    skyline = []
+    uf = UnionFind(n)
+    for left_x, right_x, height in buildings:
+        left, right = index_map[left_x], index_map[right_x]
+        while left < right:
+            left = uf.find(left)
+            if left < right:
+                # merge left index with right index, connect two parts of skyline
+                uf.union(left, right) 
+                heights[left] = height 
+                left += 1 
+    # build final skyline by looping through heights
+    for i in range(n):
+        # only add points to skyline when height changes from previous point
+        if i == 0 or heights[i] != heights[i - 1]:
+            skyline.append([coordinates[i], heights[i]])
+    return skyline 
 ```
 
 <!-- TOC --><a name="26-custom-data-structures"></a>
