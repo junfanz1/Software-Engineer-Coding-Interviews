@@ -5479,7 +5479,239 @@ def longest_subarray(nums):
 ## 28. Math and Geometry
 
 ```py
+def check_straight_line(coordinates):
+    deltaX1 = coordinates[1][0] - coordinates[0][0]
+    deltaY1 = coordinates[1][1] - coordinates[0][1]
+    for i in range(2, len(coordinates)):
+        deltaX2 = coordinates[i][0] - coordinates[0][0]
+        deltaY2 = coordinates[i][1] - coordinates[0][1]
+        if (deltaY1 * deltaX2) != (deltaX1 * deltaY2):
+            return False 
+    return True 
 
+def number_of_cuts(n):
+    if n == 1:
+        return 0 
+    if n % 2 == 1:
+        return n 
+    return n // 2 
+
+def is_rectangle_overlap(rec1, rec2):
+    return (
+        min(rec1[2], rec2[2]) > max(rec1[0], rec2[0]) and 
+        min(rec1[3], rec2[3]) > max(rec1[1], rec2[1])
+    )
+
+def min_time_to_visit_all_points(points):
+    n = len(points)
+    result = 0 
+    for i in range(1, n):
+        x_diff = abs(points[i][0] - points[i - 1][0])
+        y_diff = abs(points[i][1] - points[i - 1][1])
+        result += max(x_diff, y_diff)
+    return result 
+
+def reverse(num):
+    INT_MAX = 2**31 - 1
+    result = 0 
+    is_negative = num < 0 
+    if (is_negative):
+        num = -num
+    while num != 0:
+        digit = num % 10 
+        num //= 10 
+        if result > (INT_MAX - digit) // 10:
+            return 0 
+        result = result * 10 + digit 
+    return -result if is_negative else result 
+
+def distance_squared(point1, point2):
+    return (point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2 
+def valid_square(p1, p2, p3, p4):
+    # List all pairwise distances
+    distances = [
+        distance_squared(p1, p2),
+        distance_squared(p1, p3),
+        distance_squared(p1, p4),
+        distance_squared(p2, p3),
+        distance_squared(p2, p4),
+        distance_squared(p3, p4)
+    ]
+    distances.sort()
+    return (
+        distances[0] > 0 and  # Side lengths must be positive
+        distances[0] == distances[1] == distances[2] == distances[3] and
+        distances[4] == distances[5]
+    )
+
+def compute_area(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2):
+    area_a = (ax2 - ax1) * (ay2 - ay1)
+    area_b = (bx2 - bx1) * (by2 - by1)
+    x_overlap = max(0, min(ax2, bx2) - max(ax1, bx1))
+    y_overlap = max(0, min(ay2, by2) - max(ay1, by1))
+    overlap_area = x_overlap * y_overlap
+    total_area = area_a + area_b - overlap_area
+    return total_area
+
+def min_area_rect(points):
+    point_set = set()
+    for point in points:
+        point_set.add(1009 * point[0] + point[1])
+    ans = float('inf')    
+    for i in range(len(points)):
+        p1 = points[i]        
+        for j in range(i + 1, len(points)):
+            p2 = points[j]
+            
+            if p1[0] != p2[0] and p1[1] != p2[1]:
+                if (1009 * p1[0] + p2[1] in point_set) and (1009 * p2[0] + p1[1] in point_set):
+                    ans = min(ans, abs(p2[0] - p1[0]) * abs(p2[1] - p1[1]))    
+    return ans if ans < float('inf') else 0
+
+def inside_or_border_rectangle(x1, y1, x2, y2, px, py):
+    return x1 <= px <= x2 and y1 <= py <= y2
+def max_rectangle_area(points):
+    point_set = set(map(tuple, points))
+    max_area = -1
+    for i in range(len(points)):
+        for j in range(i + 1, len(points)):
+            x1, y1 = points[i]
+            x2, y2 = points[j]
+            if x1 == x2 or y1 == y2:
+                continue
+            if (x1, y2) in point_set and (x2, y1) in point_set:
+                x_min, x_max = min(x1, x2), max(x1, x2)
+                y_min, y_max = min(y1, y2), max(y1, y2)
+                valid = True
+                for px, py in points:
+                    if (px, py) in [(x1, y1), (x2, y2), (x1, y2), (x2, y1)]:
+                        continue
+                    elif inside_or_border_rectangle(x_min, y_min, x_max, y_max, px, py):
+                        valid = False
+                        break
+                if valid:
+                    area = abs(x2 - x1) * abs(y2 - y1)
+                    max_area = max(max_area, area)
+    return max_area
+
+def is_convex(points):
+    def cross_product(p1, p2, p3):
+        x1, y1 = p2[0] - p1[0], p2[1] - p1[1]
+        x2, y2 = p3[0] - p2[0], p3[1] - p2[1]
+        return x1 * y2 - x2 * y1
+    n = len(points)
+    prev_cp = 0
+    for i in range(n):
+        cp = cross_product(points[i - 1], points[i], points[(i + 1) % n])
+        if cp != 0:
+            if prev_cp * cp < 0:
+                return False        
+            prev_cp = cp 
+    return True
+
+def binary_search(points, target, find_left=True):
+    left, right = 0, len(points)
+    while left < right:
+        mid = (left + right) // 2 
+        if points[mid] < target or (not find_left and points[mid] == target):
+            left = mid + 1 
+        else:
+            right = mid 
+    return left 
+def count_points(points, queries):
+    answer = []
+    points.sort()
+    for xj, yj, rj in queries:
+        left = binary_search(points, [xj - rj, -float('inf')], True)
+        right = binary_search(points, [xj + rj, float('inf')], False)
+        count = 0
+        for x, y in points[left:right]:
+            if (xj - x) ** 2 + (yj - y) ** 2 <= rj ** 2:
+                count += 1 
+        answer.append(count)
+    return answer 
+
+from math import inf
+from fractions import Fraction
+def max_points(points):
+    if len(points) <= 2:
+        return len(points)
+    max_collinear_points = 1
+    for i, p1 in enumerate(points):
+        slope_counts = {}
+        for j, p2 in enumerate(points[i + 1:]):
+            slope = find_slope(p1, p2)
+            slope_counts[slope] = 1 + slope_counts.get(slope, 1)
+            max_collinear_points = max(max_collinear_points, slope_counts[slope])
+    return max_collinear_points
+def find_slope(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
+    if x1 - x2 == 0:
+        return inf
+    return Fraction(y1 - y2, x1 - x2)
+
+def to_degrees(radians):
+    return radians * 180.0 / math.pi
+def visible_points(points, angle, location):
+    angles = []
+    coincidents = 0 
+    for point in points:
+        dx = point[0] - location[0]
+        dy = point[1] - location[1]
+        if dx == 0 and dy == 0:
+            coincidents += 1 
+        else:
+            angles.append(to_degrees(math.atan2(dy, dx)))
+    angles.sort()
+    n = len(angles)
+    for i in range(n):
+        angles.append(angles[i] + 360.0)
+    res = 0 
+    j = 0 
+    for i in range(n):
+        while angles[j] - angles[i] <= angle:
+            j += 1 
+        res = max(res, j - i)
+    return res + coincidents
+
+def minimum_distance(points):
+    minSumIndex = maxSumIndex = minDiffIndex = maxDiffIndex = None
+    minSum = minSum2nd = minDiff = minDiff2nd = float('inf')
+    maxSum = maxSum2nd = maxDiff = maxDiff2nd = float('-inf')
+    ans = float('inf')    
+    for i in range(len(points)):
+        x = points[i][0]
+        y = points[i][1]        
+        s = x + y
+        d = x - y        
+        if s < minSum:
+            minSumIndex = i
+            minSum, minSum2nd = s, minSum
+        elif s < minSum2nd:
+            minSum2nd = s            
+        if s > maxSum:
+            maxSumIndex = i
+            maxSum, maxSum2nd = s, maxSum
+        elif s > maxSum2nd:
+            maxSum2nd = s            
+        if d < minDiff:
+            minDiffIndex = i
+            minDiff, minDiff2nd = d, minDiff
+        elif d < minDiff2nd:
+            minDiff2nd = d            
+        if d > maxDiff:
+            maxDiffIndex = i
+            maxDiff, maxDiff2nd = d, maxDiff
+        elif d > maxDiff2nd:
+            maxDiff2nd = d
+    for i in {minSumIndex, maxSumIndex, minDiffIndex, maxDiffIndex}:
+        adjMinSum = minSum2nd if i == minSumIndex else minSum
+        adjMaxSum = maxSum2nd if i == maxSumIndex else maxSum
+        adjMinDiff = minDiff2nd if i == minDiffIndex else minDiff
+        adjMaxDiff = maxDiff2nd if i == maxDiffIndex else maxDiff 
+        ans = min(ans, max(adjMaxSum - adjMinSum, adjMaxDiff - adjMinDiff))
+    return ans
 ```
 
 <!-- TOC --><a name="29-challenges"></a>
